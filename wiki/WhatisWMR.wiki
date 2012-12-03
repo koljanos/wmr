@@ -1,6 +1,8 @@
 #summary WMR is a Oregon Scientific WMR/RMS/I series *nix data reader - logger.
 #labels weather,logger,reader,Featured,Phase-Requirements,Phase-Design
 
+http://www.nkl.ru/support/oregon_img/i.jpg
+
 = Introduction =
 
 WMR is a Oregon Scientific WMR/RMS/I series Linux/FreeBSD data reader - logger
