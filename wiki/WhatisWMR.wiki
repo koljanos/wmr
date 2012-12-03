@@ -9,6 +9,7 @@ WMR is a Oregon Scientific WMR/RMS/I series Linux/FreeBSD data reader - logger
 OpenWRT project support.
 
 Supports:
+Oregon Scientific LW301
 Oregon Scientific WMR88
 Oregon Scientific WMR100
 Oregon Scientific WMR200
