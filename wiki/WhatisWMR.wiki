@@ -18,7 +18,7 @@ Oregon Scientific I600
 
 = Details =
 
-The *WMR/RMS/I* series from _(c) Oregon Scientific_, use a proprietary protocol for their USB connection. It's very useful for enthusiasts running a headless *Linux/FreeBSD* box to collect and analyze data from this link, but unfortunately the protocol isn't openly documented, nor are clients provided for this platform.
+The *WMR/RMS/I* series from *_(c) Oregon Scientific_*, use a proprietary protocol for their USB connection. It's very useful for enthusiasts running a headless *Linux/FreeBSD* box to collect and analyze data from this link, but unfortunately the protocol isn't openly documented, nor are clients provided for this platform.
 
 This simple *C* program handles the USB protocol of tested the WMR series, and translates it an ASCII line-format, easy for parsing/analysing.
 
