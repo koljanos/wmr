@@ -3,7 +3,8 @@
 
 = Introduction =
 
-WMR is a Oregon Scientific WMR/RMS/I series *nix data reader - logger
+WMR is a Oregon Scientific WMR/RMS/I series Linux/FreeBSD data reader - logger
+OpenWRT project support.
 
 Supports:
 Oregon Scientific WMR88
