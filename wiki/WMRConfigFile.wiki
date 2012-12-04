@@ -1,4 +1,4 @@
-#summary One-sentence summary of this page.
+#summary Weather station logger configuration, features and value fields
 #labels Featured,Phase-Requirements,Phase-Support,Phase-Implementation
 
 = wmr.conf =
@@ -7,60 +7,76 @@ Weather station logger configuration, features and value fields
 
 = Details =
 
+{{{
 #
 # Allows entry into the database sqlite3 information from a weather station
 # Enable: 1 Disable: 0
 #
+}}}
 {{{
 SQLENABLE 1
 }}}
+{{{
 #
 # The full path to the database slite3, including file name
 # /path/to/file/base.db
 #
+}}}
 {{{
 SQLBASEPATH /var/weather/weather.db
 }}}
+{{{
 #
 # Allows entry into the data log file, save in txt format 
 # information from a weather station
 # Enable: 1 Disable: 0
 #
+}}}
 {{{
 FILENABLE 0
 }}}
+{{{
 #
 # The full path to the log file, including file name
 # /path/to/file/file.log
 #
+}}}
 {{{
 FILEPATH /var/weather/weather.log
 }}}
+{{{
 #
 # Recording weather statistics in a graphical format, use rrdtools
 # Enable: 1 Disable: 0
 #
+}}}
 {{{
 RRDENABLE 1
 }}}
+{{{
 #
 # The full path to executable binary app rrdtool, including file name
 # /path/to/file/rrdtool
 #
+}}}
 {{{
 RRDEXECPATH /usr/bin/rrdtool
 }}}
+{{{
 #
 # The full path to save directory statistic in .rrd format
 # /path/to/savepath
 #
+}}}
 {{{
 RRDSAVEPATH /var/weather/
 }}}
+{{{
 #
 # Debuging info to display print
 # Enable: 1 Disable: 0
 #
+}}}
 {{{
 DEBUGENABLE 1
 }}}
