@@ -10,15 +10,15 @@ OpenWRT project support.
 
 =Support:=
 {{{
-_Oregon Scientific_ LW301
-_Oregon Scientific_ WMR88
-_Oregon Scientific_ WMR100
-_Oregon Scientific_ WMR200
-_Oregon Scientific_ WMRS200
-_Oregon Scientific_ RMS300
-_Oregon Scientific_ RMS600
-_Oregon Scientific_ I300
-_Oregon Scientific_ I600
+Oregon Scientific LW301
+Oregon Scientific WMR88
+Oregon Scientific WMR100
+Oregon Scientific WMR200
+Oregon Scientific WMRS200
+Oregon Scientific RMS300
+Oregon Scientific RMS600
+Oregon Scientific I300
+Oregon Scientific I600
 }}}
 
 =Features=
