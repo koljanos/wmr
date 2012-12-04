@@ -1,5 +1,5 @@
 #summary WMR debug Screenshot
-#labels метеостанция,weather,linux,oregon,wmr,screenshot,Phase-Requirements,Phase-Implementation,Phase-Design
+#labels метеостанция,weather,linux,oregon,wmr,screenshot,Phase-Requirements,Phase-Implementation,Phase-Design,Featured,Phase-QA,Phase-Support
 
 = WMR debug enabled Screenshot =
 
