@@ -1,0 +1,6 @@
+#summary WMR debug Screenshot
+#labels метеостанция,weather,linux,oregon,wmr,screenshot,Phase-Requirements,Phase-Implementation,Phase-Design
+
+= WMR debug enabled Screenshot =
+
+http://www.nkl.ru/support/fowsr/oregon_img/oregon_debug_info.png
