@@ -18,7 +18,7 @@ SQLENABLE 1
 }}}
 {{{
 #
-# The full path to the database slite3, including file name
+# The full path to the database sqlite3, including file name
 # /path/to/file/base.db
 #
 }}}
