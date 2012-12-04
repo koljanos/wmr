@@ -45,7 +45,7 @@ box to collect and analyze data from this link, but unfortunately the
 protocol isn't openly documented, nor are clients provided for this
 platform.
 
-This simple C program handles the USB protocol of the WMR100, and
+This simple C program handles the USB protocol of the WMRxxx, or RMSxxx, or Ixxx, and
 translates it an ASCII line-format, easy for parsing/analysing.
 
 You'll need to setup the udev rules (see udev/README) if you want to
