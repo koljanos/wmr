@@ -9,6 +9,7 @@ WMR is a Oregon Scientific WMR/RMS/I series Linux/FreeBSD data reader - logger
 OpenWRT project support.
 
 =Support:=
+------------
 {{{
 Oregon Scientific LW301
 Oregon Scientific WMR88
@@ -24,9 +25,13 @@ Oregon Scientific I600
 =Features=
 ------------
 `*`SQL sqlite3 database support for store data from weather station.
+------------
 `*`Store data from weather station to log file in txt format.
+------------
 `*`Correct all data from sensor (temperature, pressure, rain, wind).
+------------
 `*`Build graphical statistic from sql data (rrd-tools).
+------------
 `*`Posted to popularity weather web site weather data.
 
 =Introduction=
