@@ -26,7 +26,7 @@ Oregon Scientific I600
 `*`SQL sqlite3 database support for store data from weather station.
 `*`Store data from weather station to log file in txt format.
 `*`Correct all data from sensor (temperature, pressure, rain, wind).
-`*`Build graphical statistic from sql data (rrd-tools).
+`*`Build graphical statistic from sql data (rrd-tools).\n
 `*`Posted to popularity weather web site weather data.
 
 =Introduction=
