@@ -80,3 +80,16 @@ RRDSAVEPATH /var/weather/
 {{{
 DEBUGENABLE 1
 }}}
+{{{
+#----------------------------------------------------------------------#
+# Correction of sensor 
+# allowed as positive, or negative, for example: 2 or -3
+#----------------------------------------------------------------------#
+}}}
+{{{
+SENS_TEMP 0
+SENS_PRESSURE 0
+SENS_WIND 0
+SENS_RAIN 0
+SENS_UV 0
+}}}
