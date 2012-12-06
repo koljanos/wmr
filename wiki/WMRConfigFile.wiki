@@ -104,7 +104,7 @@ SENS_TEMP1 0
 }}}
 {{{
 #
-# Other outdoor/indoor sensor
+# Other outdoor/indoor temperature sensor
 #
 }}}
 {{{
