@@ -87,7 +87,42 @@ DEBUGENABLE 1
 #----------------------------------------------------------------------#
 }}}
 {{{
-SENS_TEMP 0
+#
+# Main station indoor sensor
+#
+}}}
+{{{
+SENS_TEMP0 0
+}}}
+{{{
+#
+# Complected Outdoor sensor
+#
+}}}
+{{{
+SENS_TEMP1 0
+}}}
+{{{
+#
+# Other outdoor/indoor sensor
+#
+}}}
+{{{
+SENS_TEMP2 0
+SENS_TEMP3 0
+SENS_TEMP4 0
+SENS_TEMP5 0
+SENS_TEMP6 0
+SENS_TEMP7 0
+SENS_TEMP8 0
+SENS_TEMP9 0
+}}}
+{{{
+#
+# Other sensor data correct
+#
+}}}
+{{{
 SENS_PRESSURE 0
 SENS_WIND 0
 SENS_RAIN 0
