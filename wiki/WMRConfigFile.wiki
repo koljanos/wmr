@@ -1,12 +1,4 @@
-#summary Weather station logger configuration, features and value fields
 #labels Featured,Phase-Requirements,Phase-Support,Phase-Implementation
-
-= wmr.conf =
-
-Weather station logger configuration, features and value fields
-
-= Details =
-
 {{{
 #
 # Allows entry into the database sqlite3 information from a weather station
@@ -81,6 +73,60 @@ RRDSAVEPATH /var/weather/
 DEBUGENABLE 1
 }}}
 {{{
+#
+#----------------------------------------------------------------------#
+# Store & View convertion data
+# allowed as english metric (pindosia) and standart
+#----------------------------------------------------------------------#
+}}}
+{{{
+#
+# Temperature store data in standart:
+# 0 - C (default)
+# 1 - F
+#
+}}}
+{{{
+SV_TEMP 0
+}}}
+{{{
+#
+# Pressure store data in standart:
+# 0 - gPa (default)
+# 1 - psi
+# 2 - bar
+# 3 - mBar
+# 4 - mpa
+# 5 - mmHg
+# 6 - inHg
+#
+}}}
+{{{
+SV_PRESSURE 5
+}}}
+{{{
+#
+# Rain (Gidrometr) store data in standart:
+# 0 - mm (default)
+# 1 - cm
+#
+}}}
+{{{
+SV_RAIN 0
+}}}
+{{{
+#
+# Wind store data in standart:
+# 0 - ms (default)
+# 1 - mps
+# 2 - mph
+#
+}}}
+{{{
+SV_WIND 0
+}}}
+{{{
+#
 #----------------------------------------------------------------------#
 # Correction of sensor 
 # allowed as positive, or negative, for example: 2 or -3
