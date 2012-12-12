@@ -1,5 +1,27 @@
 #labels Featured,Phase-Requirements,Phase-Support,Phase-Implementation
 {{{
+#----------------------------------------------------------------------#
+# WMR config file for
+# Oregon Scientific WMR100/200/WMRS200/I300/I600/RMS600 protocol.
+# Global download URL: http://code.google.com/p/wmr/
+# Latest download URL: http://www.nkl.ru/support/wmr/
+#----------------------------------------------------------------------#
+}}}
+{{{
+#
+# To run, comand line, use flags:
+#	-c <value> 	= path and name to config file, sample /etc/wmr.conf .
+#	-s		= print all info & debug info to local syslog server.
+#	-d		= start is a daemon server mode (loging only syslog).
+#			  flag -s automatic enable.
+#	-v 		= print all config token from this config file.
+#			  this options require flag -c <path/to/config/name.ext>
+#			  before.
+#
+#----------------------------------------------------------------------#
+#
+}}}
+{{{
 #
 # Allows entry into the database sqlite3 information from a weather station
 # Enable: 1 Disable: 0
@@ -139,6 +161,7 @@ SV_WIND 0
 }}}
 {{{
 SENS_TEMP0 0
+SENS_HUMIDITY0 0
 }}}
 {{{
 #
@@ -147,6 +170,7 @@ SENS_TEMP0 0
 }}}
 {{{
 SENS_TEMP1 0
+SENS_HUMIDITY1 0
 }}}
 {{{
 #
@@ -155,13 +179,21 @@ SENS_TEMP1 0
 }}}
 {{{
 SENS_TEMP2 0
+SENS_HUMIDITY2 0
 SENS_TEMP3 0
+SENS_HUMIDITY3 0
 SENS_TEMP4 0
+SENS_HUMIDITY4 0
 SENS_TEMP5 0
+SENS_HUMIDITY5 0
 SENS_TEMP6 0
+SENS_HUMIDITY6 0
 SENS_TEMP7 0
+SENS_HUMIDITY7 0
 SENS_TEMP8 0
+SENS_HUMIDITY8 0
 SENS_TEMP9 0
+SENS_HUMIDITY9 0
 }}}
 {{{
 #
@@ -173,5 +205,4 @@ SENS_PRESSURE 0
 SENS_WIND 0
 SENS_RAIN 0
 SENS_UV 0
-SENS_HUMIDITY 0
 }}}
