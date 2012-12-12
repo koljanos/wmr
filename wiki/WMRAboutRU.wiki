@@ -1,0 +1,37 @@
+#summary Софт для погодных станций Oregon Scientific (linux)
+#labels Featured,Phase-Deploy,Phase-Support,Phase-Implementation,Phase-QA
+
+= Зачем это? =
+
+WMR-Oregon преднозначе собирать данные с погодной станции и сохранять их для последующей выборки, обработки, визуализации и прогнозов.
+
+= Особенности =
+
+В отличии от немногочисленных "собратьев" работающиих с погодными станциями Oregon Scientific - компактный, работает демоном, данные пишет в SQL (sqlite3) и/или в файл, в текстовом формате.
+
+Позволяет корректировать погрешность датчиков, для построения визуальных графиков использует rrd-tool.
+
+Подходит для установки на роутеры, требует библиотек:
+libusb, libhid, libsqlite3
+
+На сайте есть готовая сборка под OpenWRT для RouteBoard 2xx (i386)
+
+= Поддерживает железо =
+
+Oregon Scientific LW301
+Oregon Scientific WMR88
+Oregon Scientific WMR100
+Oregon Scientific WMR200
+Oregon Scientific WMRS200
+Oregon Scientific RMS300 
+Oregon Scientific RMS600 
+Oregon Scientific I300 
+Oregon Scientific I600
+
+компактный, работает демоном, данные пишет в SQL (sqlite3) или в файл, позволяет корректировать погрешность датчиков, для построения визуальных графиков использует rrd-tool
+
+подходит для установки на роутеры, требует библиотек:
+libusb, libhid, libsqlite3
+
+на сайте есть готовая сборка под OpenWRT для RouteBoard 2xx (i386)
+
