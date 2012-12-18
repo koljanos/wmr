@@ -1,5 +1,5 @@
 #summary С2000-СП1.
-#labels Featured
+#labels Featured,Болид,С2000-СП1,Орион,RS485,Alarm
 
 = Alarm / События =
 {{{
@@ -20,6 +20,7 @@
  С2000-СП1, С2000-СП1 исп.01
  (http://www.bolid.ru/production/devices/devices_48.html)  
 }}}
+http://www.nkl.ru/support/wmr/oregon_img/BOLID_C2000_SP1.jpg
 {{{
 Блок расчитан на управление 4 силовыми линиями, по интерфейсу RS485, доступен  по цене.   
 }}}
