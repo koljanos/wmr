@@ -1,4 +1,4 @@
-#labels Featured,Phase-Requirements,Phase-Support,Phase-Implementation
+#labels Featured,Phase-Requirements,Phase-Support,Phase-Implementation,метеостанция,Блоксигнально-пусковой,С2000-СП1,С2000-СП1исп.01,погода,погоднаястанция,барометр,гигрометр,термометр,weather,прогнозпогоды,Болид,Bolid,weathersensor,Орион,weatheralarm,weatherstation,контрольвлажности,контрольтемпературы,контрольветра
 {{{
 #----------------------------------------------------------------------#
 # WMR config file for
@@ -84,6 +84,36 @@ RRDEXECPATH /usr/bin/rrdtool
 }}}
 {{{
 RRDSAVEPATH /var/weather/
+}}}
+{{{
+#
+# The full path to script rotating log/sql/rrd files
+# To logrotate, type: wmr_logrotate.sh -logrotate
+# or, insert cron job new line:
+# for every day:
+# 0 0 * * * * /usr/bin/wmr_logrotate.sh -logrotate
+# for every month:
+# 0 0 1 * * * /usr/bin/wmr_logrotate.sh -logrotate
+# for every year:
+# 0 0 1 1 * * /usr/bin/wmr_logrotate.sh -logrotate
+#
+}}}
+{{{
+LOGROTATEBIN /usr/bin/wmr_logrotate.sh
+}}}
+{{{
+#
+#
+# The full path to script alarm sensor execute
+# for detail - see script/wmr_alarm.sh
+# Format string send to script:
+# /path/to/script//wmr_alarm.sh 'SENSOR TYPE' 'NUM OF SENSOR' 'CURENT STATUS'
+# See script/controlling/C2000-CP1.php for controling 4 line from 'C2000-CP1'
+# 'Bolid' trademark (http://www.bolid.ru/production/devices/devices_48.html)
+#
+}}}
+{{{
+ALARMBIN /usr/bin/wmr_alarm.sh
 }}}
 {{{
 #
@@ -205,4 +235,120 @@ SENS_PRESSURE 0
 SENS_WIND 0
 SENS_RAIN 0
 SENS_UV 0
+}}}
+{{{
+#----------------------------------------------------------------------#
+# Alarm of sensor (exec /path/to/script/wmr_alarm.sh)
+# allowed as positive, or negative, for example: 28 or -9
+#----------------------------------------------------------------------#
+#
+# Main station indoor temperature/humidity sensor
+#
+}}}
+{{{
+ALARM_MIN_TEMP0 0
+ALARM_MAX_TEMP0 0
+ALARM_MIN_HUMIDITY0 0
+ALARM_MAX_HUMIDITY0 0
+}}}
+{{{
+#
+# Complected Outdoor temperature/humidity sensor
+#
+}}}
+{{{
+ALARM_MIN_TEMP1 0
+ALARM_MAX_TEMP1 0
+ALARM_MIN_HUMIDITY1 0
+ALARM_MAX_HUMIDITY1 0
+#
+# Other outdoor/indoor temperature/humidity sensor
+#
+}}}
+{{{
+ALARM_MIN_TEMP2 0
+ALARM_MAX_TEMP2 0
+ALARM_MIN_HUMIDITY2 0
+ALARM_MAX_HUMIDITY2 0
+}}}
+{{{
+#
+}}}
+{{{
+ALARM_MIN_TEMP3 0
+ALARM_MAX_TEMP3 0
+ALARM_MIN_HUMIDITY3 0
+ALARM_MAX_HUMIDITY3 0
+}}}
+{{{
+#
+}}}
+{{{
+ALARM_MIN_TEMP4 0
+ALARM_MAX_TEMP4 0
+ALARM_MIN_HUMIDITY4 0
+ALARM_MAX_HUMIDITY4 0
+}}}
+{{{
+#
+}}}
+{{{
+ALARM_MIN_TEMP5 0
+ALARM_MAX_TEMP5 0
+ALARM_MIN_HUMIDITY5 0
+ALARM_MAX_HUMIDITY5 0
+}}}
+{{{
+#
+}}}
+{{{
+ALARM_MIN_TEMP6 0
+ALARM_MAX_TEMP6 0
+ALARM_MIN_HUMIDITY6 0
+ALARM_MAX_HUMIDITY6 0
+}}}
+{{{
+#
+}}}
+{{{
+ALARM_MIN_TEMP7 0
+ALARM_MAX_TEMP7 0
+ALARM_MIN_HUMIDITY7 0
+ALARM_MAX_HUMIDITY7 0
+}}}
+{{{
+#
+}}}
+{{{
+ALARM_MIN_TEMP8 0
+ALARM_MAX_TEMP8 0
+ALARM_MIN_HUMIDITY8 0
+ALARM_MAX_HUMIDITY8 0
+}}}
+{{{
+#
+}}}
+{{{
+ALARM_MIN_TEMP9 0
+ALARM_MAX_TEMP9 0
+ALARM_MIN_HUMIDITY9 0
+ALARM_MAX_HUMIDITY9 0
+}}}
+{{{
+#
+# Other sensor data alarm
+#
+}}}
+{{{
+ALARM_MIN_PRESSURE 0
+ALARM_MAX_PRESSURE 0
+ALARM_MIN_WIND 0
+ALARM_MAX_WIND 0
+ALARM_MIN_RAIN 0
+ALARM_MAX_RAIN 0
+ALARM_MIN_UV 0
+ALARM_MAX_UV 0
+}}}
+{{{
+#
 }}}
