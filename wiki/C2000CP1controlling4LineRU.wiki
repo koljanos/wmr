@@ -13,11 +13,11 @@
  события передаются следующие параметры: 
 }}}
 {{{
-/path/to/script/wmr_alarm.sh 'ТИП ДАТЧИКА' 'НОМЕР ДАТЧИКА' 'ТЕКУЩИЕ ПОКАЗАНИЯ'  
+/path/to/script/wmr_alarm.sh 'ТИП ДАТЧИКА' 'НОМЕР ДАТЧИКА' 'ТЕКУЩИЕ ПОКАЗАНИЯ' 'МАКС/МИН'  
 	например:
-/path/to/script/wmr_alarm.sh TEMP 1 -22  
-/path/to/script/wmr_alarm.sh PRESSURE 0 778
-/path/to/script/wmr_alarm.sh HUMIDITY 3 12  
+/path/to/script/wmr_alarm.sh TEMP 1 -22 MIN
+/path/to/script/wmr_alarm.sh PRESSURE 0 778 MAX
+/path/to/script/wmr_alarm.sh HUMIDITY 3 12 MIN 
 }}}
 {{{
 Добавлен протокол и библиотека управления Блоком сигнально-пусковым
