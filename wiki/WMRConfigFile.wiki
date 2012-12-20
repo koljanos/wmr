@@ -103,6 +103,14 @@ LOGROTATEBIN /usr/bin/wmr_logrotate.sh
 }}}
 {{{
 #
+# Allows Alarm event check enable or disable 
+# Enable: 1 Disable: 0
+#
+}}}
+{{{
+ALARMENABLE 1
+}}}
+{{{
 #
 # The full path to script alarm sensor execute
 # for detail - see script/wmr_alarm.sh
@@ -110,7 +118,6 @@ LOGROTATEBIN /usr/bin/wmr_logrotate.sh
 # /path/to/script//wmr_alarm.sh 'SENSOR TYPE' 'NUM OF SENSOR' 'CURENT STATUS'
 # See script/controlling/C2000-CP1.php for controling 4 line from 'C2000-CP1'
 # 'Bolid' trademark (http://www.bolid.ru/production/devices/devices_48.html)
-#
 }}}
 {{{
 ALARMBIN /usr/bin/wmr_alarm.sh
