@@ -14,15 +14,20 @@
 }}}
 {{{
 /path/to/script/wmr_alarm.sh 'ТИП ДАТЧИКА' 'НОМЕР ДАТЧИКА' 'ТЕКУЩИЕ ПОКАЗАНИЯ' 'МАКС/МИН'  
+
 	например:
+
 /path/to/script/wmr_alarm.sh TEMP 1 -22 MIN
 /path/to/script/wmr_alarm.sh PRESSURE 0 778 MAX
 /path/to/script/wmr_alarm.sh HUMIDITY 3 12 MIN 
 
 Контроль питания реализуется типом сенсора 'BATTERY', при этом скрипту обработки
 событий передаются следуюшие параметры:
+
     /path/to/script/wmr_alarm.sh BATTERY 'NUM SENSOR' 'VALUE SENSOR' 'TYPE SENSOR'
+
     например:
+
     /path/to/script/wmr_alarm.sh BATTERY 1 7 TEMP
     /path/to/script/wmr_alarm.sh BATTERY 0 11 MAIN
 
