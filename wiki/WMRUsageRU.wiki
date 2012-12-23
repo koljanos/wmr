@@ -40,8 +40,17 @@ Oregon Scientific под linux - имеет преимущества:
   * libsqlite3 (http://www.sqlite.org/download.html),
   * rrd-toots (опционально) (http://oss.oetiker.ch/rrdtool/download.en.html)
 
+Домашняя страничка программы wmr-oregon:
+http://code.google.com/p/wmr/
+
+Документация, обновления, модули:
+http://www.nkl.ru/support/wmr/
+
 На сайте есть готовая сборка под  OpenWRT для RouteBoard 2xx (i386)
 http://www.nkl.ru/support/wmr/wmr-oregon-OpenWrt_i386_bin.tar.gz
+
+Последняя версия:
+http://www.nkl.ru/support/wmr/wmr-oregon-latest.tar.gz
 
 Последняя версия:
 http://www.nkl.ru/support/wmr/wmr-oregon-latest.tar.gz
@@ -108,6 +117,15 @@ Alarm / Управление по событиям
  ключ -c <значение> = полный путь и имя конфигурационного файла, 
 		      обычно /etc/wmr.conf, по умолчанию ./wmr.conf .
 
+	/usr/bin/wmr-oregon -l /tmp/wmr
+
+ ключ -l <значение> = полный путь к файлу блокировки запущенной программы
+		      в режиме демона, имя файла блокировки файла: 
+		      wmr-oregon.lock, в нем содержится пид запущенной 
+		      программы, узнать пид можно командой: 
+		      cat /var/lock/wmr-oregon.lock	
+		      по умолчанию путь для файла блоктровки: /var/lock
+
 	/usr/bin/wmr-oregon -d -c /etc/wmr.conf
 
  ключ -d = запустить в режиме демона, при этом режим вывода отладочной 
@@ -124,6 +142,10 @@ Alarm / Управление по событиям
 	   о программе и ключах запуска. После отображение информации 
 	   происходит выход из программы.
 	   Ключ -c <значение> должен быть установлен до ключа -v
+
+ ключ -k = выхоод запущенной копии wmr-oregon в режиме демона,
+	   иными словами - завершить работу программы, аналогично:
+	   kill -TERM `pidof wmr-oregon`
 
 Для автозагрузки, применить указанные ниже комманды, это пример, конкретное
 расположение и названия файлов зависит от дистрибутива:
@@ -145,4 +167,7 @@ Alarm / Управление по событиям
 
 Для остановки программы запущенной в реждиме демона, выполнить:  
 	kill -TERM `pidof wmr-oregon`
+	или
+	/usr/bin/wmr-oregon -k
+
 }}}
