@@ -11,12 +11,19 @@
 #
 # To run, comand line, use flags:
 #	-c <value> 	= path and name to config file, sample /etc/wmr.conf .
+#       -l <value>      = path directory to lock file /tmp/wmr, name of lock file
+#		  generated automation, default: wmr-oregon.lock 
+#		  default: /var/lock
+#		  for get pid of runing programm, use:
+#		  cat /var/lock/wmr-oregon.lock
 #	-s		= print all info & debug info to local syslog server.
 #	-d		= start is a daemon server mode (loging only syslog).
 #			  flag -s automatic enable.
 #	-v 		= print all config token from this config file.
 #			  this options require flag -c <path/to/config/name.ext>
 #			  before.
+#       -k              = kill memory copy programm wmr-oregon running in daemon mode.
+#               	  Analog: kill -TERM `pidof wmr-oregon`
 #
 #----------------------------------------------------------------------#
 #
