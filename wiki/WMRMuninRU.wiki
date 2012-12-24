@@ -1,9 +1,12 @@
 #summary WMR Munin integrate.
+#labels Featured,Phase-Design,Phase-Support,Phase-Implementation,munin,wmr,weather
 
 = Интеграция плагинов WMR в munin =
 
-Чтобы активировать модули WMR, нужно создать символьную ссылку, или перенести 
-файлы плагинов в каталоге plugins и перезапустить демон Munin. 
+Чтобы активировать модули WMR, нужно создать символьную ссылку, или перенести файлы плагинов в каталоге plugins и перезапустить демон Munin.
+
+Плагины для munin находятся в архиве, в директории script/munin
+
 
 
 = MUNIN ПЛАГИН ЛИСТ: =
