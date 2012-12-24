@@ -1,5 +1,5 @@
 #summary WMR Munin integrate.
-#labels Featured,Phase-Design,Phase-Support,Phase-Implementation,munin,wmr,weather
+#labels Featured,Phase-Design,Phase-Support,Phase-Implementation,munin,RGR126,weather,погоднаястанция,метеостанция,OregonScientific,мониторинг,wmr88,wmr200,wmrs200,wmr100,RMS300,RMS600,UVN800,THWR288,LW301,THGN801,THGR810,WGR800,PCR800
 
 = Интеграция плагинов WMR в munin =
 
