@@ -27,3 +27,5 @@
     * wmr_uv		- Датчик ультрафиолетового излучения UVN800
     * wmr_water		- Датчик температуры воды THWR288
 }}}
+
+[http://www.nkl.ru/support/wmr/wmr-munin.tar.gz Download latest wmr-munin]
