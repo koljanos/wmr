@@ -26,6 +26,7 @@
     * wmr_rain		- Датчик осадков PCR800,RGR126 или иные ...
     * wmr_uv		- Датчик ультрафиолетового излучения UVN800
     * wmr_water		- Датчик температуры воды THWR288
+    * wmr_*_X           - Дополнтельные термо-гигро датчики.
 }}}
 
 [http://www.nkl.ru/support/wmr/wmr-munin.tar.gz Download latest wmr-munin]
