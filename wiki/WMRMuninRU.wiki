@@ -30,3 +30,4 @@
 }}}
 
 [http://www.nkl.ru/support/wmr/wmr-munin.tar.gz Download latest wmr-munin]
+[http://sourceforge.net/projects/munin/files/ munin - visualisation monitor]
