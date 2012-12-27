@@ -1,5 +1,5 @@
 #summary интеграция WMR и Cacti
-#labels Featured,Phase-Implementation,Phase-Support,Phase-Design
+#labels Featured,Phase-Implementation,Phase-Support,Phase-Design,cacti,wmr,oregon,OregonScientific,Scientific
 
 = Активировация модулей WMR в Cacti =
 
