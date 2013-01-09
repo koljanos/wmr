@@ -23,6 +23,7 @@
 #include "wmr_weather.h"
 
 char err_string[1024];
+extern int errno;
 
 #if defined(GENERAL_MAIN)
 // wmr.c
