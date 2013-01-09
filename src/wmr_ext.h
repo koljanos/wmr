@@ -21,6 +21,7 @@
 #define WMR_EXIT_KILL		9
 
 #include "wmr_weather.h"
+#include <errno.h>
 
 char err_string[1024];
 extern int errno;
