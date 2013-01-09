@@ -5,8 +5,7 @@ Depended libs required:
    - libusb (needed to install) http://www.libusb.org/"
    - libsqlite3 (needed to install)  http://www.sqlite.org/download.html"
 
-
-Enable full debug option, compile width key -DDEBUG
+Enable full debug option, compile width added key -DDEBUG
 Enable language support: LANG_RU LANG_EN
 Run ./configure and select you support code page, or 
 edit ./Makefile.inc, CFLAGS +=  -DLANG_XXX_XXX -DDEBUG
@@ -33,7 +32,6 @@ Russian code page support:
 Other national language:
     - please, write and submit me...
       view to example: src/lang/lang_* 
-
 
 Run to compile shared library support:
     ./configure
