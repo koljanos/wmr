@@ -1,0 +1,194 @@
+#!/bin/sh
+# Create compile configuration for Weather TXT/SQL/RRD/SNMP Logger 
+
+DEPEND="usb hid sqlite3"
+HPATH="/usr/local/lib/_include_ /usr/local/include /usr/include"
+LPATH="/usr/local/lib/_compile_ /usr/local/lib /usr/lib"
+
+echo ""
+echo "Oregon Scientific WMR100/200/WMRS200/I300/I600/RMS600 USB protocol logger."
+echo "Latest download URL: http://www.nkl.ru/support/wmr/"
+echo "Global download URL: http://code.google.com/p/wmr/"
+echo ""
+echo "Configure headers and lib for compiling wmr-oregon for you platform ..."
+
+INCPATH=""
+INCFILE=""
+LIBPATH=""
+
+warning()
+{
+    echo ""
+    echo "Please download and install depended library:"
+    echo "   - libhid (needed to install) http://libhid.alioth.debian.org/"
+    echo "   - libusb (needed to install) http://www.libusb.org/"
+    echo "   - libsqlite3 (needed to install)  http://www.sqlite.org/download.html"
+    echo ""
+}
+
+for i in ${DEPEND}
+do
+FOKH="0"
+FOKL="0"
+HOK=""
+LOK=""
+
+    echo ""
+    echo "------------------------------------"
+    echo "- Find library dependes: lib"${i}
+    for n in ${HPATH}
+    do
+	if [ "${FOKH}" == "1" ]; then
+	    break
+	fi
+
+	if   [ -f "${n}/${i}.h" ]; then
+		HOK=${n}"/"${i}".h"
+        	INCFILE=${INCFILE}" "${n}"/"${i}".h"
+		INCPATH=${INCPATH}"\n-I"${n}
+		FOKH="1"
+	elif [ -f "${n}/lib${i}/${i}.h" ]; then
+		HOK=${n}"/lib"${i}"/"${i}".h"
+                INCFILE=${INCFILE}" "${n}"/lib"${i}"/"${i}".h"
+		INCPATH=${INCPATH}"\n-I"${n}"/lib"${i}
+		FOKH="1"
+	else
+		FPATH=`find ${n} -iname ${i}.h | tail -n 1`
+		if [ "${FPATH}" != "" ] ; then
+		    HOK=${FPATH}
+            	    INCFILE=${INCFILE}" "${FPATH}
+		    INCPATH=${INCPATH}"\n-I"`echo ${FPATH} | sed -e 's/\/'${i}'.h//g'`
+		    FOKH="1"
+		fi
+        fi
+
+	if [ "${FOKH}" == "1" ]; then
+	    echo "- Found header: " ${HOK}
+	fi
+    done
+
+	if [ "${FOK}" == "0" ]; then
+	    echo ""
+	    echo "Error configure: path to find header file " ${i}".h - not found!"
+	    echo "Library lib"${i}" not installed, or not find it .."
+	    warning
+    	    exit 1
+	fi
+
+    for n in ${LPATH}
+    do
+	if [ "${i}" == "usb" ]; then
+	    z="lib"${i}"-0.1.so.4"
+	else
+	    z="lib"${i}".so.0"
+	fi
+
+	if [ "${FOKL}" == "1" ]; then
+	    break
+	fi
+
+	if   [ -f "${n}/${z}" ]; then
+		LOK=${n}"/"${z}
+		LIBPATH=${LIBPATH}"\n-L"${n}
+		FOKL="1"
+	elif [ -f "${n}/lib${i}/${z}" ]; then
+		LOK=${n}"/lib"${i}"/"${z}
+		LIBPATH=${LIBPATH}"\n-L"${n}"/lib"${i}
+		FOKL="1"
+	else
+		FPATH=`find ${n} -iname ${z} | tail -n 1`
+		if [ "${FPATH}" != "" ] ; then
+		    LOK=${FPATH}
+		    LIBPATH=${LIBPATH}"\n-L"`echo ${FPATH} | sed -e 's/\/'${z}'//g'`
+		    FOKL="1"
+		fi
+        fi
+
+	if [ "${FOKL}" == "1" ]; then
+	    echo "- Found library: " ${LOK}
+	fi
+
+    done
+
+	if [ "${FOKL}" == "0" ]; then
+	    echo ""
+	    echo "Error configure: path to find library file " ${z}" - not found!"
+	    echo "Library lib${i} not installed, or not find it .."
+	    warning
+    	    exit 1
+	fi
+
+done
+
+INCPATH=`echo -e ${INCPATH} | sort | uniq`
+LIBPATH=`echo -e ${LIBPATH} | sort | uniq`
+
+echo "CFLAGS += " ${INCPATH} > Makefile.inc
+echo "LIBS   += " ${LIBPATH} >> Makefile.inc
+
+echo "/* create "`date`" */" > config.h
+for i in ${INCFILE}
+do
+    echo "#include \""${i}"\"" >> config.h
+done
+
+sed -i -e 's/COMPILE = i386/COMPILE = i686/g' ./Makefile
+
+echo ""
+echo "Configuration ok, write config file: Makefile.inc and config.h"
+echo "Edit manualy its needed ..."
+echo ""
+echo "Select you code page and press :"
+echo "1 - English language"
+echo "2 - Russian language codepage CP866"
+echo "3 - Russian language codepage CP1251"
+echo "4 - Russian language codepage KOI8-R"
+echo "5 - Russian language codepage UTF-8"
+echo "0 - Exit from configure"
+echo ""
+
+read tmp
+if [ "$tmp" == "1" ]; then
+    echo "CFLAGS +=  -DLANG_ENG" >> Makefile.inc
+elif [ "$tmp" == "2" ]; then
+    echo "CFLAGS +=  -DLANG_RU_CP866" >> Makefile.inc
+elif [ "$tmp" == "3" ]; then
+    echo "CFLAGS +=  -DLANG_RU_CP1251" >> Makefile.inc
+elif [ "$tmp" == "4" ]; then
+    echo "CFLAGS +=  -DLANG_RU_KOI8" >> Makefile.inc
+elif [ "$tmp" == "5" ]; then
+    echo "CFLAGS +=  -DLANG_RU_UTF8" >> Makefile.inc
+elif [ "$tmp" == "0" ]; then
+    echo "Edit manualy: Makefile.inc"
+    echo ""
+    exit 0
+else
+    echo "read file INSTALL please ..."
+    echo "exit."
+fi
+
+echo "" >> Makefile.inc
+
+echo ""
+echo "Press :"
+echo "1 - Run to compile singele file wmrd: make single"
+echo "2 - Run to compile shared library support: make all"
+echo "0 - Exit from configure"
+echo ""
+
+read tmp
+if [ "$tmp" == "1" ]; then
+    make single
+elif [ "$tmp" == "2" ]; then
+    make all 
+elif [ "$tmp" == "0" ]; then
+    echo "run manualy: make"
+    echo "After compile ok, run: make install"
+    echo ""
+    exit 0
+else
+    echo "read file INSTALL please ..."
+    echo "exit."
+fi
+
+exit 0

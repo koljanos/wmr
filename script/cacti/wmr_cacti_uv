@@ -1,0 +1,48 @@
+#!/bin/sh
+#
+
+: << =cut
+
+=head1 NAME
+
+wmr_uv - Plugin to monitor WMR weather UV sensors UVN800
+wmr_uv
+
+=head1 CONFIGURATION
+
+The following enviroment variables are used by this plugin:
+
+ wmrconf - full path to config file to use. (Default /etc/wmr/wmr.conf)
+
+=head1 USAGE
+
+Place the plugin in the /etc/munin/plugins/ directory, and make it
+executable.
+
+=head1 AUTHOR
+
+Oregon Scientific WMR100/200/WMRS200/I300/I600/RMS600 protocol.
+Latest download URL: http://www.nkl.ru/support/wmr/
+Global download URL: http://code.google.com/p/wmr/
+
+Copyright (C) 2012 @Den68 <idg68@yandex.ru>
+
+=cut
+
+wmr_uv=${0##*/}
+sensor=${wmr_uv##*_}
+wmrconf=${wmrconf:-/etc/wmr/wmr.conf}
+autoconfst=0
+
+        if [ ! -x "`which sqlite3`" ]; then
+                echo "no '(sqlite3 not found)'"
+                exit 0
+	fi
+
+	if [ ! -f $wmrconf ]; then
+                echo "no '(" $wmrconf " not found)'"
+                exit 0
+	fi
+
+SQLBASEPATH=`cat $wmrconf | grep SQLBASEPATH | awk '{ print $2 }'`
+echo -n "uv_index:"`sqlite3 -column ${SQLBASEPATH} "select uvindex from UV ORDER BY tdate DESC LIMIT 1"`

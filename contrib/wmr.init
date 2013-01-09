@@ -1,0 +1,104 @@
+#! /bin/bash
+#
+# chkconfig: 2345 9 91
+# description: start and stop WMR - Weather Logger for (c) Oregon Scientific USB protocol
+# support all USB oregon device (WMR100/200/WMRS200/I300/I600/RMS600 ..)
+#
+
+WMRBIN="/usr/bin/wmrd"
+WMRCNF="/etc/wmr/wmr.conf"
+WMRLCK="/var/lock/subsys/wmrd"
+
+#
+#
+
+PATH=/bin:/sbin:/usr/bin:/usr/sbin
+
+# Source function library.
+if [ -f /etc/init.d/functions ]; then
+    . /etc/init.d/functions
+elif [ -f /etc/rc.d/init.d/functions ] ; then
+    . /etc/rc.d/init.d/functions
+else
+    exit 0
+fi
+
+[ -f ${WMRBIN} ] || exit 0
+[ -f ${WMRCNF} ] || exit 0
+RETVAL=0
+
+function start()
+{
+    # don't start again if it's already started
+    [ ! -f ${WMRLCK} ] || exit 0
+
+    INSMODHID=`lsmod | grep usbhid`
+    if [ "$INSMODHID" == "" ] ; 
+    then
+	echo -n "Insert kernel module usbhid.ko: "
+	insmod usbhid
+    fi
+
+    echo -n "Starting WMR Oregon logger: "
+    rm -f /tmp/WMR*.lock
+    # daemon ${WMRBIN} -s -c ${WMRCNF}
+    ${WMRBIN} -d -s -c ${WMRCNF}
+    RETVAL=$?
+    if [ $RETVAL -eq 0 ] ; then
+       touch ${WMRLCK}
+    fi
+}
+
+function stop()
+{
+    if [ -f ${WMRLCK} ] ; then
+       echo -n "Stopping WMR Oregon logger:"
+       # killall wmrd
+	kill -TERM `pidof wmrd`
+       RETVAL=$?
+       if [ $RETVAL -eq 0 ] ; then
+          rm -f ${WMRLCK}
+       fi
+    fi
+}
+
+function restart()
+{
+    stop
+    start
+}
+
+function condrestart()
+{
+    if [ -f ${WMRLCK} ] ; then
+        restart
+    fi
+}
+
+function status()
+{
+    echo `pidof wmrd`
+}
+
+case "$1" in 
+    start)
+       start
+       ;;
+    stop)
+       stop
+       ;;
+    restart)
+       restart
+       ;;
+    condrestart)
+       condrestart
+       ;;
+    status)
+       status
+       ;;
+    *)
+       echo $"Usage: $0 {start|stop|restart|status|condrestart}"
+       exit 1
+esac
+
+exit 0
