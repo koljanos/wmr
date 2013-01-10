@@ -34,10 +34,10 @@ void wmr_handle_temp(WMR *wmr, WEATHER *weather, unsigned char *data, int len)
 {
     int sensor, st, smiley, trend, humidity, battery;
     float temp, dewpoint;
+    double rrdupd[3];
     char *smileyTxt = "";
     char *trendTxt = "";
     char msg[200];
-    double rrdupd[3];
 
     battery = (data[0] & 0x40) >> 2;
     sensor = data[2] & 0x0f;
@@ -131,9 +131,9 @@ void wmr_handle_temp(WMR *wmr, WEATHER *weather, unsigned char *data, int len)
     {
 	if(wmr->rrdEmb == 1)
 	{
-	    rrdupd[0] = temp;
-	    rrdupd[1] = dewpoint;
-	    rrdupd[2] = humidity;
+	    rrdupd[0] = (double)temp;
+	    rrdupd[1] = (double)dewpoint;
+	    rrdupd[2] = (double)humidity;
 	    rrd_update_int ( wmr->rrdtool_exec_path, wmr->rrdtool_save_path, 0, sensor, rrdupd, ( sizeof(rrdupd) / sizeof(double) ), &wmr->rrdEn, wmr->syslogEn, wmr->debugEn );
 	} else {
 	    sprintf ( msg, WMR_RRD_UPDATE[0], temp, dewpoint, humidity);
@@ -234,8 +234,8 @@ void wmr_handle_pressure(WMR *wmr, WEATHER *weather, unsigned char *data, int le
 	{
 	    if(wmr->rrdEmb == 1)
 	    {
-		rrdupd[0] = pressure;
-		rrdupd[1] = alt_pressure;
+		rrdupd[0] = (double)pressure;
+		rrdupd[1] = (double)alt_pressure;
 		rrd_update_int ( wmr->rrdtool_exec_path, wmr->rrdtool_save_path, 1, 0, rrdupd, ( sizeof(rrdupd) / sizeof(double) ), &wmr->rrdEn, wmr->syslogEn, wmr->debugEn );
 	    } else {
 		sprintf ( msg, WMR_RRD_UPDATE[1], pressure, alt_pressure);
@@ -355,10 +355,10 @@ void wmr_handle_wind(WMR *wmr, WEATHER *weather, unsigned char *data, int len)
     {
 	if(wmr->rrdEmb == 1)
 	{
-	    rrdupd[0] = wind_speed;
-	    rrdupd[1] = avg_speed;
-	    rrdupd[2] = wind_dir;
-	    rrdupd[3] = wind_chill;
+	    rrdupd[0] = (double)wind_speed;
+	    rrdupd[1] = (double)avg_speed;
+	    rrdupd[2] = (double)wind_dir;
+	    rrdupd[3] = (double)wind_chill;
 	    rrd_update_int ( wmr->rrdtool_exec_path, wmr->rrdtool_save_path, 2, 0, rrdupd, ( sizeof(rrdupd) / sizeof(double) ), &wmr->rrdEn, wmr->syslogEn, wmr->debugEn );
 	} else {
 	    sprintf ( msg, WMR_RRD_UPDATE[2], wind_speed, avg_speed, wind_dir, wind_chill);
@@ -453,10 +453,10 @@ void wmr_handle_rain(WMR *wmr, WEATHER *weather, unsigned char *data, int len)
     {
 	if(wmr->rrdEmb == 1)
 	{
-	    rrdupd[0] = rate;
-	    rrdupd[1] = hour;
-	    rrdupd[2] = day;
-	    rrdupd[3] = total;
+	    rrdupd[0] = (double)rate;
+	    rrdupd[1] = (double)hour;
+	    rrdupd[2] = (double)day;
+	    rrdupd[3] = (double)total;
 	    rrd_update_int ( wmr->rrdtool_exec_path, wmr->rrdtool_save_path, 3, sensor, rrdupd, ( sizeof(rrdupd) / sizeof(double) ), &wmr->rrdEn, wmr->syslogEn, wmr->debugEn );
 	} else {
 	    sprintf ( msg, WMR_RRD_UPDATE[3], rate, hour, day, total);
@@ -538,7 +538,7 @@ void wmr_handle_water(WMR *wmr, WEATHER *weather, unsigned char *data, int len)
     {
 	if(wmr->rrdEmb == 1)
 	{
-	    rrdupd[0] = temp;
+	    rrdupd[0] = (double)temp;
 	    rrd_update_int ( wmr->rrdtool_exec_path, wmr->rrdtool_save_path, 4, sensor, rrdupd, ( sizeof(rrdupd) / sizeof(double) ), &wmr->rrdEn, wmr->syslogEn, wmr->debugEn );
 	} else {
 	    sprintf ( msg, WMR_RRD_UPDATE[4], temp);
@@ -604,7 +604,7 @@ void wmr_handle_uv(WMR *wmr, WEATHER *weather, unsigned char *data, int len)
     {
 	if(wmr->rrdEmb == 1)
 	{
-	    rrdupd[0] = uvindex;
+	    rrdupd[0] = (double)uvindex;
 	    rrd_update_int ( wmr->rrdtool_exec_path, wmr->rrdtool_save_path, 5, 0, rrdupd, ( sizeof(rrdupd) / sizeof(double) ), &wmr->rrdEn, wmr->syslogEn, wmr->debugEn );
 	} else {
 	    sprintf ( msg, WMR_RRD_UPDATE[5], uvindex);
@@ -674,9 +674,9 @@ void wmr_handle_mainu(WMR *wmr, WEATHER *weather, unsigned char *data, int len)
     {
 	if(wmr->rrdEmb == 1)
 	{
-	    rrdupd[0] = battery;
-	    rrdupd[1] = powered;
-	    rrdupd[2] = level;
+	    rrdupd[0] = (double)battery;
+	    rrdupd[1] = (double)powered;
+	    rrdupd[2] = (double)level;
 	    rrd_update_int ( wmr->rrdtool_exec_path, wmr->rrdtool_save_path, 6, 0, rrdupd, ( sizeof(rrdupd) / sizeof(double) ), &wmr->rrdEn, wmr->syslogEn, wmr->debugEn );
 	} else {
 	    sprintf ( msg, WMR_RRD_UPDATE[6], battery, powered, level);
