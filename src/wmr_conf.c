@@ -693,6 +693,8 @@ int read_cnfile(WMR *wmr, WEATHER *weather)
       continue;
     } else if( strncasecmp( "SENS_WATER_NUM", ptr,14  ) == 0 ) {
       continue;
+    } else if( strncasecmp( "GRAPHPATH", ptr,9  ) == 0 ) {
+      continue;
 
     } else {
       sprintf ( err_string, WMR_CONF_C_TXT_4, wmr->conf_path, ptr );
