@@ -1,6 +1,6 @@
 #
 #
-COMPILE = i386
+COMPILE = i686
 
 VERSION = 0.4
 
@@ -19,7 +19,24 @@ CFLAGS  = -I${TOOLCHAINPATH}/include -I/usr/loca/lib/_include_
 CFLAGS += -std=gnu99  -Wall -D_GNU_SOURCE
 LIBS    = -L/usr/local/lib/${TOOLCHAINSYS} -L/usr/lib/wmr -L${TOOLCHAINPATH}/lib
 LDFLAGS = -lusb -lhid -lsqlite3 -lpthread -lm
-else
+endif
+
+ifeq ($(COMPILE),win32)
+##
+## for Win32 mingw
+##
+DDD = compile for Win32 mingw
+TOOLCHAINPATH=/var/INSTALL/toolchain/mingw
+TOOLCHAINSYS=win32
+PLATFORM=i386-mingw32-
+CC	= ${TOOLCHAINPATH}/bin/gcc
+CFLAGS  = -I${TOOLCHAINPATH}/include -I/usr/loca/lib/${TOOLCHAINSYS}/include
+CFLAGS += -std=gnu99  -Wall -D_GNU_SOURCE
+LIBS    = -L/usr/local/lib/${TOOLCHAINSYS} -L/usr/lib/wmr -L${TOOLCHAINPATH}/lib
+LDFLAGS = -lusb -lhid -lsqlite3
+endif
+
+ifeq ($(COMPILE),i686)
 ##
 ## for i686 Linux
 ##
@@ -30,6 +47,7 @@ LIBS	= -L/usr/local/lib -L-L/usr/lib
 CFLAGS  = -I/usr/local/include -I/usr/include
 LDFLAGS = -lusb -lhid -lsqlite3 -lpthread
 endif
+
 
 include Makefile.inc
 
