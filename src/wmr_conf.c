@@ -683,6 +683,17 @@ int read_cnfile(WMR *wmr, WEATHER *weather)
       wmr->sv_uv = atoi(ptr);
       continue;
 
+    } else if( strncasecmp( "SENS_TEMP_NUM", ptr,13  ) == 0 ) {
+      continue;
+    } else if( strncasecmp( "SENS_WIND_NUM", ptr,13  ) == 0 ) {
+      continue;
+    } else if( strncasecmp( "SENS_RAIN_NUM", ptr,13  ) == 0 ) {
+      continue;
+    } else if( strncasecmp( "SENS_UV_NUM", ptr,11  ) == 0 ) {
+      continue;
+    } else if( strncasecmp( "SENS_WATER_NUM", ptr,14  ) == 0 ) {
+      continue;
+
     } else {
       sprintf ( err_string, WMR_CONF_C_TXT_4, wmr->conf_path, ptr );
       syslog_msg (wmr->syslogEn, err_string);
