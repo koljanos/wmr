@@ -49,10 +49,10 @@ WEATHER *weather_new( int seln, key_t shm_key, char * fname, int debugEn )
 		    perror("- ftok ");
 		    exit(WMR_EXIT_FAILURE);
 		}
-                if ( (shmID = shmget( shmKey, sizeof(WEATHER), 0666 | IPC_CREAT | IPC_EXCL )) < 0 )
-                // if ( (shmID = shmget( shmKey, sizeof(WEATHER), 0666 | IPC_CREAT )) < 0 )
+                if ( (shmID = shmget( shmKey, sizeof(WEATHER), 0666 | IPC_CREAT )) < 0 )
+                // if ( (shmID = shmget( shmKey, sizeof(WEATHER), 0666 | IPC_CREAT | IPC_EXCL )) < 0 )
                 {
-                    printf (WMR_UTIL_C_TXT_2, shm_key );
+                    printf (WMR_UTIL_C_TXT_2, seln, shmKey, shmID );
 		    perror("- shmget ");
 
 		    if ( shmID == -1 )
@@ -82,7 +82,7 @@ WEATHER *weather_new( int seln, key_t shm_key, char * fname, int debugEn )
                 if ( (shmID = shmget( shm_key, sizeof(WEATHER), 0666 )) < 0 )
                 //if ( (shmID = shmget( shm_key, 0, 0666 )) < 0 )
                 {
-                    printf (WMR_UTIL_C_TXT_6, shm_key);
+                    printf (WMR_UTIL_C_TXT_6, seln, shm_key, shmID);
 		    perror("- shmget ");
                     exit(WMR_EXIT_FAILURE);
                 }
