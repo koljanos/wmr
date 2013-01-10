@@ -58,7 +58,7 @@
 #define WMR_SENSOR_C_TXT_2 "- WMR: wind packet is bogus!\n"
 #define WMR_UTIL_C_TXT_1 "- WMR: (weather identifer shared memory) initialization failed\n\n"
 #define WMR_UTIL_C_TXT_2 "- WMR: (weather data shared memory) initialization failed\n- Primary shm key %d\n\n"
-#define WMR_UTIL_C_TXT_3 "- WMR: shmID = %d\nRestart please ...\n"
+#define WMR_UTIL_C_TXT_3 "- WMR: shmID = %d\nRestart please ...\n\n"
 #define WMR_UTIL_C_TXT_4 "- WMR: (weather data shared memory) attached failed\n- Primary shm key %d\n\n"
 #define WMR_UTIL_C_TXT_5 "- WMR: (weather data shared memory) bad initialization key\n\n"
 #define WMR_UTIL_C_TXT_6 "- WMR: (weather data shared memory) initialization failed\n- Child shm key %d\n\n"
