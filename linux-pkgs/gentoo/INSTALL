@@ -9,11 +9,11 @@ To install it to Gentoo you have 2 chooses:
    - to uninstall - run 'ebuild <ebuild file> unmerge'
 
 2. Install it using an overlay manager.
-   - add to list of overlays this overlay.
+   - add to the list of overlays this overlay.
 	Example for 'layman':
 	    # nano /etc/layman/layman.cfg
 		    overlays  : http://www.gentoo.org/proj/en/overlays/repositories.xml
-	    +       		https://wmr.googlecode.com/svn/linux-pkgs/gentoo/distfiles/layman/wmr-overlay.xml
+	    +       		https://wmr.googlecode.com/svn/linux-pkgs/gentoo/wmr-oregon-overlay.xml
    - add this overlay to the system.
 	Example for 'layman':
 	    # layman -L; layman -a wmr-oregon
