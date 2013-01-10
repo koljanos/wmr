@@ -29,7 +29,9 @@
 #if defined(GENTOO_HACK)
 extern int errno;
 #endif
+
 #include <errno.h>
+
 #if defined(GENTOO_HACK)
 extern int error_intr;
 #endif
