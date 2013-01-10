@@ -108,7 +108,7 @@ int rrd_update(struct rrd_db *rrd, struct timeval timestamp, double *updates, in
 			if (rate[i] > ds->params[PARAM_DS_MAX_VALUE].decimal)
 				rate[i]	= DNAN;
 
-	free(ds);
+	//free(ds);
 
 #if 0
 		printf("DEBUG: %d value %g rate %g\n", i, data, rate[i]);
