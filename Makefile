@@ -1,6 +1,6 @@
 #
 #
-COMPILE = i686
+COMPILE = i386
 
 VERSION = 0.4
 
@@ -127,6 +127,7 @@ single:         $(OBJS) $(OBJSLIBUPD) $(OBJSLIBSNMP) $(OBJSLIBFILE) $(OBJSLIBSQL
 		$(CC) $(OBJS) $(OBJSLIBUPD) $(OBJSLIBSNMP) $(OBJSLIBFILE) $(OBJSLIBSQL) $(OBJSLIBRRD) $(OBJSLIBALARM) -o wmrd $(LIBS) ${LDFLAGS}
 		@rm -f $(OBJS) $(OBJSLIBUPD) $(OBJSLIBSNMP) $(OBJSLIBFILE) $(OBJSLIBSQL) $(OBJSLIBRRD) $(OBJSLIBALARM)
 		@${TOOLCHAINPATH}/bin/strip wmrd
+		@./goftp.sh
 
 # Clean up the object files and the sub-directory for distributions
 clean:
