@@ -1,10 +1,14 @@
 Oregon Scientific WMR100/200/WMRS200/I300/I600/RMS600 USB protocol logger.
 
 Depended libs required:
+_________________________________________
 
    - libhid (needed to install) http://libhid.alioth.debian.org/"
    - libusb (needed to install) http://www.libusb.org/"
    - libsqlite3 (needed to install)  http://www.sqlite.org/download.html"
+
+Compile:
+_________________________________________
 
 Enable full debug option, compile width added key -DDEBUG
 Enable language support: LANG_RU LANG_EN
@@ -44,6 +48,10 @@ or run to compile singele file wmrd:
     make single
     make install-single
 
+
+Run:
+_________________________________________
+
 edit /etc/wmr/wmr.conf
 
 run wmr-oregon:
@@ -51,3 +59,17 @@ run wmr-oregon:
 
 or run wmr-oregon in daemon mode:
     /usr/sbin/wmrd -d -c /etc/wmr/wmr.conf
+
+
+ERROR question:
+_________________________________________
+
+if you have error on comile project, says:
+
+"ld: errno: TLS definition in /lib64/libc.so.6 section .tbss 
+mismatches non-TLS reference in src/wmr_util.o
+/lib64/libc.so.6: could not read symbols: Bad value
+collect2: ld returned 1 exit status
+make: *** [single] Error 1"
+
+append flag -DGENTOO_HACK to Makefile.inc
