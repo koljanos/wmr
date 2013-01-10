@@ -15,6 +15,7 @@ echo "Configure headers and lib for compiling wmr-oregon for you platform ..."
 INCPATH=""
 INCFILE=""
 LIBPATH=""
+ADDCFLAGS=""
 
 warning()
 {
@@ -120,9 +121,16 @@ LOK=""
 
 done
 
+if [ -f "/usr/include/errno.h" ] ; then
+    if [ "`grep "extern int errno" /usr/include/errno.h`" == "" ]; then
+	ADDCFLAGS="-DGENTOO_HACK"
+    fi
+fi
+
 INCPATH=`echo -e ${INCPATH} | sort | uniq`
 LIBPATH=`echo -e ${LIBPATH} | sort | uniq`
 
+echo "Write Makefile.inc ..."
 echo "CFLAGS += " ${INCPATH} > Makefile.inc
 echo "LIBS   += " ${LIBPATH} >> Makefile.inc
 
@@ -144,29 +152,54 @@ echo "2 - Russian language codepage CP866"
 echo "3 - Russian language codepage CP1251"
 echo "4 - Russian language codepage KOI8-R"
 echo "5 - Russian language codepage UTF-8"
-echo "0 - Exit from configure"
+echo "0 - No selected"
 echo ""
 
 read tmp
 if [ "$tmp" == "1" ]; then
-    echo "CFLAGS +=  -DLANG_ENG" >> Makefile.inc
+    ADDCFLAGS=${ADDCFLAGS}" -DLANG_ENG"
 elif [ "$tmp" == "2" ]; then
-    echo "CFLAGS +=  -DLANG_RU_CP866" >> Makefile.inc
+     ADDCFLAGS=${ADDCFLAGS}" -DLANG_RU_CP866"
 elif [ "$tmp" == "3" ]; then
-    echo "CFLAGS +=  -DLANG_RU_CP1251" >> Makefile.inc
+     ADDCFLAGS=${ADDCFLAGS}" -DLANG_RU_CP1251"
 elif [ "$tmp" == "4" ]; then
-    echo "CFLAGS +=  -DLANG_RU_KOI8" >> Makefile.inc
+     ADDCFLAGS=${ADDCFLAGS}" -DLANG_RU_KOI8"
 elif [ "$tmp" == "5" ]; then
-    echo "CFLAGS +=  -DLANG_RU_UTF8" >> Makefile.inc
+     ADDCFLAGS=${ADDCFLAGS}" -DLANG_RU_UTF8"
 elif [ "$tmp" == "0" ]; then
     echo "Edit manualy: Makefile.inc"
     echo ""
     exit 0
 else
+    ADDCFLAGS=${ADDCFLAGS}" -DLANG_ENG"
     echo "read file INSTALL please ..."
-    echo "exit."
+    echo ""
 fi
 
+echo ""
+echo "Enable full debug version compile?"
+echo ""
+echo "Select and press :"
+echo "1 - Disable full debug version"
+echo "2 - Enable full debug version"
+echo "0 - No selected"
+echo ""
+
+read tmp
+if [ "$tmp" == "1" ]; then
+    echo -n ""
+elif [ "$tmp" == "2" ]; then
+     ADDCFLAGS=${ADDCFLAGS}" -DDEBUG"
+elif [ "$tmp" == "0" ]; then
+    echo "Edit manualy: Makefile.inc"
+    echo ""
+    exit 0
+else
+    echo -n ""
+fi
+
+echo "Write Makefile.inc ..."
+echo "CFLAGS += "${ADDCFLAGS} >> Makefile.inc
 echo "" >> Makefile.inc
 
 echo ""
