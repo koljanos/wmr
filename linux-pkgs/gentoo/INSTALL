@@ -1,0 +1,23 @@
+This is a private overlay for Gentoo.
+Right now it includes only one package - wmr-oregon.
+
+To install it to Gentoo you have 2 chooses:
+
+1. Install ebuild manually.
+   - copy .ebuild file to you localhost
+   - run 'ebuild <ebuild file> merge' to install it
+   - to uninstall - run 'ebuild <ebuild file> unmerge'
+
+2. Install it using an overlay manager.
+   - add to list of overlays this overlay.
+	Example for 'layman':
+	    # nano /etc/layman/layman.cfg
+		    overlays  : http://www.gentoo.org/proj/en/overlays/repositories.xml
+	    +       		https://wmr.googlecode.com/svn/linux-pkgs/gentoo/distfiles/layman/wmr-overlay.xml
+   - add this overlay to the system.
+	Example for 'layman':
+	    # layman -L; layman -a wmr-oregon
+   - unmask the package
+   - install/uninstall it as usual.
+   
+If you are planning to update the package, the second method is recommended.

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE repositories SYSTEM "/dtd/repositories.dtd">
+<repositories xmlns="" version="1.0">
+  <repo quality="experimental" status="unofficial">
+    <name><![CDATA[wmr-oregon]]></name>
+    <description lang="en"><![CDATA[Oregon Scientific WMRxxx, RMSxxx and Ixxx USB stations reader and logger. Comments and bugreports are welcome!]]></description>
+    <homepage>http://code.google.com/p/wmr/</homepage>
+    <owner type="person">
+      <email>alexdu.com.ae@gmail.com</email>
+      <name><![CDATA[Alex Dubenetsky]]></name>
+    </owner>
+    <source type="svn">http://wmr.googlecode.com/svn/linux-pkgs/gentoo/overlay/</source>
+    <feed>https://code.google.com/feeds/p/wmr/updates/basic</feed>
+  </repo>
+</repositories>
+
