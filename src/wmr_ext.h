@@ -21,9 +21,18 @@
 #define WMR_EXIT_KILL		9
 
 #include "wmr_weather.h"
+
+/*
+ Gentoo header hack
+*/
+
+#if defined(GENTOO_HACK)
 extern int errno;
+#endif
 #include <errno.h>
+#if defined(GENTOO_HACK)
 extern int error_intr;
+#endif
 
 char err_string[1024];
 
