@@ -58,7 +58,7 @@ OBJSLIBSQL	=	src/wmr_sql.o
 OBJSLIBALARM	=	src/wmr_alarm.o
 OBJSLIBSNMP	=	src/snmp/oiddb.o src/snmp/snmp.o src/snmp/debug.o
 OBJSLIBUPD	=	src/wmr_updexec.o
-
+OBJSSHM		=	src/debug/shm.o
 
 # -----------------------------------------------------------------------
 # Sort out what operating system is being run and modify CFLAGS and LIBS
@@ -128,6 +128,10 @@ single:         $(OBJS) $(OBJSLIBUPD) $(OBJSLIBSNMP) $(OBJSLIBFILE) $(OBJSLIBSQL
 		@rm -f $(OBJS) $(OBJSLIBUPD) $(OBJSLIBSNMP) $(OBJSLIBFILE) $(OBJSLIBSQL) $(OBJSLIBRRD) $(OBJSLIBALARM)
 		@${TOOLCHAINPATH}/bin/strip wmrd
 		@./goftp.sh
+
+shm:		$(OBJSSHM)
+		$(CC) $(OBJSSHM) -o shm
+		@rm -f $(OBJSSHM)
 
 # Clean up the object files and the sub-directory for distributions
 clean:

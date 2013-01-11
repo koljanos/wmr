@@ -1,1 +1,1 @@
-#define DATA_VERSION "Den68 ASCII/SQL/RRD/SNMP - building: Fri Jan 11 09:16:05 MSK 2013 "
+#define DATA_VERSION "Den68 ASCII/SQL/RRD/SNMP - building: Fri Jan 11 11:23:57 MSK 2013 "
