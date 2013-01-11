@@ -206,7 +206,7 @@ static char *const TRENDS[] 	= { "-", "U", "D" };
 static char *const WMR_RRD_CREATE_PAR[] = { \
 "%s create %s/%s_%d.rrd --step 150 DS:Temp:GAUGE:240:-50:150 DS:DewPoint:GAUGE:240:-50:150 DS:Humidity:GAUGE:240:0:100 %s", \
 "%s create %s/%s_%d.rrd --step 150 DS:Pressure:GAUGE:240:700:800 DS:PressureAlt:GAUGE:240:700:800 %s", \
-"%s create %s/%s_%d.rrd --step 150 DS:WindSpeed:GAUGE:240:0:200 DS:WindAwg:GAUGE:240:0:200 DS:WindDir:GAUGE:240:0:200 DS:WindChill:GAUGE:240:0:200 %s", \
+"%s create %s/%s_%d.rrd --step 150 DS:WindSpeed:GAUGE:240:0:200 DS:WindAwg:GAUGE:240:0:200 DS:WindDir:GAUGE:240:0:200 DS:WindChill:GAUGE:240:-100:100 %s", \
 "%s create %s/%s_%d.rrd --step 150 DS:RainRate:GAUGE:240:0:100 DS:RainHour:GAUGE:240:0:100 DS:RainDay:GAUGE:240:0:100 DS:RainAll:GAUGE:240:0:100 %s", \
 "%s create %s/%s_%d.rrd --step 150 DS:Water:GAUGE:240:-50:150 %s", \
 "%s create %s/%s_%d.rrd --step 150 DS:UV:GAUGE:240:0:15 %s", \
@@ -214,8 +214,24 @@ static char *const WMR_RRD_CREATE_PAR[] = { \
 };
 
 #define WMR_RRD_CREATE_BASE "RRA:AVERAGE:0.5:1:4320 RRA:AVERAGE:0.5:15:2880 RRA:AVERAGE:0.5:120:2160 RRA:AVERAGE:0.5:720:1440 RRA:MIN:0.5:1:4320 RRA:MIN:0.5:15:2880 RRA:MIN:0.5:120:2160 RRA:MIN:0.5:720:1440 RRA:MAX:0.5:1:4320 RRA:MAX:0.5:15:2880 RRA:MAX:0.5:120:2160 RRA:MAX:0.5:720:1440 RRA:LAST:0.5:1:4320 RRA:LAST:0.5:15:2880 RRA:LAST:0.5:120:2160 RRA:LAST:0.5:720:1440"
+#define WMR_RRD_GRAPH_WATERMARK="WMR Oregon Scientific USB weather data logger (c)created http://code.google.com/p/wmr/"
 
 extern int rrdtool_check(char *);
+
+/*
+// "TEMP", "PRESSURE", "WIND", "RAIN", "WATER", "UV", "MAIN", "HUMIDITY" };
+#define WMR_RRD_GRAPH_TSENS[] = { \
+"Humidity"
+
+// %s %s %s %d %d %s %s %s
+static char *const WMR_RRD_GRAPH_PAR[] = { \
+"%s graph %s/%s.gif --width %d --height %d --start -%s --end now --rigid --slope-mode --watermark \"%s\" --vertical-label \"%s\"", \
+"DEF:param%d=%s/%s_%d.rrd:%s:AVERAGE " \
+"CDEF:param%d_by_16=param%d,16,/ " \
+"AREA:param%d_by_16#%s%d%s " \
+""
+};
+*/
 
 #endif
 

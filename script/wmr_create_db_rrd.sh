@@ -49,7 +49,7 @@ do
     elif [ "$i" == "RAIN" ] ; then
 	    ${RRDEXECPATH} create ${RRDSAVEPATH}/${i}_0.rrd --step 150 DS:RainRate:GAUGE:240:0:100 DS:RainHour:GAUGE:240:0:100 DS:RainDay:GAUGE:240:0:100 DS:RainAll:GAUGE:240:0:100 ${WMR_RRD_CREATE_BASE}
     elif [ "$i" == "WIND" ] ; then
-	    ${RRDEXECPATH} create ${RRDSAVEPATH}/${i}_0.rrd --step 150 DS:WindSpeed:GAUGE:240:0:200 DS:WindAwg:GAUGE:240:0:200 DS:WindDir:GAUGE:240:0:200 DS:WindChill:GAUGE:240:0:200 ${WMR_RRD_CREATE_BASE}
+	    ${RRDEXECPATH} create ${RRDSAVEPATH}/${i}_0.rrd --step 150 DS:WindSpeed:GAUGE:240:0:200 DS:WindAwg:GAUGE:240:0:200 DS:WindDir:GAUGE:240:0:200 DS:WindChill:GAUGE:240:-100:100 ${WMR_RRD_CREATE_BASE}
     elif [ "$i" == "UV" ] ; then
 	    ${RRDEXECPATH} create ${RRDSAVEPATH}/${i}_0.rrd --step 150 DS:UV:GAUGE:240:0:15 ${WMR_RRD_CREATE_BASE}
     elif [ "$i" == "MAIN" ] ; then
