@@ -204,11 +204,11 @@ static char *const TRENDS[] 	= { "-", "U", "D" };
 #define WMR_RRD_UPDATE_FILE		"%s update %s/%s_%d.rrd --template %s"
 
 static char *const WMR_RRD_CREATE_PAR[] = { \
-"%s create %s/%s_%d.rrd --step 150 DS:Temp:GAUGE:240:-50:150 DS:DewPoint:GAUGE:240:-50:150 DS:Humidity:GAUGE:240:0:100 %s", \
+"%s create %s/%s_%d.rrd --step 150 DS:Temp:GAUGE:240:-100:100 DS:DewPoint:GAUGE:240:-100:100 DS:Humidity:GAUGE:240:0:100 %s", \
 "%s create %s/%s_%d.rrd --step 150 DS:Pressure:GAUGE:240:700:800 DS:PressureAlt:GAUGE:240:700:800 %s", \
 "%s create %s/%s_%d.rrd --step 150 DS:WindSpeed:GAUGE:240:0:200 DS:WindAwg:GAUGE:240:0:200 DS:WindDir:GAUGE:240:0:200 DS:WindChill:GAUGE:240:-100:100 %s", \
 "%s create %s/%s_%d.rrd --step 150 DS:RainRate:GAUGE:240:0:100 DS:RainHour:GAUGE:240:0:100 DS:RainDay:GAUGE:240:0:100 DS:RainAll:GAUGE:240:0:100 %s", \
-"%s create %s/%s_%d.rrd --step 150 DS:Water:GAUGE:240:-50:150 %s", \
+"%s create %s/%s_%d.rrd --step 150 DS:Water:GAUGE:240:-100:100 %s", \
 "%s create %s/%s_%d.rrd --step 150 DS:UV:GAUGE:240:0:15 %s", \
 "%s create %s/%s_%d.rrd --step 150 DS:MainBattery:GAUGE:240:0:1 DS:ExtPower:GAUGE:240:0:1 DS:Level:GAUGE:240:0:100 %s" \
 };
