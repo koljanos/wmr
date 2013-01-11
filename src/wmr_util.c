@@ -421,6 +421,26 @@ int lock_state( char * lock_file, int daemonKill, int syslogEn, int debugEn, int
 		    break;
     		}
     break;
+
+    case 4:
+		if (unlink (lock_file)) 
+		{
+		    if( debugEn > 0 )         
+    		    {
+			sprintf ( err_string, WMR_UTIL_C_TXT_22, lock_file);
+			syslog_msg (syslogEn, err_string );
+		    }
+		    return (WMR_EXIT_NORMAL);
+		    break;
+		} else {
+		    if( debugEn > 0 )         
+    		    {
+			sprintf ( err_string, WMR_UTIL_C_TXT_23, lock_file);
+			syslog_msg (syslogEn, err_string );
+		    }
+		}
+
+    break;
     }
 
 return WMR_EXIT_SUCCESS;

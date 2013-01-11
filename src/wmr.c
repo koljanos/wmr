@@ -533,12 +533,12 @@ run = RR_WMR_ARGV;
 		}
 
 		syslog_msg (wmr->syslogEn, WMR_C_TXT_20 );
-		if ((wmr->fileEn == 1 ) && ( wmr->data_fh ))	{ wmr_file_close(&wmr->data_fh); }
-		if ((wmr->sqlEn  == 1 ) && ( wmr->db )) 	{ wmr_sqldb_close(&wmr->db); }
-		if (lock_state( wmr->lock_file, wmr->daemonKill, wmr->syslogEn, wmr->debugEn, 1, 0) == WMR_EXIT_SUCCESS ) { syslog_msg (wmr->syslogEn, WMR_C_TXT_40); }
 		run = RR_WMR_EXIT;
 		break;
 	case RR_WMR_EXIT:
+		if ((wmr->fileEn == 1 ) && ( wmr->data_fh ))	{ wmr_file_close(&wmr->data_fh); }
+		if ((wmr->sqlEn  == 1 ) && ( wmr->db )) 	{ wmr_sqldb_close(&wmr->db); }
+		if (lock_state( wmr->lock_file, wmr->daemonKill, wmr->syslogEn, wmr->debugEn, 1, 0) == WMR_EXIT_SUCCESS ) { syslog_msg (wmr->syslogEn, WMR_C_TXT_40); }
 		if (weather != NULL) 				{ weather_close(weather, weather->run.shmid, weather->run.MAINpid, 0, wmr->syslogEn, wmr->debugEn );  }
 		if (wmr->daemonKill != 1 )			{ printf(WMR_C_TXT_21, argv[0]); }
 		if (wmr != NULL) 				{ wmr_close(wmr); }
@@ -638,7 +638,9 @@ run = RR_WMR_ARGV;
 			{
 				weather->run.MAINpid = getpid();
 				printf ( WMR_C_TXT_30 );
-				exit (WMR_EXIT_SUCCESS);				
+				run = RR_WMR_PREEXIT;
+				break;
+				//exit(WMR_EXIT_SUCCESS);				
 			}
 
 			umask(0);
@@ -693,6 +695,6 @@ run = RR_WMR_ARGV;
     wmr_close(wmr);
     //pthread_mutex_destroy(&job_mutex);
 
-    exit (WMR_EXIT_SUCCESS);
+    exit(WMR_EXIT_SUCCESS);
 }
 

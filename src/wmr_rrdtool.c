@@ -89,36 +89,44 @@ void rrd_update_int( char *rrdtool_exec_path, char *rrdtool_save_path, int table
 return;
 }
 
+int rrdtool_check(char *rrdtool_exec_path)
+{
+FILE *fd1;
+
+    if (!(fd1 = fopen(rrdtool_exec_path, "r"))) 
+    {
+	return(WMR_EXIT_FAILURE);
+    }
+    fclose (fd1);
+
+return(WMR_EXIT_SUCCESS);
+}
+
 void rrdtool_exec ( char *rrdtool_exec_path, char *rrdtool_save_path, int table, int sensor, char *msg, int * rrdEn, int syslogEn, int debugEn )
 {
-FILE *fd1, *fd2;
+FILE *fd1;
 char buf[1024];
 
+    if (rrdtool_check(rrdtool_exec_path) != WMR_EXIT_SUCCESS)
+    {
+        if( debugEn > 0 )
+        {
+            sprintf ( err_string, WMR_RRDTOOL_C_TXT_7, rrdtool_exec_path);
+            syslog_msg (syslogEn, err_string);
+        }
 
+    return;
+    }
+    
     if( debugEn > 2 )
     {
 	sprintf ( err_string, WMR_RRDTOOL_C_TXT_6, TABLES[table], sensor);
 	syslog_msg (syslogEn, err_string);
     }
 
-    if (!(fd1 = fopen(rrdtool_exec_path, "r"))) 
-    {
-	if( debugEn > 0 )
-	{
-	    sprintf ( err_string, WMR_RRDTOOL_C_TXT_7, rrdtool_exec_path);
-	    syslog_msg (syslogEn, err_string);
-	}
-
-	rrdEn = 0;
-	return;
-
-    }
-    fclose (fd1);
-
-
     sprintf (buf, WMR_RRD_OUT_FILE, rrdtool_save_path, TABLES[table], sensor);
 		
-    if (!(fd2 = fopen(buf, "r")))
+    if (!(fd1 = fopen(buf, "r")))
     {
 	if( debugEn > 1 )
 	{
@@ -135,7 +143,7 @@ char buf[1024];
 	}
 
     } else {
-        fclose (fd2);
+        fclose (fd1);
     }
 
 	sprintf (buf, WMR_RRD_UPDATE_FILE, rrdtool_exec_path, rrdtool_save_path, TABLES[table], sensor, msg);
