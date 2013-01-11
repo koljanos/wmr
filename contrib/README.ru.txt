@@ -8,7 +8,9 @@ WMR - новый компактный софт снимающий данные с погодной станции и сохраняющий
  - компактный (подходит для установки на роутерах), 
  - умеет работать демоном, использовать syslog,
  - данные пишет в различных форматах удобных для обработки. 
- - для построения визуальных графиков использует rrd-tool. 
+ - для построения визуальных графиков использует rrdtool, может работать 
+   как с внешним пакетом rrdtool, так и имеет встроенную независимую от пакета
+   rrdtool функцию обновления графиков в формате rrd.
 
 Поддерживаемые форматы хранения данных:
 
@@ -30,12 +32,13 @@ WMR - новый компактный софт снимающий данные с погодной станции и сохраняющий
 
 
 Подходит для установки на роутеры, требует библиотек: 
-  * libusb 0.x (http://www.libusb.org/ "libusb-compat"),  
-  * libhid (http://libhid.alioth.debian.org/),  
-  * libsqlite3 (http://www.sqlite.org/download.html),
-  * rrd-toots (опционально) (http://oss.oetiker.ch/rrdtool/download.en.html)
+  * libusb,  
+  * libhid,  
+  * libsqlite3,
+  * rrd-toots (опционально)
 
-Домашняя страничка программы wmrd:
+Последняя версия:
+http://www.nkl.ru/support/wmr/wmr-oregon-latest.tar.gz
 http://code.google.com/p/wmr/
 
 Документация, обновления, модули:
@@ -43,9 +46,6 @@ http://www.nkl.ru/support/wmr/
 
 На сайте есть готовая сборка под  OpenWRT для RouteBoard 2xx (i386):
 http://www.nkl.ru/support/wmr/wmrd-OpenWrt_i386_bin.tar.gz
-
-Последняя версия:
-http://www.nkl.ru/support/wmr/wmrd-latest.tar.gz
 
 
 SQLite

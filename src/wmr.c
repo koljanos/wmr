@@ -395,7 +395,6 @@ int main(int argc, char *argv[])
     exit(WMR_EXIT_FAILURE);
     }
 
-    weather->run.MAINpid = getpid();
     sprintf ( err_string, "/var/lock/%s.lock", fbname );
     memcpy(wmr->lock_file, err_string, strlen(err_string));
 
@@ -411,6 +410,7 @@ int main(int argc, char *argv[])
     signal(SIGUSR1, _reinitwmr);
     signal(SIGUSR2, _logrotate);
 
+    weather->run.MAINpid = getpid();
 
 run = RR_WMR_ARGV; 
 
@@ -453,7 +453,6 @@ run = RR_WMR_ARGV;
 */
 ///
 #ifdef DEBUG
-    weather = weather_new( 0,0,argv[0], 4);
                     sprintf (tmp_string, WMR_TMPL_UPD_EXEC_DEBUG, \
 					    weather->run.shmid, \
                                             "MAIN EXEC:", \
