@@ -43,7 +43,8 @@ WEATHER *weather_new( int seln, key_t shm_key, char * fname, int debugEn )
     switch(seln)
     {
         case 0:
-		if ( (int) ( shmKey = ftok("./", 1) )  < 0 )
+		// if ( (int) ( shmKey = ftok("./", 1) )  < 0 )
+		if ( (int) ( shmKey = ftok( fname, 1) )  < 0 )
 		{
     		    printf (WMR_UTIL_C_TXT_1 );
 		    perror("- ftok ");

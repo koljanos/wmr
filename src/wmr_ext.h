@@ -214,7 +214,7 @@ static char *const WMR_RRD_CREATE_PAR[] = { \
 };
 
 #define WMR_RRD_CREATE_BASE "RRA:AVERAGE:0.5:1:4320 RRA:AVERAGE:0.5:15:2880 RRA:AVERAGE:0.5:120:2160 RRA:AVERAGE:0.5:720:1440 RRA:MIN:0.5:1:4320 RRA:MIN:0.5:15:2880 RRA:MIN:0.5:120:2160 RRA:MIN:0.5:720:1440 RRA:MAX:0.5:1:4320 RRA:MAX:0.5:15:2880 RRA:MAX:0.5:120:2160 RRA:MAX:0.5:720:1440 RRA:LAST:0.5:1:4320 RRA:LAST:0.5:15:2880 RRA:LAST:0.5:120:2160 RRA:LAST:0.5:720:1440"
-#define WMR_RRD_GRAPH_WATERMARK="WMR Oregon Scientific USB weather data logger (c)created http://code.google.com/p/wmr/"
+#define WMR_RRD_GRAPH_WATERMARK "WMR Oregon Scientific USB weather data logger (c)created http://code.google.com/p/wmr/"
 
 extern int rrdtool_check(char *);
 

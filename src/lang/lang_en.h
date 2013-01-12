@@ -1,5 +1,6 @@
 #define WMR_C_TXT_1 "- Receive packet len %d: "
 #define WMR_C_TXT_2 "- hid_set_output_report failed with return code %d\n"
+#define WMR_C_TXT_3 "- WMR: error alocate memory for basename\nExit...\n\n"
 #define WMR_C_TXT_4 "- hid_init failed with return code %d\n"
 #define WMR_C_TXT_5 "- hid_new_HIDInterface() failed, out of memory?\n"
 #define WMR_C_TXT_6 "- Open failed, sleeping 5 seconds before retrying..\n"

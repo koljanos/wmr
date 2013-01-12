@@ -1,5 +1,6 @@
 #define WMR_C_TXT_1 "- BYTE: Длина полученного пакета: %d: "
 #define WMR_C_TXT_2 "- BYTE: hid_set_output_report - завершился с низвестным значением: %d\n"
+#define WMR_C_TXT_3 "- WMR: ошибка выделения памяти для пути программы\nВыход...\n\n"
 #define WMR_C_TXT_4 "- BYTE: hid_init - завершился с низвестным значением: %d\n"
 #define WMR_C_TXT_5 "- BYTE: hid_new_HIDInterface - ошибка, не удалось выделить память?\n"
 #define WMR_C_TXT_6 "- Не удалось окрыть USB устройство, повторение попытки через 5 секунд ..\n"
