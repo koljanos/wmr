@@ -11,7 +11,7 @@ or:
 {{{                  
 	  make single ; make install
 }}}
-	this mode compile one binary wmrd, witchout dynamic linked library,
+this mode compile one binary wmrd, witchout dynamic linked library,
 latter:
 {{{                  
         vi /etc/wmr/wmr.conf
