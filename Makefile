@@ -167,6 +167,7 @@ install-single:
 		install -b -o root -g bin script/wmr_sendms_sms.ru.sh /usr/sbin
 		install -b -o root -g bin script/wmr_create_db_sqlite3.sh /usr/sbin
 		install -b -o root -g bin script/wmr_create_db_rrd.sh /usr/sbin
+		install -b -o root -g bin script/wmr_create_graph_rrd.sh /usr/sbin
 		install -b -o root -g bin script/wmr_logrotate.sh /usr/sbin
 		install -b -o root -g bin contrib/wmr.init /etc/rc.d/init.d
 		ln -s /etc/rc.d/init.d/wmr.init /etc/rc.d/rc3.d/S95wmr
@@ -175,7 +176,10 @@ install-single:
 		install -b -o root -g bin contrib/wmr.conf /etc/wmr
 		@mkdir -P /etc/wmr/script_alarm
 		@mkdir -P /etc/wmr/script_update
+		@mkdir -P /etc/wmr/script_graph
 		@cp -f -R script/wmr_alarm_advanced/etc/wmr/script_alarm /etc/wmr/script_alarm
+		@cp -f -R script/wmr_alarm_advanced/etc/wmr/script_graph /etc/wmr/script_graph
+		@cp -f -R script/wmr_alarm_advanced/etc/wmr/script_update /etc/wmr/script_update
 		@mkdir -p /var/weather
 		@script/wmr_create_db_sqlite3.sh
 		@script/wmr_create_db_rrd.sh
