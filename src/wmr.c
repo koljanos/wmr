@@ -381,12 +381,8 @@ int main(int argc, char *argv[])
     wmr = wmr_new();
     if (wmr == NULL) 
     {
-	if( wmr->debugEn > 0 )
-	{
-	    syslog_msg (wmr->syslogEn,WMR_C_TXT_37);
-	}
-
-    exit(WMR_EXIT_FAILURE);
+	syslog_msg (1,WMR_C_TXT_37);
+	exit(WMR_EXIT_FAILURE);
     }
 
 #ifdef DEBUG
@@ -397,22 +393,15 @@ int main(int argc, char *argv[])
 
     if (weather == NULL) 
     {
-	if( wmr->debugEn > 0 )
-	{
-	    syslog_msg (wmr->syslogEn,WMR_C_TXT_38);
-	}
-
-    exit(WMR_EXIT_FAILURE);
+	syslog_msg (1,WMR_C_TXT_38);
+	exit(WMR_EXIT_FAILURE);
     }
 
     sprintf ( err_string, "/var/lock/%s.lock", fbname );
     memcpy(wmr->lock_file, err_string, strlen(err_string));
 
-	if( wmr->debugEn > 0 )
-	{
-	    sprintf (err_string,  WMR_HEADER_INFO, NUM_VERSION, DATA_VERSION );
-	    syslog_msg (wmr->syslogEn, err_string);
-	}
+    sprintf (err_string,  WMR_HEADER_INFO, NUM_VERSION, DATA_VERSION );
+    syslog_msg (1, err_string);
 
     signal(SIGINT,  _cleanup);
     signal(SIGTERM, _cleanup);
@@ -573,15 +562,15 @@ run = RR_WMR_ARGV;
 		if ( wmr->daemonKill   == WMR_EXIT_NORMAL )	{ run = RR_WMR_EXIT; break; }
 		if ( lock_state( wmr->lock_file, wmr->daemonKill, wmr->syslogEn, wmr->debugEn, 0, 0) == WMR_EXIT_NORMAL )
 		    { run = RR_WMR_EXIT; break; }
-		syslog_msg (wmr->syslogEn, WMR_C_TXT_22 );
+		syslog_msg (1, WMR_C_TXT_22 );
     		if ( wmr_init(wmr) != 0) 
     		{
-			syslog_msg (wmr->syslogEn, WMR_C_TXT_23 );
+			syslog_msg (1, WMR_C_TXT_23 );
 			run = RR_WMR_PREEXIT;
     		} else {
 			sprintf (err_string, WMR_C_TXT_24, wmr->hid->id);
-			syslog_msg (wmr->syslogEn, err_string);
-			wmr_print_state( (unsigned int) wmr->hid, wmr->syslogEn );
+			syslog_msg (1, err_string);
+			wmr_print_state( (unsigned int) wmr->hid, 1 );
 			run = RR_WMR_RCONF;
 		}	
 		break;
@@ -589,7 +578,7 @@ run = RR_WMR_ARGV;
 		if( read_cnfile(wmr,weather) != 0)
 		{
 			sprintf (err_string, WMR_C_TXT_25, wmr->conf_path );
-			syslog_msg (wmr->syslogEn, err_string);
+			syslog_msg (1, err_string);
 			if (wmr != NULL) { wmr_close(wmr); }
 			run = RR_WMR_PREEXIT;
     		} else {
