@@ -372,7 +372,7 @@ int main(int argc, char *argv[])
     fbname = malloc(CNF_PATH_SIZE);
     if ( fbname == NULL)
     {
-      syslog_msg (1, WMR_C_TXT_3);
+      syslog_msg (0, WMR_C_TXT_3);
       exit(WMR_EXIT_FAILURE);
     }
     fbname =  (char *) basename( (const char *) argv[0]);
@@ -381,7 +381,7 @@ int main(int argc, char *argv[])
     wmr = wmr_new();
     if (wmr == NULL) 
     {
-	syslog_msg (1,WMR_C_TXT_37);
+	syslog_msg (0,WMR_C_TXT_37);
 	exit(WMR_EXIT_FAILURE);
     }
 
@@ -393,7 +393,7 @@ int main(int argc, char *argv[])
 
     if (weather == NULL) 
     {
-	syslog_msg (1,WMR_C_TXT_38);
+	syslog_msg (0,WMR_C_TXT_38);
 	exit(WMR_EXIT_FAILURE);
     }
 
@@ -401,7 +401,7 @@ int main(int argc, char *argv[])
     memcpy(wmr->lock_file, err_string, strlen(err_string));
 
     sprintf (err_string,  WMR_HEADER_INFO, NUM_VERSION, DATA_VERSION );
-    syslog_msg (1, err_string);
+    syslog_msg (0, err_string);
 
     signal(SIGINT,  _cleanup);
     signal(SIGTERM, _cleanup);
@@ -562,14 +562,14 @@ run = RR_WMR_ARGV;
 		if ( wmr->daemonKill   == WMR_EXIT_NORMAL )	{ run = RR_WMR_EXIT; break; }
 		if ( lock_state( wmr->lock_file, wmr->daemonKill, wmr->syslogEn, wmr->debugEn, 0, 0) == WMR_EXIT_NORMAL )
 		    { run = RR_WMR_EXIT; break; }
-		syslog_msg (1, WMR_C_TXT_22 );
+		syslog_msg (0, WMR_C_TXT_22 );
     		if ( wmr_init(wmr) != 0) 
     		{
-			syslog_msg (1, WMR_C_TXT_23 );
+			syslog_msg (0, WMR_C_TXT_23 );
 			run = RR_WMR_PREEXIT;
     		} else {
 			sprintf (err_string, WMR_C_TXT_24, wmr->hid->id);
-			syslog_msg (1, err_string);
+			syslog_msg (0, err_string);
 			wmr_print_state( (unsigned int) wmr->hid, 1 );
 			run = RR_WMR_RCONF;
 		}	
@@ -578,7 +578,7 @@ run = RR_WMR_ARGV;
 		if( read_cnfile(wmr,weather) != 0)
 		{
 			sprintf (err_string, WMR_C_TXT_25, wmr->conf_path );
-			syslog_msg (1, err_string);
+			syslog_msg (0, err_string);
 			if (wmr != NULL) { wmr_close(wmr); }
 			run = RR_WMR_PREEXIT;
     		} else {
