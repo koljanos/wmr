@@ -7,7 +7,7 @@ After, check path to development library in Makefile, and run make this project:
 {{{                  
           make clean ; make all ; make install
 }}}
-	or:
+or:
 {{{                  
 	  make single ; make install
 }}}
