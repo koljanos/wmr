@@ -14,3 +14,7 @@ Install WMR plugin for cacti:
 }}}
 
 See script/cacti/* for more info.
+----------
+[http://www.nkl.ru/support/wmr/wmr-cacti.tar.gz Download latest wmr-cacti]
+
+[http://www.cacti.net/download_cacti.php Cacti - visualisation monitor]
