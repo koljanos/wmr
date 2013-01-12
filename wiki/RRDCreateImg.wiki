@@ -16,11 +16,11 @@ Use /usr/bin/wmr_create_graph_rrd.sh to create web graphical image.
 Example graphical file generate WMR:
 -----------
 
-http://www.nkl.ru/support/wmr/oregon_img/a1-m.png
+[http://www.nkl.ru/support/wmr/oregon_img/a1-l.png http://www.nkl.ru/support/wmr/oregon_img/a1-m.png]
 -----------
-http://www.nkl.ru/support/wmr/oregon_img/a2-m.png
+[http://www.nkl.ru/support/wmr/oregon_img/a2-l.png http://www.nkl.ru/support/wmr/oregon_img/a2-m.png]
 -----------
-http://www.nkl.ru/support/wmr/oregon_img/a4-m.png
+[http://www.nkl.ru/support/wmr/oregon_img/a4-l.png http://www.nkl.ru/support/wmr/oregon_img/a4-m.png]
 -----------
-http://www.nkl.ru/support/wmr/oregon_img/a6-m.png
+[http://www.nkl.ru/support/wmr/oregon_img/a6-l.png http://www.nkl.ru/support/wmr/oregon_img/a6-m.png]
 -----------
