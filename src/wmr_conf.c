@@ -683,17 +683,19 @@ int read_cnfile(WMR *wmr, WEATHER *weather)
       wmr->sv_uv = atoi(ptr);
       continue;
 
-    } else if( strncasecmp( "SENS_TEMP_NUM", ptr,13  ) == 0 ) {
+    } else if( strncasecmp( "GRAPHEXECPATH", ptr,13  ) == 0 ) {
       continue;
-    } else if( strncasecmp( "SENS_WIND_NUM", ptr,13  ) == 0 ) {
+    } else if( strncasecmp( "GRAPHIMGPATH", ptr,12  ) == 0 ) {
       continue;
-    } else if( strncasecmp( "SENS_RAIN_NUM", ptr,13  ) == 0 ) {
+    } else if( strncasecmp( "GRAPHPERIOD", ptr,11  ) == 0 ) {
       continue;
-    } else if( strncasecmp( "SENS_UV_NUM", ptr,11  ) == 0 ) {
+    } else if( strncasecmp( "IMGWSIZEL", ptr,9  ) == 0 ) {
       continue;
-    } else if( strncasecmp( "SENS_WATER_NUM", ptr,14  ) == 0 ) {
+    } else if( strncasecmp( "IMGHSIZEL", ptr,9  ) == 0 ) {
       continue;
-    } else if( strncasecmp( "GRAPHPATH", ptr,9  ) == 0 ) {
+    } else if( strncasecmp( "IMGWSIZES", ptr,9  ) == 0 ) {
+      continue;
+    } else if( strncasecmp( "IMGHSIZES", ptr,9  ) == 0 ) {
       continue;
 
     } else {

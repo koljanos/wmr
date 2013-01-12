@@ -41,7 +41,7 @@ protocol isn't openly documented, nor are clients provided for this platform.
 
 This  C program handles the USB protocol of the WMRxxx, or RMSxxx, or Ixxx, 
 and translates it an ASCII/SQLite3/RRD format, easy for parsing/analysing. 
-See directory sripts/ for example.
+See directory scripts/ for example.
 
 You'll need to setup the udev rules (see udev/README). 
 
@@ -149,7 +149,11 @@ If sensor type = BATTERY, format command:
 Valid type of sensor:
     All data sensor: "TEMP", "HUMIDITY", "PRESSURE", "WIND", "RAIN", "UV"
     Battery check sensor: "MAIN", "WATER", "TEMP", "WIND", "RAIN", "UV"
+
 Advanced user frendly alarm script in script/wmr_alarm_advanced/ - see for detail ... 
+Default to install advanced alarm script in /usr/bin/wmr_alarm.sh
+Sub user edit script default locate in /etc/wmr/script_alarm
+
 
 Logrotate data LOG/SQL/RRD:
 ------------------------------------
