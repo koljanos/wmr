@@ -12,6 +12,9 @@
  *
  */
 
+#define __USE_GNU
+//#define _GNU_SOURCE
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/stat.h>
@@ -366,7 +369,14 @@ int main(int argc, char *argv[])
     char tmp_string[2048];
 #endif
 
-    fbname = basename(argv[0]);
+    fbname = malloc(CNF_PATH_SIZE);
+    if ( fbname == NULL)
+    {
+      syslog_msg (1, WMR_C_TXT_3);
+      exit(WMR_EXIT_FAILURE);
+    }
+    fbname =  (char *) basename( (const char *) argv[0]);
+    // memcpy(fbname, basename(argv[0]), strlen( basename(argv[0]) ) );
 
     wmr = wmr_new();
     if (wmr == NULL) 
