@@ -25,3 +25,7 @@ Install WMR plugin for munin:
 }}}
 
 See script/munin/README.* for more info.
+---------------
+[http://www.nkl.ru/support/wmr/wmr-munin.tar.gz Download latest wmr-munin]
+
+[http://sourceforge.net/projects/munin/files/ Munin - visualisation monitor]
