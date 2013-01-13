@@ -1,6 +1,6 @@
 #
 #
-COMPILE = i386
+COMPILE = i686
 
 VERSION = 0.4
 

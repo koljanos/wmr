@@ -369,10 +369,16 @@ int main(int argc, char *argv[])
     char tmp_string[2048];
 #endif
 
+pthread_mutexattr_t attr;
+pthread_mutexattr_init(&attr);
+pthread_mutexattr_settype(&attr, PTHREAD_MUTEX_RECURSIVE_NP);
+pthread_mutex_init(&job_mutex, &attr);
+
     fbname = malloc(CNF_PATH_SIZE);
     if ( fbname == NULL)
     {
       syslog_msg (0, WMR_C_TXT_3);
+      pthread_mutex_unlock(&job_mutex);
       exit(WMR_EXIT_FAILURE);
     }
     fbname =  (char *) basename( (const char *) argv[0]);
@@ -382,6 +388,7 @@ int main(int argc, char *argv[])
     if (wmr == NULL) 
     {
 	syslog_msg (0,WMR_C_TXT_37);
+        pthread_mutex_unlock(&job_mutex);
 	exit(WMR_EXIT_FAILURE);
     }
 
@@ -394,6 +401,7 @@ int main(int argc, char *argv[])
     if (weather == NULL) 
     {
 	syslog_msg (0,WMR_C_TXT_38);
+        pthread_mutex_unlock(&job_mutex);
 	exit(WMR_EXIT_FAILURE);
     }
 
@@ -413,10 +421,6 @@ int main(int argc, char *argv[])
 
 run = RR_WMR_ARGV; 
 
-//pthread_mutexattr_t attr;
-//pthread_mutexattr_init(&attr);
-//pthread_mutexattr_settype(&attr, PTHREAD_MUTEX_RECURSIVE_NP);
-//pthread_mutex_init(&job_mutex, &attr);
 
 
 //////////////////
@@ -428,7 +432,7 @@ run = RR_WMR_ARGV;
 	{
     	case RR_WMR_DATA:
 		wmr_read_data(wmr,weather);
-		//pthread_mutex_unlock(&job_mutex);
+		pthread_mutex_unlock(&job_mutex);
 
 /*
 		printf("- Exec: updEn: %d run.UPD[0]: %d run.UPD[1]: %d Key: %d\n", wmr->updEn, weather->run.UPD[0], weather->run.UPD[1], weather->run.shmid );
@@ -501,6 +505,7 @@ run = RR_WMR_ARGV;
 		{
     		    printf (WMR_C_TXT_16);
 		    lock_state( wmr->lock_file, wmr->daemonKill, wmr->syslogEn, wmr->debugEn, 1, 0);
+		    pthread_mutex_unlock(&job_mutex);
     		    exit(WMR_EXIT_FAILURE);
 		    break;
 		}
@@ -541,7 +546,7 @@ run = RR_WMR_ARGV;
 		if (weather != NULL) 				{ weather_close(weather, weather->run.shmid, weather->run.MAINpid, 0, wmr->syslogEn, wmr->debugEn );  }
 		if (wmr->daemonKill != 1 )			{ printf(WMR_C_TXT_21, argv[0]); }
 		if (wmr != NULL) 				{ wmr_close(wmr); }
-		//pthread_mutex_destroy(&job_mutex);
+		pthread_mutex_destroy(&job_mutex);
 		exit(WMR_EXIT_SUCCESS);
 		break;
 	case RR_WMR_ARGV:
@@ -632,6 +637,7 @@ run = RR_WMR_ARGV;
 			{
 				syslog_msg (wmr->syslogEn, WMR_C_TXT_29 );
 				lock_state( wmr->lock_file, wmr->daemonKill, wmr->syslogEn, wmr->debugEn, 1, 0);
+				pthread_mutex_unlock(&job_mutex);
         			exit(WMR_EXIT_FAILURE);
 			} else if (pid > 0) 
 			{
@@ -647,12 +653,14 @@ run = RR_WMR_ARGV;
 			if (sid < 0) 
 			{
 				syslog_msg (wmr->syslogEn, WMR_C_TXT_31 );
+				pthread_mutex_unlock(&job_mutex);
 				exit(WMR_EXIT_FAILURE);
 			}
 
 			if ((chdir("/")) < 0) 
 			{
 				syslog_msg (wmr->syslogEn, WMR_C_TXT_32 );
+				pthread_mutex_unlock(&job_mutex);
 				exit(WMR_EXIT_FAILURE);
 			}
 
@@ -692,7 +700,7 @@ run = RR_WMR_ARGV;
 
     syslog_msg (wmr->syslogEn, WMR_C_TXT_36 );
     wmr_close(wmr);
-    //pthread_mutex_destroy(&job_mutex);
+    pthread_mutex_destroy(&job_mutex);
 
     exit(WMR_EXIT_SUCCESS);
 }

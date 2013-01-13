@@ -40,6 +40,8 @@ WEATHER *weather_new( int seln, key_t shm_key, char * fname, int debugEn )
     key_t shmKey;
     struct shmid_ds shmstat;
 
+    pthread_mutex_lock(&job_mutex);
+
     switch(seln)
     {
         case 0:
@@ -111,6 +113,7 @@ WEATHER *weather_new( int seln, key_t shm_key, char * fname, int debugEn )
     		);
     }
 
+pthread_mutex_unlock(&job_mutex);
 return weather;
 }
 
@@ -118,6 +121,8 @@ int weather_close(WEATHER *weather, key_t shmID, pid_t MAINpid, int seln, int sy
 {
     int shmHN;
     struct shmid_ds shmstat;
+
+    pthread_mutex_lock(&job_mutex);
 
     if( MAINpid != getpid() )
     {
@@ -176,6 +181,7 @@ int weather_close(WEATHER *weather, key_t shmID, pid_t MAINpid, int seln, int sy
 
     }
 
+pthread_mutex_unlock(&job_mutex);
 return WMR_EXIT_SUCCESS;
 }
 
@@ -184,6 +190,8 @@ return WMR_EXIT_SUCCESS;
  ****************************/
 WMR *wmr_new( void )
 {
+
+    pthread_mutex_lock(&job_mutex);
 
     WMR *wmr = malloc(sizeof(WMR));
     if (wmr == NULL)
@@ -215,12 +223,15 @@ WMR *wmr_new( void )
 
     strcpy(wmr->conf_path,  WMR_CONFG_FILE );
 
+pthread_mutex_unlock(&job_mutex);
 return wmr;
 }
 
 int wmr_close( WMR *wmr )
 {
     hid_return ret;
+
+    pthread_mutex_lock(&job_mutex);
 
     if(wmr->hid)
     {
@@ -245,6 +256,8 @@ int wmr_close( WMR *wmr )
     }
 
 free(wmr);
+pthread_mutex_unlock(&job_mutex);
+
 return WMR_EXIT_SUCCESS;
 }
 
