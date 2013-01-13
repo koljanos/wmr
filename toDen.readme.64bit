@@ -1,0 +1,31 @@
+если первый варниг поправить - работает на 64бита, наверно там надо чего-то как-то типы постандартней указывать (32/64/хз чё вообще)
+
+
+
+$ make single
+gcc -I/usr/local/include -I/usr/include -I/usr/include -I/usr/local/lib/_include_ -DLANG_ENG -DGENTOO_HACK -DLINUX   -c -o src/wmr.o src/wmr.c
+src/wmr.c: In function ‘main’:
+src/wmr.c:384:15: warning: cast to pointer from integer of different size
+src/wmr.c:578:21: warning: cast from pointer to integer of different size
+gcc -I/usr/local/include -I/usr/include -I/usr/include -I/usr/local/lib/_include_ -DLANG_ENG -DGENTOO_HACK -DLINUX   -c -o src/wmr_conf.o src/wmr_conf.c
+gcc -I/usr/local/include -I/usr/include -I/usr/include -I/usr/local/lib/_include_ -DLANG_ENG -DGENTOO_HACK -DLINUX   -c -o src/wmr_syslog.o src/wmr_syslog.c
+src/wmr_syslog.c: In function ‘syslog_msg’:
+src/wmr_syslog.c:25:4: warning: format not a string literal and no format arguments
+src/wmr_syslog.c:29:4: warning: format not a string literal and no format arguments
+src/wmr_syslog.c:33:4: warning: format not a string literal and no format arguments
+gcc -I/usr/local/include -I/usr/include -I/usr/include -I/usr/local/lib/_include_ -DLANG_ENG -DGENTOO_HACK -DLINUX   -c -o src/wmr_util.o src/wmr_util.c
+src/wmr_util.c: In function ‘weather_new’:
+src/wmr_util.c:69:22: warning: cast from pointer to integer of different size
+src/wmr_util.c:92:22: warning: cast from pointer to integer of different size
+gcc -I/usr/local/include -I/usr/include -I/usr/include -I/usr/local/lib/_include_ -DLANG_ENG -DGENTOO_HACK -DLINUX   -c -o src/wmr_sensor.o src/wmr_sensor.c
+gcc -I/usr/local/include -I/usr/include -I/usr/include -I/usr/local/lib/_include_ -DLANG_ENG -DGENTOO_HACK -DLINUX   -c -o src/wmr_updexec.o src/wmr_updexec.c
+gcc -I/usr/local/include -I/usr/include -I/usr/include -I/usr/local/lib/_include_ -DLANG_ENG -DGENTOO_HACK -DLINUX   -c -o src/snmp/oiddb.o src/snmp/oiddb.c
+gcc -I/usr/local/include -I/usr/include -I/usr/include -I/usr/local/lib/_include_ -DLANG_ENG -DGENTOO_HACK -DLINUX   -c -o src/snmp/snmp.o src/snmp/snmp.c
+gcc -I/usr/local/include -I/usr/include -I/usr/include -I/usr/local/lib/_include_ -DLANG_ENG -DGENTOO_HACK -DLINUX   -c -o src/snmp/debug.o src/snmp/debug.c
+gcc -I/usr/local/include -I/usr/include -I/usr/include -I/usr/local/lib/_include_ -DLANG_ENG -DGENTOO_HACK -DLINUX   -c -o src/wmr_file.o src/wmr_file.c
+gcc -I/usr/local/include -I/usr/include -I/usr/include -I/usr/local/lib/_include_ -DLANG_ENG -DGENTOO_HACK -DLINUX   -c -o src/wmr_sql.o src/wmr_sql.c
+gcc -I/usr/local/include -I/usr/include -I/usr/include -I/usr/local/lib/_include_ -DLANG_ENG -DGENTOO_HACK -DLINUX   -c -o src/wmr_rrdtool.o src/wmr_rrdtool.c
+gcc -I/usr/local/include -I/usr/include -I/usr/include -I/usr/local/lib/_include_ -DLANG_ENG -DGENTOO_HACK -DLINUX   -c -o src/rrdupdate/rrd_update.o src/rrdupdate/rrd_update.c
+gcc -I/usr/local/include -I/usr/include -I/usr/include -I/usr/local/lib/_include_ -DLANG_ENG -DGENTOO_HACK -DLINUX   -c -o src/rrdupdate/rrd_misc.o src/rrdupdate/rrd_misc.c
+gcc -I/usr/local/include -I/usr/include -I/usr/include -I/usr/local/lib/_include_ -DLANG_ENG -DGENTOO_HACK -DLINUX   -c -o src/rrdupdate/rrd_generic.o src/rrdupdate/rrd_generic.c
+gcc src/wmr.o src/wmr_conf.o src/wmr_syslog.o src/wmr_util.o src/wmr_sensor.o src/wmr_updexec.o src/snmp/oiddb.o src/snmp/snmp.o src/snmp/debug.o src/wmr_file.o  src/wmr_sql.o  src/wmr_rrdtool.o src/rrdupdate/rrd_update.o src/rrdupdate/rrd_misc.o src/rrdupdate/rrd_generic.o src/wmr_alarm.o -o wmrd -L/usr/local/lib -L-L/usr/lib -L/usr/local/lib -lusb -lhid -lsqlite3 -lpthread
