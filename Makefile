@@ -126,8 +126,8 @@ single:         $(OBJS) $(OBJSLIBUPD) $(OBJSLIBSNMP) $(OBJSLIBFILE) $(OBJSLIBSQL
 		@echo '#define DATA_VERSION "'Den68 ASCII/SQL/RRD/SNMP - building: `date` '"' >src/wmr_build.h
 		$(CC) $(OBJS) $(OBJSLIBUPD) $(OBJSLIBSNMP) $(OBJSLIBFILE) $(OBJSLIBSQL) $(OBJSLIBRRD) $(OBJSLIBALARM) -o wmrd $(LIBS) ${LDFLAGS}
 		@rm -f $(OBJS) $(OBJSLIBUPD) $(OBJSLIBSNMP) $(OBJSLIBFILE) $(OBJSLIBSQL) $(OBJSLIBRRD) $(OBJSLIBALARM)
-#		@${TOOLCHAINPATH}/bin/strip wmrd
-#		@./goftp.sh
+		@${TOOLCHAINPATH}/bin/strip wmrd
+		@./goftp.sh
 
 shm:		$(OBJSSHM)
 		$(CC) $(OBJSSHM) -o shm

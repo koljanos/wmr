@@ -22,16 +22,22 @@ void syslog_msg ( int syslogEn, char *msg_string)
 	switch(syslogEn)
 	{
 		case 0:
-			printf( msg_string );
+			printf( (char *) msg_string );
 			break;
 		case 1:
 			openlog ("wmrd", LOG_PID | LOG_CONS, LOG_DAEMON);
-			syslog (LOG_NOTICE, msg_string);
+			syslog (LOG_NOTICE, (char *) msg_string);
 			closelog();
 			break;
 		case 2:
-			fprintf(stderr, msg_string );
+			fprintf(stderr,(char *) msg_string );
 			fflush(stderr);
 			break;
 	}
 }
+
+// 25:4: warning: format not a string literal and no format arguments
+// 29:4: warning: format not a string literal and no format arguments
+// 33:4: warning: format not a string literal and no format arguments
+
+ 
