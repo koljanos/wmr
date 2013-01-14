@@ -1,0 +1,8 @@
+munin_plugin.lst
+wmr_humidity
+wmr_pressure
+wmr_rain
+wmr_temp
+wmr_uv
+wmr_water
+wmr_wind

@@ -1,0 +1,84 @@
+#!/bin/sh
+#
+
+: << =cut
+
+=head1 NAME
+
+wmr_rain - Plugin to monitor WMR Oregon weather rain sensors 
+	   PCR800,RGR126 or other...
+wmr_rain
+
+=head1 CONFIGURATION
+
+The following enviroment variables are used by this plugin:
+
+ wmrconf - full path to config file to use. (Default /etc/wmr/wmr.conf)
+
+=head1 USAGE
+
+Place the plugin in the /etc/munin/plugins/ directory, and make it
+executable.
+
+=head1 AUTHOR
+
+Oregon Scientific WMR100/200/WMRS200/I300/I600/RMS600 protocol.
+Latest download URL: http://www.nkl.ru/support/wmr/
+Global download URL: http://code.google.com/p/wmr/
+
+Copyright (C) 2012 @Den68 <idg68@yandex.ru>
+
+=cut
+
+wmr_rain=${0##*/}
+sensor=${wmr_rain##*_}
+wmrconf=${wmrconf:-/etc/wmr/wmr.conf}
+autoconfst=0
+
+if [ "$1" = "autoconf" ]; then
+        if [ ! -x "`which sqlite3`" ]; then
+                echo "no '(sqlite3 not found)'"
+                autoconfst=1
+	fi
+
+	if [ ! -f $wmrconf ]; then
+                echo "no '(" $wmrconf " not found)'"
+                autoconfst=1
+	fi
+
+	if [ $autoconfst == 0 ]; then
+                echo yes
+        fi
+
+exit 0
+fi
+
+if [ "$1" = "config" ]; then
+  echo "graph_category WeatherStation"
+  echo "graph_title Rain"
+  echo "graph_args --base 1000"
+  echo "graph_vlabel mm (l/m^2)"
+  echo "rain_total.label rain"
+  echo "rain_total.type DERIVE"
+  echo "rain_total.min 0" 
+  echo "rain_total.draw LINE2"
+  echo "rain_total.cdef rain_total,100,*"
+  echo "rain_24h.label last 24h in mm"
+  echo "rain_24h.type DERIVE"
+  echo "rain_24h.min 0"
+  echo "rain_24h.draw LINE2"
+  echo "rain_24h.cdef rain_24h,100,*"
+  echo "rain_1h.label last h in mm/h"
+  echo "rain_1h.draw LINE2"
+  echo "rain_rate.label rate in mm/h"
+  echo "rain_rate.draw LINE2"
+exit 0
+fi
+
+SQLBASEPATH=`cat $wmrconf | grep SQLBASEPATH | awk '{ print $2 }'`
+echo "rain_total.value" `sqlite3 -column ${SQLBASEPATH} "select all_total from RAIN ORDER BY tdate DESC LIMIT 1"`
+echo "rain_24h.value" `sqlite3 -column ${SQLBASEPATH} "select day_total from RAIN ORDER BY tdate DESC LIMIT 1"`
+echo "rain_1h.value" `sqlite3 -column ${SQLBASEPATH} "select hour_total from RAIN ORDER BY tdate DESC LIMIT 1"`
+echo "rain_rate.value" `sqlite3 -column ${SQLBASEPATH} "select rate from RAIN ORDER BY tdate DESC LIMIT 1"`
+
+exit 0

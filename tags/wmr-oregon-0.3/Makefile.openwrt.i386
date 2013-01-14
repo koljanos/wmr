@@ -1,0 +1,88 @@
+#
+#
+
+VERSION = 0.2
+
+##
+## for i386 OpenWRT toolchain
+##
+## 
+CC      = /var/INSTALL/toolchain/openwrt/staging_dir/toolchain-i386_gcc4.1.2/bin/gcc
+## 
+CFLAGS  = -I/var/INSTALL/toolchain/openwrt/staging_dir/toolchain-i386_gcc4.1.2/include -I/usr/loca/lib/_include_
+## 
+CFLAGS += -std=gnu99  -Wall
+## 
+LIBS    = -L/usr/local/lib/i386 -L/var/INSTALL/toolchain/openwrt/staging_dir/toolchain-i386_gcc4.1.2/lib
+## 
+LDFLAGS = -lusb -lhid -lsqlite3 -lpthread -lm
+
+##
+## for i686 Linux
+#CC      = gcc
+#LIBS	= -L/usr/local/lib -L-L/usr/lib
+#CFLAGS  = -I/usr/local/include -I/usr/include
+#LDFLAGS = -lusb -lhid -lsqlite3 -lpthread
+
+OBJS		=	wmr.o wmr_conf.o wmr_rrdtool.o wmr_syslog.o 
+#rrdupdate/rrd_update.o rrdupdate/rrd_misc.o rrdupdate/rrd_generic.o
+
+# -----------------------------------------------------------------------
+# Sort out what operating system is being run and modify CFLAGS and LIBS
+#
+# If you add a new OSTYPE here please email it to me so that I can add
+# it to the distribution in the next release
+# -----------------------------------------------------------------------
+SYSTYPE := $(shell uname -s)
+
+ifeq ($(SYSTYPE), Linux)
+  CFLAGS += -DLINUX
+endif
+
+ifeq ($(SYSTYPE), SunOS)
+  CFLAGS += -DSOLARIS
+  LIBS   += -lposix4
+endif
+
+ifeq ($(SYSTYPE), FreeBSD)
+  CFLAGS += -DFREEBSD
+endif
+
+ifeq ($(SYSTYPE), AIX)
+  CFLAGS += -DAIX
+endif
+
+help:
+	@echo "  SYSTYPE = $(SYSTYPE)"
+	@echo "  CFLAGS = $(CFLAGS)"
+	@echo "  LIBS   = $(LIBS)"
+	@echo ""
+	@echo " "
+
+# Build the Linux executable
+all:		$(OBJS)
+		echo '#define DATA_VERSION "'Den68 ASCII/SQL/RRD - building: `date` '"' >wmr_build.h
+		$(CC) $(OBJS) -o wmr-oregon $(LIBS) ${LDFLAGS}
+		rm -f $(OBJS)
+
+# Clean up the object files and the sub-directory for distributions
+clean:
+		rm -f *~
+		rm -f $(OBJS) 
+		rm -f core *.asc 
+		rm -rf wmr-oregon
+
+# Installwmr-oregon into /usr/sbin
+install:
+		wmr-oregon
+		install -b -o root -g bin wmr-oregon /usr/sbin
+		install -b -o root -g bin script/wmr_alarm_advanced/wmr_logrotate.sh /usr/sbin
+		install -b -o root -g bin contrib/wmr.init /etc/rc.d/init.d
+		ln -s /etc/rc.d/init.d/wmr.init /etc/rc.d/rc3.d/S95wmr
+		ln -s /etc/rc.d/init.d/wmr.init /etc/rc.d/rc5.d/S95wmr
+		mkdir -p /var/weather
+		script/create_db_sqlite3.sh
+		mkdir -P /etc/wmr
+		install -b -o root -g bin contrib/wmr.conf /etc/wmr
+		mkdir -P /etc/wmr/script
+		cp -f -R script/wmr_alarm_advanced/etc/wmr/script /etc/wmr/script

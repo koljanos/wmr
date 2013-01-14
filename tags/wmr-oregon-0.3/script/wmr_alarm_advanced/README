@@ -1,0 +1,12 @@
+
+    Run only wmr-oregon software is alarm enabled
+
+make directory /etc/wmr/script/
+copy wmr.conf /etc/wmr/
+cpopy & edit all sensor named script in ./etc/wmr/script/ to /etc/wmr/script/
+copy this script to /usr/bin/wmr_alarm.sh
+edit /etc/wmr/wmr.conf - lines:
+ALARMENABLE 1
+ALARMBIN /usr/bin/wmr_alarm.sh
+
+Alarm event enable.
