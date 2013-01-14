@@ -22,7 +22,7 @@ fi
 if [ "$1" == "BATTERY" ]
 then
     #
-    # $2 - number of sensor 
+    # $2 - nuber of sensor 
     # $3 - value battery of sensor
     # $4 - name of sensor
     # sample:
@@ -32,7 +32,7 @@ then
     # "TEMP", "WIND", "RAIN", "UV", "MAIN", "WATER"
     #
 	echo "BATTERY NO GOOD: $4 $2 $3 !"
-	/usr/bin/wmr_sendms_sms.ru.sh "Weather station - BATTERY NO GOOD: $4 $2 $3 !"
+	# sendsms -n 89110000000 -t "Weather station - BATTERY NO GOOD: $4 $2 $3 !"
 	exit
 fi
 

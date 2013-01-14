@@ -2,7 +2,7 @@
  * Tested on wmrs200 all sensor.
  * Copyright:
  * 2009 Barnaby Gray <barnaby@pickle.me.uk> (initial source)
- * 2012-2013 Den68 <idg68@yandex.ru> http://www.nkl.ru/support/wmr/
+ * 2012 Den68 <idg68@yandex.ru> http://www.nkl.ru/support/wmr/
  * Latest download URL: http://www.nkl.ru/support/wmr/
  * Global download URL: http://code.google.com/p/wmr/
  * You should have received a copy of the GNU General Public License
@@ -41,7 +41,7 @@ protocol isn't openly documented, nor are clients provided for this platform.
 
 This  C program handles the USB protocol of the WMRxxx, or RMSxxx, or Ixxx, 
 and translates it an ASCII/SQLite3/RRD format, easy for parsing/analysing. 
-See directory scripts/ for example.
+See directory sripts/ for example.
 
 You'll need to setup the udev rules (see udev/README). 
 
@@ -56,7 +56,7 @@ After, check path to development library in Makefile, and run make this project:
 	make clean ; make all ; make install
 	vi /etc/wmr/wmr.conf
 	lsmod | grep usbhid
-	/usr/bin/wmrd -d -s -c /etc/wmr/wmr.conf
+	/usr/bin/wmr-oregon -d -s -c /etc/wmr/wmr.conf
 
 
 SQLite
@@ -69,38 +69,38 @@ Use:
 ------------------------------------
 
 To run: 
-	/usr/bin/wmrd -c /etc/wmr/wmr.conf
+	/usr/bin/wmr-oregon -c /etc/wmr/wmr.conf
 
  flag -c <value> = path and name to config file /etc/wmr/wmr.conf,
 		  default: /etc/wmr/wmr.conf
 
-	/usr/bin/wmrd -l /tmp/wmr/lock
+	/usr/bin/wmr-oregon -l /tmp/wmr/lock
 
  flag -l <value> = path directory to lock file /tmp/wmr, name of lock file
-		  generated automation, default: wmrd.lock 
+		  generated automation, default: wmr-oregon.lock 
 		  default: /var/lock
 		  for get pid of runing programm, use:
-		  cat /var/lock/wmrd.lock
+		  cat /var/lock/wmr-oregon.lock
 
-	/usr/bin/wmrd -d -c /etc/wmr/wmr.conf
+	/usr/bin/wmr-oregon -d -c /etc/wmr/wmr.conf
 
  flag -d = start is a daemon server mode. (loging only syslog)
 	  flag -s automatic enable.
 
-	/usr/bin/wmrd -s -c /etc/wmr/wmr.conf
+	/usr/bin/wmr-oregon -s -c /etc/wmr/wmr.conf
 
  flag -s = print all info & debug info to local syslog server.
 
-	/usr/bin/wmrd -v
+	/usr/bin/wmr-oregon -v
 
  flag -v = print all config token from config file,
 	   this options require flag -c <path/to/config/name.ext>
 	   before.
 
-	/usr/bin/wmrd -k
+	/usr/bin/wmr-oregon -k
 
- flag -k = kill memory copy programm wmrd running in daemon mode.
-	   Analog: kill -TERM `pidof wmrd`
+ flag -k = kill memory copy programm wmr-oregon running in daemon mode.
+	   Analog: kill -TERM `pidof wmr-oregon`
 
 To autostart: 
 	cp contrib/wmr.init /etc/rc.d/init.d/
@@ -108,17 +108,17 @@ To autostart:
 	ln -s /etc/rc.d/init.d/wmr.init /etc/rc.d/rc5.d/S95wmr
 
 To reread config file, send:  
-	kill -HUP `pidof wmrd
+	kill -HUP `pidof wmr-oregon
 
 To reread config file and re init USB device, send:  
-	kill -USR1 `pidof wmrd`
+	kill -USR1 `pidof wmr-oregon`
 
 To logrotate data file - log/sql/rrd, send:  
-	kill -USR2 `pidof wmrd`
+	kill -USR2 `pidof wmr-oregon`
 	- run & see script/wmr_logrotate.sh
 
-To stop wmrd in daemon mode, send:
-	kill -TERM `pidof wmrd`
+To stop wmr-oregon in daemon mode, send:
+	kill -TERM `pidof wmr-oregon`
 
 To update internet weather hosting, support: 
 	www.pwsweather.com, 
@@ -128,7 +128,7 @@ To update internet weather hosting, support:
 
 Alarm event:
 ------------------------------------
-Edit section alarm in config file. For event alarming, wmrd runing
+Edit section alarm in config file. For event alarming, wmr-oregon runing
 script. Default: /usr/bin/wmr_alarm.sh
 - see script/wmr_alarm.sh & edit for you job.
 - see script/controlling/C2000-CP1.php for controling 4 line from C2000-CP1
@@ -149,11 +149,7 @@ If sensor type = BATTERY, format command:
 Valid type of sensor:
     All data sensor: "TEMP", "HUMIDITY", "PRESSURE", "WIND", "RAIN", "UV"
     Battery check sensor: "MAIN", "WATER", "TEMP", "WIND", "RAIN", "UV"
-
 Advanced user frendly alarm script in script/wmr_alarm_advanced/ - see for detail ... 
-Default to install advanced alarm script in /usr/bin/wmr_alarm.sh
-Sub user edit script default locate in /etc/wmr/script_alarm
-
 
 Logrotate data LOG/SQL/RRD:
 ------------------------------------
@@ -172,22 +168,6 @@ or, insert cron job new line:
 
  for every year:
    0 0 1 1 * * /usr/bin/wmr_logrotate.sh -logrotate
-
-
-Create graphical image from RRD database
-------------------------------------
-
-Web & wmr graphical image file create in directory
-defined from wmr.conf: GRAPHPATH, default directory
-is /var/www, if other, edit this.
-
-rrdtool use to create graphical image, this image needed
-to php web interface, or visual view weather statistic.
-Use /usr/bin/wmr_create_graph_rrd.sh to create web graphical image.
-
- for every 10 minute create new image, insert cron job new line:
-   0/10 0 * * * * /usr/bin/wmr_create_graph_rrd.sh
-
 
 MUNIN integrate support:
 ------------------------------------
@@ -211,16 +191,4 @@ MUNIN PLUGIN LIST:
     * wmr_water		- Water temperature sensor (THWR288)
 
 See script/munin/README.* for more info.
-
-CACTI integrate support
---------------------------------------
-
-Install WMR plugin for cacti: 
-
-1. Check & edit path to wmr.conf in plugin from this direcory. 
-2. Place the plugin in the exec allowed path to cacti, samle:    /www/cacti/plugins/ , and make it executable. 
-3. Insert new job in cacti admin panel: 
-   Data Input Method -> Data Template -> Data Source ->   Graph Template -> Graph -> Graph Tree
-
-See script/cacti/ for more info.
 

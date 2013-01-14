@@ -5,9 +5,9 @@
 # support all USB oregon device (WMR100/200/WMRS200/I300/I600/RMS600 ..)
 #
 
-WMRBIN="/usr/bin/wmrd"
+WMRBIN="/usr/bin/wmr-oregon"
 WMRCNF="/etc/wmr/wmr.conf"
-WMRLCK="/var/lock/subsys/wmrd"
+WMRLCK="/var/lock/subsys/wmr-oregon"
 
 #
 #
@@ -53,8 +53,8 @@ function stop()
 {
     if [ -f ${WMRLCK} ] ; then
        echo -n "Stopping WMR Oregon logger:"
-       # killall wmrd
-	kill -TERM `pidof wmrd`
+       # killall wmr-oregon
+	kill -TERM `pidof wmr-oregon`
        RETVAL=$?
        if [ $RETVAL -eq 0 ] ; then
           rm -f ${WMRLCK}
@@ -77,7 +77,7 @@ function condrestart()
 
 function status()
 {
-    echo `pidof wmrd`
+    echo `pidof wmr-oregon`
 }
 
 case "$1" in 

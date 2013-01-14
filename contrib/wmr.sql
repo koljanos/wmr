@@ -1,4 +1,4 @@
-create table MAIN
+create table CLOCK
 (
 tdate datetime PRIMARY KEY UNIQUE,
 battery int(2),
@@ -59,8 +59,7 @@ dir char(5),
 speed float(5),
 avgspeed float(5),
 low_speed float(5),
-high_speed float(5),
-wind_chill float(5)
+high_speed float(5)
 );
 
 create table UV

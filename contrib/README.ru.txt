@@ -8,9 +8,7 @@ WMR - новый компактный софт снимающий данные с погодной станции и сохраняющий
  - компактный (подходит для установки на роутерах), 
  - умеет работать демоном, использовать syslog,
  - данные пишет в различных форматах удобных для обработки. 
- - для построения визуальных графиков использует rrdtool, может работать 
-   как с внешним пакетом rrdtool, так и имеет встроенную независимую от пакета
-   rrdtool функцию обновления графиков в формате rrd.
+ - для построения визуальных графиков использует rrd-tool. 
 
 Поддерживаемые форматы хранения данных:
 
@@ -32,20 +30,22 @@ WMR - новый компактный софт снимающий данные с погодной станции и сохраняющий
 
 
 Подходит для установки на роутеры, требует библиотек: 
-  * libusb,  
-  * libhid,  
-  * libsqlite3,
-  * rrd-toots (опционально)
+  * libusb 0.x (http://www.libusb.org/ "libusb-compat"),  
+  * libhid (http://libhid.alioth.debian.org/),  
+  * libsqlite3 (http://www.sqlite.org/download.html),
+  * rrd-toots (опционально) (http://oss.oetiker.ch/rrdtool/download.en.html)
 
-Последняя версия:
-http://www.nkl.ru/support/wmr/wmr-oregon-latest.tar.gz
+Домашняя страничка программы wmr-oregon:
 http://code.google.com/p/wmr/
 
 Документация, обновления, модули:
 http://www.nkl.ru/support/wmr/
 
 На сайте есть готовая сборка под  OpenWRT для RouteBoard 2xx (i386):
-http://www.nkl.ru/support/wmr/wmrd-OpenWrt_i386_bin.tar.gz
+http://www.nkl.ru/support/wmr/wmr-oregon-OpenWrt_i386_bin.tar.gz
+
+Последняя версия:
+http://www.nkl.ru/support/wmr/wmr-oregon-latest.tar.gz
 
 
 SQLite
@@ -104,42 +104,42 @@ Alarm'ы / события / ахтунги
 
 Для запуска в консольном режиме: 
 
-	/usr/bin/wmrd -c /etc/wmr.conf
+	/usr/bin/wmr-oregon -c /etc/wmr.conf
 
  ключ -c <значение> = полный путь и имя конфигурационного файла, 
 		      обычно по умолчанию /etc/wmr/wmr.conf
 
-	/usr/bin/wmrd -l /tmp/wmr
+	/usr/bin/wmr-oregon -l /tmp/wmr
 
  ключ -l <значение> = полный путь к файлу блокировки запущенной программы
 		      в режиме демона, имя файла блокировки файла: 
-		      wmrd.lock, в нем содержится пид запущенной 
+		      wmr-oregon.lock, в нем содержится пид запущенной 
 		      программы, узнать пид можно командой: 
-		      cat /var/lock/wmrd.lock	
+		      cat /var/lock/wmr-oregon.lock	
 		      по умолчанию путь для файла блоктровки: /var/lock
 
-	/usr/bin/wmrd -d -c /etc/wmr.conf
+	/usr/bin/wmr-oregon -d -c /etc/wmr.conf
 
  ключ -d = запустить в режиме демона, при этом режим вывода отладочной 
 	   и иной информации автоматический перенаправляется в syslog,
 	   даже если ключ -s небыл указан.
 
-	/usr/bin/wmrd -s -c /etc/wmr.conf
+	/usr/bin/wmr-oregon -s -c /etc/wmr.conf
 
  ключ -s = вывод отладочной и иной информации перенаправляется в syslog.
 
-	/usr/bin/wmrd -c /etc/wmr.conf -v
+	/usr/bin/wmr-oregon -c /etc/wmr.conf -v
 
  ключ -v = показать все параметры конфигурационного файла, информацию 
 	   о программе и ключах запуска. После отображение информации 
 	   происходит выход из программы.
 	   Ключ -c <значение> должен быть установлен до ключа -v
 
-	/usr/bin/wmrd -k
+	/usr/bin/wmr-oregon -k
 
- ключ -k = выхоод запущенной копии wmrd в режиме демона,
+ ключ -k = выхоод запущенной копии wmr-oregon в режиме демона,
 	   иными словами - завершить работу программы, аналогично:
-	   kill -TERM `pidof wmrd`
+	   kill -TERM `pidof wmr-oregon`
 
 Для автозагрузки, применить указанные ниже комманды, это пример, конкретное
 расположение и названия файлов зависит от дистрибутива:
@@ -149,18 +149,18 @@ Alarm'ы / события / ахтунги
 	ln -s /etc/rc.d/init.d/wmr.init /etc/rc.d/rc5.d/S95wmr
 
 Для вступления изменений произведенных в конфиг файле, если прграмма запущена:  
-	kill -HUP `pidof wmrd`
+	kill -HUP `pidof wmr-oregon`
 
 Для вступления изменений произведенных в конфиг файле, и переинициализации USB 
 соединения, если прграмма запущена:  
-	kill -USR1 `pidof wmrd`
+	kill -USR1 `pidof wmr-oregon`
 
 Для ротации файлов log/sql/rrd, выполнить:  
-	kill -USR2 `pidof wmrd`
+	kill -USR2 `pidof wmr-oregon`
 	при этом выполняется скрипт script/wmr_logrotate.sh                    
 
 Для остановки программы запущенной в реждиме демона, выполнить:  
-	kill -TERM `pidof wmrd`
+	kill -TERM `pidof wmr-oregon`
 	или
-	/usr/bin/wmrd -k
+	/usr/bin/wmr-oregon -k
 

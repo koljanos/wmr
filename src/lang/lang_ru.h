@@ -1,1 +1,0 @@
-lang_ru_KOI8.h

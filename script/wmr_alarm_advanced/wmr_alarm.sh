@@ -19,13 +19,13 @@ then
 fi
 
 if [ "$1" == "TEMP" ] || [ "$1" == "HUMIDITY" ] ; then
-    /etc/wmr/script_alarm/WMR_${1}_${2}_${4}.sh $3
+    /etc/wmr/script/WMR_${1}_${2}_${4}.sh $3
     exit
 elif [ "$1" == "PRESSURE" ] || [ "$1" == "RAIN" ] || [ "$1" == "WIND" ] || [ "$1" == "UV" ] || [ "$1" == "WATER" ] ; then
-    /etc/wmr/script_alarm/WMR_${1}_${4}.sh $3
+    /etc/wmr/script/WMR_${1}_${4}.sh $3
     exit
 elif [ "$1" == "BATTERY" ] ; then
-    /etc/wmr/script_alarm/WMR_${1}.sh ${4} ${2} ${3}
+    /etc/wmr/script/WMR_${1}.sh ${4} ${2} ${3}
 fi
 
 exit 0

@@ -7,9 +7,9 @@
 
 START=60
 
-WMRBIN="/usr/bin/wmrd"
+WMRBIN="/usr/bin/wmr-oregon"
 WMRCNF="/etc/wmr/wmr.conf"
-WMRLCK="/var/lock/wmrd"
+WMRLCK="/var/lock/wmr-oregon"
 
 #
 #
@@ -46,8 +46,8 @@ stop()
 {
     if [ -f ${WMRLCK} ] ; then
        echo -n "Stopping WMR Oregon logger:"
-       # killall wmrd
-	kill -TERM `pidof wmrd`
+       # killall wmr-oregon
+	kill -TERM `pidof wmr-oregon`
        RETVAL=$?
        if [ $RETVAL -eq 0 ] ; then
           rm -f ${WMRLCK}
