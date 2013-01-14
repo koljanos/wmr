@@ -1,0 +1,75 @@
+#!/bin/sh
+#
+
+: << =cut
+
+=head1 NAME
+
+wmr_humidity_X - Plugin to monitor WMR Oregon weather temperature / humidity
+	         sensors THGN801, THGR810 or other. X - number of sensor.
+wmr_humidity_X
+
+=head1 CONFIGURATION
+
+The following enviroment variables are used by this plugin:
+
+ wmrconf - full path to config file to use. (Default /etc/wmr/wmr.conf)
+
+=head1 USAGE
+
+Place link the plugin in the /etc/munin/plugins/ directory, and make it
+executable.
+Example:
+         ln -s /path/to/plugin/wmr_humidity_X /etc/munin/plugins/wmr_humidity_2
+         ln -s /path/to/plugin/wmr_humidity_X /etc/munin/plugins/wmr_humidity_3
+         ln -s /path/to/plugin/wmr_humidity_X /etc/munin/plugins/wmr_humidity_4
+         .... etc
+         X - number of temperature / humidity  sensor,
+         base complect: 0 - indor, 1 - outdoor, 2,3,4 ... other extended
+
+=head1 AUTHOR
+
+Oregon Scientific WMR100/200/WMRS200/I300/I600/RMS600 protocol.
+Latest download URL: http://www.nkl.ru/support/wmr/
+Global download URL: http://code.google.com/p/wmr/
+
+Copyright (C) 2012 @Den68 <idg68@yandex.ru>
+
+=cut
+
+wmr_humidity=${0##*/}
+sensor=${wmr_humidity##*_}
+wmrconf=${wmrconf:-/etc/wmr/wmr.conf}
+autoconfst=0
+
+if [ "$1" = "autoconf" ]; then
+        if [ ! -x "`which sqlite3`" ]; then
+                echo "no '(sqlite3 not found)'"
+                autoconfst=1
+	fi
+
+	if [ ! -f $wmrconf ]; then
+                echo "no '(" $wmrconf " not found)'"
+                autoconfst=1
+	fi
+
+	if [ $autoconfst == 0 ]; then
+                echo yes
+        fi
+
+exit 0
+fi
+
+if [ "$1" = "config" ]; then
+  echo "graph_category WeatherStation"
+  echo "graph_title rel. Humidity - extended sensor ( ${sensor} )"
+  echo "graph_args --base 1000 --vertical-label %"
+  echo "humid.label rel. Humidity"
+  echo "humid.draw LINE2"
+exit 0
+fi
+
+SQLBASEPATH=`cat $wmrconf | grep SQLBASEPATH | awk '{ print $2 }'`
+echo "humid.value" `sqlite3 -column ${SQLBASEPATH} "select humidity from TEMP where sensor = ${sensor} ORDER BY tdate DESC LIMIT 1"`
+
+exit 0

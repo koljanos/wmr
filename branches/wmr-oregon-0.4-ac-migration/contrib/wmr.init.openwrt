@@ -1,0 +1,59 @@
+#! /bin/bash
+#
+# chkconfig: 2345 9 91
+# description: start and stop WMR - Weather Logger for (c) Oregon Scientific USB protocol
+# support all USB oregon device (WMR100/200/WMRS200/I300/I600/RMS600 ..)
+#
+
+START=60
+
+WMRBIN="/usr/bin/wmrd"
+WMRCNF="/etc/wmr/wmr.conf"
+WMRLCK="/var/lock/wmrd"
+
+#
+#
+
+PATH=/bin:/sbin:/usr/bin:/usr/sbin
+
+[ -f ${WMRBIN} ] || exit 0
+[ -f ${WMRCNF} ] || exit 0
+RETVAL=0
+
+start()
+{
+    # don't start again if it's already started
+    [ ! -f ${WMRLCK} ] || exit 0
+
+    INSMODHID=`lsmod | grep usbhid`
+    if [ "$INSMODHID" == "" ] ; 
+    then
+	echo -n "Insert kernel module usbhid.ko: "
+	insmod usbhid
+    fi
+
+    echo -n "Starting WMR Oregon logger: "
+    rm -f /tmp/WMR*.lock
+    # daemon ${WMRBIN} -s -c ${WMRCNF}
+    ${WMRBIN} -d -s -c ${WMRCNF}
+    RETVAL=$?
+    if [ $RETVAL -eq 0 ] ; then
+       touch ${WMRLCK}
+    fi
+}
+
+stop()
+{
+    if [ -f ${WMRLCK} ] ; then
+       echo -n "Stopping WMR Oregon logger:"
+       # killall wmrd
+	kill -TERM `pidof wmrd`
+       RETVAL=$?
+       if [ $RETVAL -eq 0 ] ; then
+          rm -f ${WMRLCK}
+       fi
+    fi
+}
+
+
+exit 0

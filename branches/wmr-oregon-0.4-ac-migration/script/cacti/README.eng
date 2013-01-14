@@ -1,0 +1,26 @@
+1. Check & edit path to wmr.conf in plugin from this direcory. 
+2. Place the plugin in the exec allowed path to cacti, sample:    
+   /www/cacti/plugins/ , and make it executable. 
+3. Insert new job in cacti admin panel: 
+   Data Input Method -> Data Template -> Data Source -> 
+   Graph Template -> Graph -> Graph Tree
+
+CACTI PLUGIN LIST:
+
+    * wmr_cacti_temp		- Temperature sensor (indoor / outdor), for more default 2 sensor,
+				  include insert THGN801,THGR810 or other, edit plugin and add new sensor graphic.  
+    * wmr_cacti_humidity	- Humidity sensor (indoor / outdor), for more default 2 sensor,
+            		          include insert THGN801,THGR810 or other, edit plugin and add new sensor graphic.
+    * wmr_cacti_pressure	- Pressure sensor in main unit.
+    * wmr_cacti_wind		- Wind sensor (WGR800)
+    * wmr_cacti_rain		- Rain sensor (PCR800,RGR126) or other ...
+    * wmr_cacti_uv		- UV sensor (UVN800)
+    * wmr_cacti_water		- Water temperature sensor (THWR288)
+    * wmr_cacti_*_X		- extended temperature / humidity sensor
+
+
+Download latest wmr-cacti:
+http://www.nkl.ru/support/wmr/wmr-cacti.tar.gz 
+
+Cacti - visualisation monitor:
+http://www.cacti.net/download_cacti.php
