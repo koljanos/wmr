@@ -1,0 +1,17 @@
+1. Check & edit path to wmr.conf in plugin from this direcory.
+2. Place the plugin in the /etc/munin/plugins/ directory, and make it executable.
+3. Restart munin
+
+MUNIN PLUGIN LIST:
+
+    * wmr_munin_temp		- Temperature sensor (indoor / outdor), for more default 2 sensor,
+				  include insert THGN801,THGR810 or other, edit plugin and add new sensor graphic.  
+    * wmr_munin_humidity	- Humidity sensor (indoor / outdor), for more default 2 sensor,
+            		          include insert THGN801,THGR810 or other, edit plugin and add new sensor graphic.
+    * wmr_munin_pressure	- Pressure sensor in main unit.
+    * wmr_munin_wind		- Wind sensor (WGR800)
+    * wmr_munin_rain		- Rain sensor (PCR800,RGR126) or other ...
+    * wmr_munin_uv		- UV sensor (UVN800)
+    * wmr_munin_water		- Water temperature sensor (THWR288)
+    * wmr_munin_*_X		- extended temperature / humidity sensor
+
