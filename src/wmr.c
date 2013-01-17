@@ -381,8 +381,12 @@ pthread_mutex_init(&job_mutex, &attr);
       pthread_mutex_unlock(&job_mutex);
       exit(WMR_EXIT_FAILURE);
     }
-    fbname =  (char *) basename( (const char *) argv[0]);
-    // memcpy(fbname, basename(argv[0]), strlen( basename(argv[0]) ) );
+
+// warning: cast to pointer from integer of different size
+//
+    fbname =  (char *) basename( (char **) argv[0]);
+    // fbname =  (char *) basename( (const char *) argv[0]);
+    //memcpy(fbname, (char *) basename(argv[0]), strlen( basename(argv[0]) ) );
 
     wmr = wmr_new();
     if (wmr == NULL) 
@@ -575,7 +579,11 @@ run = RR_WMR_ARGV;
     		} else {
 			sprintf (err_string, WMR_C_TXT_24, wmr->hid->id);
 			syslog_msg (0, err_string);
-			wmr_print_state( (unsigned int) wmr->hid, 1 );
+
+// warning: cast from pointer to integer of different size
+//
+//			wmr_print_state( (unsigned int) wmr->hid, 1 );
+			wmr_print_state( wmr->hid, 1 );
 			run = RR_WMR_RCONF;
 		}	
 		break;

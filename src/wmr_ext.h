@@ -78,7 +78,8 @@ unsigned char const INIT_PACKET2[] = { 0x01, 0xd0, 0x08, 0x01, 0x00, 0x00, 0x00,
     // UTILs
     extern WMR *wmr_new( void );
     extern int wmr_close( WMR * );
-    extern void wmr_print_state( unsigned int, int );
+//    extern void wmr_print_state( unsigned int, int );
+    extern void wmr_print_state( HIDInterface *, int );
     extern void get_curtime( char ** );
     extern int logrotate ( sqlite3 **, FILE **, char *, int, char *, int, char *, int, char *, int, int );
     extern int kill_prog(char *, int, int );
