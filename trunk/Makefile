@@ -1,6 +1,6 @@
 #
 #
-COMPILE = i686
+COMPILE = i386
 
 VERSION = 0.4
 
@@ -126,8 +126,8 @@ single:         $(OBJS) $(OBJSLIBUPD) $(OBJSLIBSNMP) $(OBJSLIBFILE) $(OBJSLIBSQL
 		@echo '#define DATA_VERSION "'Den68 ASCII/SQL/RRD/SNMP - building: `date` '"' >src/wmr_build.h
 		$(CC) $(OBJS) $(OBJSLIBUPD) $(OBJSLIBSNMP) $(OBJSLIBFILE) $(OBJSLIBSQL) $(OBJSLIBRRD) $(OBJSLIBALARM) -o wmrd $(LIBS) ${LDFLAGS}
 		@rm -f $(OBJS) $(OBJSLIBUPD) $(OBJSLIBSNMP) $(OBJSLIBFILE) $(OBJSLIBSQL) $(OBJSLIBRRD) $(OBJSLIBALARM)
-#		@${TOOLCHAINPATH}/bin/strip wmrd
-#		@./goftp.sh
+		@${TOOLCHAINPATH}/bin/strip wmrd
+		@./goftp.sh
 
 shm:		$(OBJSSHM)
 		$(CC) $(OBJSSHM) -o shm
@@ -163,7 +163,7 @@ install-shared:
 
 install-single:
 		install -b -o root -g bin wmrd /usr/sbin
-		install -b -o root -g bin script/wmr_alarm_advanced/wmr_logrotate.sh /usr/sbin
+		install -b -o root -g bin script/wmr_alarm.sh /usr/sbin
 		install -b -o root -g bin script/wmr_sendms_sms.ru.sh /usr/sbin
 		install -b -o root -g bin script/wmr_create_db_sqlite3.sh /usr/sbin
 		install -b -o root -g bin script/wmr_create_db_rrd.sh /usr/sbin
@@ -177,9 +177,9 @@ install-single:
 		@mkdir -P /etc/wmr/script_alarm
 		@mkdir -P /etc/wmr/script_update
 		@mkdir -P /etc/wmr/script_graph
-		@cp -f -R script/wmr_alarm_advanced/etc/wmr/script_alarm /etc/wmr/script_alarm
-		@cp -f -R script/wmr_alarm_advanced/etc/wmr/script_graph /etc/wmr/script_graph
-		@cp -f -R script/wmr_alarm_advanced/etc/wmr/script_update /etc/wmr/script_update
+		@cp -f -R script/wmr_etc/etc/wmr/script_alarm /etc/wmr/script_alarm
+		@cp -f -R script/wmr_etc/etc/wmr/script_graph /etc/wmr/script_graph
+		@cp -f -R script/wmr_etc/etc/wmr/script_update /etc/wmr/script_update
 		@mkdir -p /var/weather
 		@script/wmr_create_db_sqlite3.sh
 		@script/wmr_create_db_rrd.sh
