@@ -35,7 +35,7 @@ wmrconf=${wmrconf:-/etc/wmr/wmr.conf}
             exit
         fi
 
-	GRAPHPERIOD=`cat $wmrconf | grep GRAPHPERIOD | awk '{ print $2 }'`
+	GRAPHPERIOD=`cat $wmrconf | grep GRAPHPERIOD | awk -F'\"' '{ print $2 }'`
 
         if [ "${GRAPHPERIOD}" == "" ]; then
             echo "Error: '(period to create graphic file - give from wmr.conf not found)'"
@@ -88,6 +88,7 @@ wmrconf=${wmrconf:-/etc/wmr/wmr.conf}
 
 IMGCSIZE="l s"
 WATERSENSOR="0 1 2 3 4"
+TEMPSENSOR="0 1 2 3 4 5 6 7 8 9"
 WATERMARKOREGON="WMR Oregon Scientific USB weather data logger (c)created http://code.google.com/p/wmr/"
 
 for n in ${GRAPHPERIOD}
@@ -111,28 +112,36 @@ do
 		###############
 		if [ -f "${RRDSAVEPATH}/TEMP_0.rrd" ] && [ -f "${RRDSAVEPATH}/TEMP_1.rrd" ] ;
 		then
-			${GRAPHEXECPATH}/wmr_graph_Humidity.sh 2 ${RRDEXECPATH} ${RRDSAVEPATH} ${GRAPHIMGPATH} ${i} ${n} ${IMGWSIZE} ${IMGHSIZE}
+			${GRAPHEXECPATH}/wmr_graph_Humidity_all.sh 2 ${RRDEXECPATH} ${RRDSAVEPATH} ${GRAPHIMGPATH} ${i} ${n} ${IMGWSIZE} ${IMGHSIZE} ${i}
 		else
-			${GRAPHEXECPATH}/wmr_graph_Humidity.sh 1 ${RRDEXECPATH} ${RRDSAVEPATH} ${GRAPHIMGPATH} ${i} ${n} ${IMGWSIZE} ${IMGHSIZE}
+			${GRAPHEXECPATH}/wmr_graph_Humidity_all.sh 1 ${RRDEXECPATH} ${RRDSAVEPATH} ${GRAPHIMGPATH} ${i} ${n} ${IMGWSIZE} ${IMGHSIZE} ${i}
 		fi
 
 		###############
 		### Temperature
 		###############
 		if [ -f "${RRDSAVEPATH}/TEMP_0.rrd" ] && [ -f "${RRDSAVEPATH}/TEMP_1.rrd" ] && [ -f "${RRDSAVEPATH}/WIND_0.rrd" ] ; then
-			${GRAPHEXECPATH}/wmr_graph_Temperature.sh 3 ${RRDEXECPATH} ${RRDSAVEPATH} ${GRAPHIMGPATH} ${i} ${n} ${IMGWSIZE} ${IMGHSIZE}
+			${GRAPHEXECPATH}/wmr_graph_Temperature_all.sh 3 ${RRDEXECPATH} ${RRDSAVEPATH} ${GRAPHIMGPATH} ${i} ${n} ${IMGWSIZE} ${IMGHSIZE} ${i}
 		elif [ -f "${RRDSAVEPATH}/TEMP_0.rrd" ] && [ -f "${RRDSAVEPATH}/TEMP_1.rrd" ] ; then
-			${GRAPHEXECPATH}/wmr_graph_Temperature.sh 2 ${RRDEXECPATH} ${RRDSAVEPATH} ${GRAPHIMGPATH} ${i} ${n} ${IMGWSIZE} ${IMGHSIZE}
+			${GRAPHEXECPATH}/wmr_graph_Temperature_all.sh 2 ${RRDEXECPATH} ${RRDSAVEPATH} ${GRAPHIMGPATH} ${i} ${n} ${IMGWSIZE} ${IMGHSIZE} ${i}
 		elif [ -f "${RRDSAVEPATH}/TEMP_0.rrd" ] ; then
-			${GRAPHEXECPATH}/wmr_graph_Temperature.sh 1 ${RRDEXECPATH} ${RRDSAVEPATH} ${GRAPHIMGPATH} ${i} ${n} ${IMGWSIZE} ${IMGHSIZE}
+			${GRAPHEXECPATH}/wmr_graph_Temperature_all.sh 1 ${RRDEXECPATH} ${RRDSAVEPATH} ${GRAPHIMGPATH} ${i} ${n} ${IMGWSIZE} ${IMGHSIZE} ${i}
 		fi
+
+		for z in ${TEMPSENSOR}
+		do
+			if [ -f "${RRDSAVEPATH}/TEMP_${z}.rrd" ] ;
+			then 
+				${GRAPHEXECPATH}/wmr_graph_TempHum.sh ${z} ${RRDEXECPATH} ${RRDSAVEPATH} ${GRAPHIMGPATH} ${i} ${n} ${IMGWSIZE} ${IMGHSIZE} ${i}
+			fi
+		done
 
 		###############
 		### Wind
 		###############
 		if [ -f "${RRDSAVEPATH}/WIND_0.rrd" ] ;
 		then 
-			${GRAPHEXECPATH}/wmr_graph_Wind.sh 1 ${RRDEXECPATH} ${RRDSAVEPATH} ${GRAPHIMGPATH} ${i} ${n} ${IMGWSIZE} ${IMGHSIZE}
+			${GRAPHEXECPATH}/wmr_graph_Wind.sh 1 ${RRDEXECPATH} ${RRDSAVEPATH} ${GRAPHIMGPATH} ${i} ${n} ${IMGWSIZE} ${IMGHSIZE} ${i}
 		fi
 
 		###############
@@ -140,7 +149,7 @@ do
 		###############
 		if [ -f "${RRDSAVEPATH}/RAIN_0.rrd" ] ;
 		then 
-			${GRAPHEXECPATH}/wmr_graph_Rain.sh 1 ${RRDEXECPATH} ${RRDSAVEPATH} ${GRAPHIMGPATH} ${i} ${n} ${IMGWSIZE} ${IMGHSIZE}
+			${GRAPHEXECPATH}/wmr_graph_Rain.sh 1 ${RRDEXECPATH} ${RRDSAVEPATH} ${GRAPHIMGPATH} ${i} ${n} ${IMGWSIZE} ${IMGHSIZE} ${i}
 		fi
 
 		###############
@@ -148,7 +157,7 @@ do
 		###############
 		if [ -f "${RRDSAVEPATH}/PRESSURE_0.rrd" ] ;
 		then 
-			${GRAPHEXECPATH}/wmr_graph_Pressure.sh 1 ${RRDEXECPATH} ${RRDSAVEPATH} ${GRAPHIMGPATH} ${i} ${n} ${IMGWSIZE} ${IMGHSIZE}
+			${GRAPHEXECPATH}/wmr_graph_Pressure.sh 1 ${RRDEXECPATH} ${RRDSAVEPATH} ${GRAPHIMGPATH} ${i} ${n} ${IMGWSIZE} ${IMGHSIZE} ${i}
 		fi
 
 		###############
@@ -156,7 +165,7 @@ do
 		###############
 		if [ -f "${RRDSAVEPATH}/UV_0.rrd" ] ;
 		then 
-			${GRAPHEXECPATH}/wmr_graph_UV.sh 1 ${RRDEXECPATH} ${RRDSAVEPATH} ${GRAPHIMGPATH} ${i} ${n} ${IMGWSIZE} ${IMGHSIZE}
+			${GRAPHEXECPATH}/wmr_graph_UV.sh 1 ${RRDEXECPATH} ${RRDSAVEPATH} ${GRAPHIMGPATH} ${i} ${n} ${IMGWSIZE} ${IMGHSIZE} ${i}
 		fi
 
 		###############
@@ -166,7 +175,7 @@ do
 		do
 			if [ -f "${RRDSAVEPATH}/WATER_${z}.rrd" ] ;
 			then 
-				${GRAPHEXECPATH}/wmr_graph_Water.sh ${z} ${RRDEXECPATH} ${RRDSAVEPATH} ${GRAPHIMGPATH} ${i} ${n} ${IMGWSIZE} ${IMGHSIZE}
+				${GRAPHEXECPATH}/wmr_graph_Water.sh ${z} ${RRDEXECPATH} ${RRDSAVEPATH} ${GRAPHIMGPATH} ${i} ${n} ${IMGWSIZE} ${IMGHSIZE} ${i}
 			fi
 		done
 

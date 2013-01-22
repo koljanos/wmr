@@ -1,11 +1,9 @@
 /**
  * Oregon Scientific WMR100/200/WMRS200/I300/I600/RMS600 protocol. Tested on wmrs200.
  *
- * Copyrights:
+ * Copyright:
  * 2009 Barnaby Gray <barnaby@pickle.me.uk>
  * 2012-2013 Den68 <idg68@yandex.ru> 
- * Contributors:
- * 2013 Ald <alexdu.com.ae@gmail.com>
  * Latest download URL: http://www.nkl.ru/support/wmr/
  * Global download URL: http://code.google.com/p/wmr/
  * 
@@ -14,8 +12,8 @@
  *
  */
 
-#ifndef _WMR_EXT_H
-#define _WMR_EXT_H
+#ifndef _WMR_LOGGER_EXT_H
+#define _WMR_LOGGER_EXT_H
 
 #define WMR_EXIT_FAILURE	-1
 #define WMR_EXIT_NORMAL		1
@@ -24,7 +22,19 @@
 
 #include "wmr_weather.h"
 
+/*
+ Gentoo header hack
+*/
+
+#if defined(GENTOO_HACK)
+extern int errno;
+#endif
+
 #include <errno.h>
+
+#if defined(GENTOO_HACK)
+extern int error_intr;
+#endif
 
 char err_string[1024];
 
@@ -68,8 +78,8 @@ unsigned char const INIT_PACKET2[] = { 0x01, 0xd0, 0x08, 0x01, 0x00, 0x00, 0x00,
     // UTILs
     extern WMR *wmr_new( void );
     extern int wmr_close( WMR * );
-//    extern void wmr_print_state( unsigned int, int );
-    extern void wmr_print_state( HIDInterface *, int );
+    extern void wmr_print_state( unsigned int, int );
+//  extern void wmr_print_state( HIDInterface *, int );
     extern void get_curtime( char ** );
     extern int logrotate ( sqlite3 **, FILE **, char *, int, char *, int, char *, int, char *, int, int );
     extern int kill_prog(char *, int, int );

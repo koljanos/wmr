@@ -15,7 +15,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <syslog.h>
-//#include "wmr.h"
+//#include "wmr_wmr.h"
 
 void syslog_msg ( int syslogEn, char *msg_string) 
 {

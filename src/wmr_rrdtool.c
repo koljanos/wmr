@@ -12,14 +12,16 @@
  *
  */
 
-// -> wmr.h ?
+#include <stdio.h>
+#include <string.h>
 #include <signal.h>
+#include <stdlib.h>
 #include <time.h>
+#include <unistd.h>
 #include <sys/time.h> 
 #define GENERAL_RRD 1
 #define GENERAL_TABLES 1
-//#include "wmr_ext.h"
-#include "wmr.h"
+#include "wmr_ext.h"
 //
 #include "rrdupdate/rrd_format.h"
 #include "rrdupdate/rrd_generic.h"

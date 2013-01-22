@@ -11,12 +11,16 @@
  *
  */
 
+#include <stdio.h>
+#include <string.h>
 #include <signal.h>
 #include <time.h>
-#include "wmr.h"
-#include "wmr_build.h" // remove
-#include "wmr_version.h"         // remove
-#include "wmr_weather.h" // ??
+#include <unistd.h>
+#include "wmr_wmr.h"
+#include "wmr_ext.h"
+#include "wmr_build.h"
+#include "wmr_version.h"
+#include "wmr_weather.h"
 
 void view_cnfile(WMR *wmr)
 {

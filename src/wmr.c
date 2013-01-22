@@ -15,18 +15,26 @@
 #define __USE_GNU
 //#define _GNU_SOURCE
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/stat.h>
+#include <sys/types.h>
 #include <sys/wait.h>
+#include <string.h>
 #include <signal.h>
 #include <time.h>
+#include <unistd.h>
 #include <pthread.h>
 #include <sys/shm.h>
 #include <sys/ipc.h>
 #define GENERAL_MAIN 1
-#include "wmr.h"
-#include "wmr_build.h" // remove
-#include "wmr_version.h" // remove
-//
-#include "wmr_updexec.h" // aggregare with wmr.h?
+#include "wmr_wmr.h"
+#include "wmr_weather.h"
+#include "wmr_ext.h"
+#include "wmr_build.h"
+#include "wmr_version.h"
+// 
+#include "wmr_updexec.h"
 
 int run;
 pthread_mutex_t job_mutex;
@@ -574,8 +582,8 @@ run = RR_WMR_ARGV;
 
 // warning: cast from pointer to integer of different size
 //
-//			wmr_print_state( (unsigned int) wmr->hid, 1 );
-			wmr_print_state( wmr->hid, 1 );
+			wmr_print_state( (unsigned int) wmr->hid, 1 );
+//			wmr_print_state( wmr->hid, 1 );
 			run = RR_WMR_RCONF;
 		}	
 		break;
