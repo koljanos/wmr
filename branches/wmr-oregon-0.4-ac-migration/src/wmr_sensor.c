@@ -12,20 +12,12 @@
  *
  */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <sys/stat.h>
-#include <sys/types.h>
 #include <sys/wait.h>
-#include <string.h>
 #include <signal.h>
 #include <time.h>
-#include <unistd.h>
 #define GENERAL_SENSOR 1
-#include "wmr_wmr.h"
-#include "wmr_weather.h"
-#include "wmr_convert.h"
-#include "wmr_ext.h"
+#include "wmr.h"
+#include "wmr_convert.h" // гм..
 
 
 // HANDLE SENSOR

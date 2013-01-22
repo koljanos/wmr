@@ -43,8 +43,8 @@ ifeq ($(COMPILE),i686)
 DDD = compile for i686 Linux
 TOOLCHAINPATH=/usr
 CC      = gcc
-LIBS	= -L/usr/local/lib -L-L/usr/lib
-CFLAGS  = -I/usr/local/include -I/usr/include
+LIBS	= -L/usr/local/lib -L/usr/lib
+CFLAGS  = -I/usr/local/include -I/usr/include -fPIC -DPIC
 LDFLAGS = -lusb -lhid -lsqlite3 -lpthread
 endif
 

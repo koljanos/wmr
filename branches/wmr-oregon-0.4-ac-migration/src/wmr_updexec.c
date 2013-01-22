@@ -12,20 +12,21 @@
  *
  */
 
-#include <stdio.h>
-#include <stdlib.h>
+//#include <stdio.h>
+//#include <stdlib.h>
 #include <syslog.h>
-#include <sys/types.h>
+//#include <sys/types.h>
 #include <signal.h>
-#include <unistd.h>
+//#include <unistd.h>
 #include <dirent.h>
-#include <string.h>
+//#include <string.h>
 #include <fnmatch.h>
 #include <pthread.h>
 // #include "wmr_wmr.h"
 #define GENERAL_UPD 1
-#include "wmr_ext.h"
-#include "wmr_weather.h"
+#include "wmr.h"
+//#include "wmr_ext.h"
+//#include "wmr_weather.h"
 #include "wmr_updexec.h"
 
 int UPDrun = 1;
