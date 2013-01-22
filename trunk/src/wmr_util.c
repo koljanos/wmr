@@ -282,8 +282,9 @@ void get_curtime( char ** curtime )
 
 }
 
-// void wmr_print_state( unsigned int usb_hid, int syslogEn )
-void wmr_print_state( HIDInterface *usb_hid, int syslogEn )
+// 
+void wmr_print_state( unsigned int usb_hid, int syslogEn )
+// void wmr_print_state( HIDInterface *usb_hid, int syslogEn )
 {
   sprintf (err_string, "- WMR->HID: %08x\n", usb_hid);
   syslog_msg (syslogEn, err_string);
