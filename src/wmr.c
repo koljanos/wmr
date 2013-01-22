@@ -582,8 +582,8 @@ run = RR_WMR_ARGV;
 
 // warning: cast from pointer to integer of different size
 //
-//			wmr_print_state( (unsigned int) wmr->hid, 1 );
-			wmr_print_state( wmr->hid, 1 );
+			wmr_print_state( (unsigned int) wmr->hid, 1 );
+//			wmr_print_state( wmr->hid, 1 );
 			run = RR_WMR_RCONF;
 		}	
 		break;
