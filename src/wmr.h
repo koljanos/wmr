@@ -1,9 +1,11 @@
 /**
  * Oregon Scientific WMR100/200/WMRS200/I300/I600/RMS600 protocol. Tested on wmrs200.
  *
- * Copyright:
+ * Copyrights:
  * 2009 Barnaby Gray <barnaby@pickle.me.uk>
  * 2012-2013 Den68 <idg68@yandex.ru> 
+ * Contributors:
+ * 2013 Ald <alexdu.com.ae@gmail.com>
  * Latest download URL: http://www.nkl.ru/support/wmr/
  * Global download URL: http://code.google.com/p/wmr/
  * 
@@ -13,17 +15,37 @@
  */
 
 
-#ifndef _WMR_LOGGER_STRUCT_WMR_H
-#define _WMR_LOGGER_STRUCT_WMR_H
+#ifndef _WMR_H
+#define _WMR_H
 
-/*
-#include <libhid/hid.h>
-#include <sqlite3.h>
-*/
+// WMR-wide standard headers
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <string.h>
+#include <unistd.h>
 
+// bits from autoconf
 #include "../config.h"
 
-/* structure */
+// libHID is out there?
+#ifdef HAVE_HID_H
+#	include <hid.h>
+#else
+#	ifdef HAVE_LIBHID_HID_H
+#		include <libhid/hid.h>
+#	endif
+#endif
+
+// SQLite is available?
+#ifdef HAVE_LIBSQLITE3
+#	include <sqlite3.h>
+#endif
+
+
+
+/* structure WMR */
 typedef struct _WMR {
     int pos;
     int sqlEn;
@@ -91,5 +113,8 @@ typedef struct _WMR {
     } run;
 
 } WMR;
+
+// Extra header (may be should be merged here?)
+#include "wmr_ext.h"
 
 #endif
