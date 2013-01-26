@@ -27,7 +27,7 @@
 #include <unistd.h>
 
 // bits from autoconf
-#include "../config.h"
+#include "config.h"
 
 // libHID is out there?
 #ifdef HAVE_HID_H

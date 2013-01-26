@@ -12,22 +12,14 @@
  *
  */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <sys/stat.h>
-#include <sys/types.h>
 #include <sys/wait.h>
-#include <string.h>
 #include <signal.h>
 #include <time.h>
-#include <unistd.h>
 #include <pthread.h>
 #include <sys/shm.h>
 #include <sys/ipc.h>
 #define GENERAL_UTIL 1
-#include "wmr_wmr.h"
-#include "wmr_weather.h"
-#include "wmr_ext.h"
+#include "wmr.h"
 
 /****************************
   WEATHER methods
@@ -282,9 +274,8 @@ void get_curtime( char ** curtime )
 
 }
 
-// 
-void wmr_print_state( unsigned int usb_hid, int syslogEn )
-// void wmr_print_state( HIDInterface *usb_hid, int syslogEn )
+// void wmr_print_state( unsigned int usb_hid, int syslogEn )
+void wmr_print_state( HIDInterface *usb_hid, int syslogEn )
 {
   sprintf (err_string, "- WMR->HID: %08x\n", usb_hid);
   syslog_msg (syslogEn, err_string);
