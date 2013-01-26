@@ -7,7 +7,6 @@ AC_CONFIG_AUX_DIR([build])
 AC_CONFIG_MACRO_DIR([build])
 AC_CANONICAL_SYSTEM # for cross-compile
 AC_CONFIG_SRCDIR([src/wmr.c])
-#AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_HEADERS([build/config.h])
 AM_INIT_AUTOMAKE
 AC_ARG_VAR([ACLOCAL_FLAGS], [aclocal flags, e.g. -I <macro dir>])
