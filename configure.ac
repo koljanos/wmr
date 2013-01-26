@@ -79,6 +79,7 @@ AC_OUTPUT
 
 echo "
   $PACKAGE_NAME version $PACKAGE_VERSION build $pkg_build_ver
+  Host: $HOST
   Prefix.........: $prefix
   Debug Build....: $debug
   C Compiler.....: $CC $CFLAGS $CPPFLAGS
