@@ -12,16 +12,9 @@
  *
  */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <sys/stat.h>
-#include <sys/types.h>
-#include <string.h>
-#include <signal.h>
-#include <time.h>
-#include <unistd.h>
-#include "wmr_wmr.h"
-#include "wmr_ext.h"
+#include <signal.h> // merge with wmr.h?
+#include <time.h>   // --"-- ?
+#include "wmr.h"
 
 int wmr_file_open(FILE ** data_fh, char * data_filename ) 
 {

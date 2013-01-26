@@ -15,26 +15,16 @@
 #define __USE_GNU
 //#define _GNU_SOURCE
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <sys/stat.h>
-#include <sys/types.h>
 #include <sys/wait.h>
-#include <string.h>
 #include <signal.h>
 #include <time.h>
-#include <unistd.h>
 #include <pthread.h>
 #include <sys/shm.h>
 #include <sys/ipc.h>
 #define GENERAL_MAIN 1
-#include "wmr_wmr.h"
-#include "wmr_weather.h"
-#include "wmr_ext.h"
-#include "wmr_build.h"
-#include "wmr_version.h"
-// 
-#include "wmr_updexec.h"
+#include "wmr.h"
+//
+#include "wmr_updexec.h" // aggregare with wmr.h?
 
 int run;
 pthread_mutex_t job_mutex;
@@ -384,7 +374,7 @@ pthread_mutex_init(&job_mutex, &attr);
 
 // warning: cast to pointer from integer of different size
 //
-    fbname =  (char *) basename( (char **) argv[0]);
+//    fbname =  (char *) basename( (char **) argv[0]);
     // fbname =  (char *) basename( (const char *) argv[0]);
     //memcpy(fbname, (char *) basename(argv[0]), strlen( basename(argv[0]) ) );
 
@@ -412,7 +402,8 @@ pthread_mutex_init(&job_mutex, &attr);
     sprintf ( err_string, "/var/lock/%s.lock", fbname );
     memcpy(wmr->lock_file, err_string, strlen(err_string));
 
-    sprintf (err_string,  WMR_HEADER_INFO, NUM_VERSION, DATA_VERSION );
+//    sprintf (err_string,  WMR_HEADER_INFO, PACKAGE_VERSION, DATA_VERSION );
+    sprintf (err_string,  WMR_HEADER_INFO, PACKAGE_VERSION, PACKAGE_BUILD );
     syslog_msg (0, err_string);
 
     signal(SIGINT,  _cleanup);
@@ -582,8 +573,8 @@ run = RR_WMR_ARGV;
 
 // warning: cast from pointer to integer of different size
 //
-			wmr_print_state( (unsigned int) wmr->hid, 1 );
-//			wmr_print_state( wmr->hid, 1 );
+//			wmr_print_state( (unsigned int) wmr->hid, 1 );
+			wmr_print_state( wmr->hid, 1 );
 			run = RR_WMR_RCONF;
 		}	
 		break;

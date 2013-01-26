@@ -12,16 +12,10 @@
  *
  */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <sys/stat.h>
-#include <sys/types.h>
-#include <string.h>
-#include <unistd.h>
+// todo: move this here
 #define GENERAL_TABLES 1
 #define GENERAL_ALARM 1
-#include "wmr_wmr.h"
-#include "wmr_ext.h"
+#include "wmr.h"
 
 
 int alarm_sig (char *alarm_path, int cevent, int csensor, int cstatus, int battery, int min, int max, int alarmEn, int syslogEn, int debugEn)
