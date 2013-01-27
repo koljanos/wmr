@@ -14,7 +14,8 @@ AC_SUBST(ACLOCAL_AMFLAGS, [\${ACLOCAL_FLAGS}])
 
 # libtool init
 AC_DISABLE_STATIC
-LT_INIT([win32-dll])
+#LT_INIT([win32-dll])
+LT_INIT
 #AC_PROG_LIBTOOL
 
 # Checks for programs.

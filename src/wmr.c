@@ -507,7 +507,11 @@ run = RR_WMR_ARGV;
 		run = RR_WMR_INIT_USB;
 		break;
     	case RR_WMR_LROTATE:
+#ifdef HAVE_LIBSQLITE3
 		if (logrotate ( &wmr->db, &wmr->data_fh, wmr->logrotate_path, wmr->fileEn, wmr->data_filename, wmr->sqlEn, wmr->db_name, wmr->rrdEn, wmr->rrdtool_save_path, wmr->syslogEn, wmr->debugEn ) != 0 ) 
+#else
+		if (logrotate ( &wmr->data_fh, wmr->logrotate_path, wmr->fileEn, wmr->data_filename, wmr->rrdEn, wmr->rrdtool_save_path, wmr->syslogEn, wmr->debugEn ) != 0 ) 
+#endif
 		{ 
 		    run = RR_WMR_PREEXIT;
 		    break;
@@ -536,7 +540,9 @@ run = RR_WMR_ARGV;
 		break;
 	case RR_WMR_EXIT:
 		if ((wmr->fileEn == 1 ) && ( wmr->data_fh ))	{ wmr_file_close(&wmr->data_fh); }
+#ifdef HAVE_LIBSQLITE3
 		if ((wmr->sqlEn  == 1 ) && ( wmr->db )) 	{ wmr_sqldb_close(&wmr->db); }
+#endif
 		if (lock_state( wmr->lock_file, wmr->daemonKill, wmr->syslogEn, wmr->debugEn, 1, 0) == WMR_EXIT_SUCCESS ) { syslog_msg (wmr->syslogEn, WMR_C_TXT_40); }
 		if (weather != NULL) 				{ weather_close(weather, weather->run.shmid, weather->run.MAINpid, 0, wmr->syslogEn, wmr->debugEn );  }
 		if (wmr->daemonKill != 1 )			{ printf(WMR_C_TXT_21, argv[0]); }
@@ -592,6 +598,7 @@ run = RR_WMR_ARGV;
     		}
 		break;
 	case RR_WMR_INIT_DATA:
+#ifdef HAVE_LIBSQLITE3
 		if (wmr->sqlEn == 1 )
 		{
 			if ( wmr->db )
@@ -606,6 +613,7 @@ run = RR_WMR_ARGV;
 			}
 
 		}
+#endif
 		if (wmr->fileEn == 1 )
 		{
 			if( wmr->data_fh )
@@ -683,24 +691,24 @@ run = RR_WMR_ARGV;
 //
 //////////////////
 
-    if (wmr->sqlEn == 1 )
-    {
-	if ( wmr->db ) { wmr_sqldb_close(&wmr->db); }
-	syslog_msg (wmr->syslogEn, WMR_C_TXT_34 );
+#ifdef HAVE_LIBSQLITE3
+    if (wmr->sqlEn == 1 ) {
+		if ( wmr->db ) { wmr_sqldb_close(&wmr->db); }
+		syslog_msg( wmr->syslogEn, WMR_C_TXT_34 );
+    }
+#endif
+
+    if (wmr->fileEn == 1 ) {
+		if( wmr->data_fh ) { wmr_file_close(&wmr->data_fh); }
+		syslog_msg( wmr->syslogEn, WMR_C_TXT_35 );
     }
 
-    if (wmr->fileEn == 1 )
-    {
-	if( wmr->data_fh ) { wmr_file_close(&wmr->data_fh); }
-	syslog_msg (wmr->syslogEn, WMR_C_TXT_35 );
-    }
+    lock_state( wmr->lock_file, wmr->daemonKill, wmr->syslogEn, wmr->debugEn, 1, 0 );
 
-    lock_state( wmr->lock_file, wmr->daemonKill, wmr->syslogEn, wmr->debugEn, 1, 0);
+    syslog_msg( wmr->syslogEn, WMR_C_TXT_36 );
+    wmr_close( wmr );
+    pthread_mutex_destroy( &job_mutex );
 
-    syslog_msg (wmr->syslogEn, WMR_C_TXT_36 );
-    wmr_close(wmr);
-    pthread_mutex_destroy(&job_mutex);
-
-    exit(WMR_EXIT_SUCCESS);
+    exit( WMR_EXIT_SUCCESS );
 }
 

@@ -102,10 +102,10 @@
             		"- Daemon mode:\t\t%d\n" \
             		"- SysLog Enable:\t%d\n" \
             		"- Lock file path:\t%s\n" \
-            		"- SQL Enable:\t\t%d\n" \
+					"- SQL Enable:\t\t%d\n" \
             		"- SQL Base path:\t%s\n" \
-            		"- File Log Enable:\t%d\n" \
-            		"- File Log path:\t%s\n" \
+					"- File Log Enable:\t%d\n" \
+		      		"- File Log path:\t%s\n" \
             		"- RRD graphic Enable:\t%d\n" \
             		"- RRD exec path:\t%s\n" \
             		"- RRD save path:\t%s\n" \
