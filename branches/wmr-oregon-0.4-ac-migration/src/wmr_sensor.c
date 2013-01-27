@@ -106,18 +106,18 @@ void wmr_handle_temp(WMR *wmr, WEATHER *weather, unsigned char *data, int len)
     wmr_file_data( &wmr->data_fh, msg, wmr->curtime, wmr->syslogEn, wmr->debugEn);
     }
 
-    if(wmr->sqlEn == 1)
-    {
-	if (( wmr->sqlt[0].tables == 0 ) && ( wmr->sqlt[0].sensor[sensor] == 0 ))
-	{
-	    wmr_sqldb_create( &wmr->db, 0, wmr->syslogEn, wmr->debugEn);
-	    wmr->sqlt[0].tables = 1;
-	    wmr->sqlt[0].sensor[sensor] = 1;
-	}
+#ifdef HAVE_LIBSQLITE3
+    if(wmr->sqlEn == 1) {
+		if (( wmr->sqlt[0].tables == 0 ) && ( wmr->sqlt[0].sensor[sensor] == 0 )) {
+			wmr_sqldb_create( &wmr->db, 0, wmr->syslogEn, wmr->debugEn);
+			wmr->sqlt[0].tables = 1;
+			wmr->sqlt[0].sensor[sensor] = 1;
+		}
 
-    sprintf ( msg, WMR_TMPL_SQL[0], battery, sensor, smiley, trendTxt, temp, humidity, dewpoint);
-    wmr_sqldb_log( &wmr->db, wmr->curtime, msg, 0, wmr->syslogEn, wmr->debugEn );
+		sprintf ( msg, WMR_TMPL_SQL[0], battery, sensor, smiley, trendTxt, temp, humidity, dewpoint);
+		wmr_sqldb_log( &wmr->db, wmr->curtime, msg, 0, wmr->syslogEn, wmr->debugEn );
     }
+#endif
 
     if(wmr->rrdEn == 1)
     {
@@ -209,18 +209,18 @@ void wmr_handle_pressure(WMR *wmr, WEATHER *weather, unsigned char *data, int le
 	wmr_file_data( &wmr->data_fh, msg, wmr->curtime, wmr->syslogEn, wmr->debugEn);
 	}         
 
-        if(wmr->sqlEn == 1)
-	{
-	    if (( wmr->sqlt[1].tables == 0 ) && ( wmr->sqlt[1].sensor[0] == 0 ))
-	    {
-		wmr_sqldb_create( &wmr->db, 1, wmr->syslogEn, wmr->debugEn);
-		wmr->sqlt[1].tables = 1;
-		wmr->sqlt[1].sensor[0] = 1;
+#ifdef HAVE_LIBSQLITE3
+	if(wmr->sqlEn == 1) {
+	    if (( wmr->sqlt[1].tables == 0 ) && ( wmr->sqlt[1].sensor[0] == 0 )) {
+			wmr_sqldb_create( &wmr->db, 1, wmr->syslogEn, wmr->debugEn);
+			wmr->sqlt[1].tables = 1;
+			wmr->sqlt[1].sensor[0] = 1;
 	    }
 
-	sprintf ( msg, WMR_TMPL_SQL[1], pressure, forecast, alt_pressure, alt_forecast);
-	wmr_sqldb_log( &wmr->db, wmr->curtime, msg, 1, wmr->syslogEn, wmr->debugEn );
+		sprintf ( msg, WMR_TMPL_SQL[1], pressure, forecast, alt_pressure, alt_forecast);
+		wmr_sqldb_log( &wmr->db, wmr->curtime, msg, 1, wmr->syslogEn, wmr->debugEn );
 	}
+#endif
 
 	if(wmr->rrdEn == 1)
 	{
@@ -330,18 +330,18 @@ void wmr_handle_wind(WMR *wmr, WEATHER *weather, unsigned char *data, int len)
     wmr_file_data( &wmr->data_fh, msg, wmr->curtime, wmr->syslogEn, wmr->debugEn);
     }
 
-    if(wmr->sqlEn == 1)
-    {
-	if (( wmr->sqlt[2].tables == 0 ) && ( wmr->sqlt[2].sensor[0] == 0 ))
-	{
-	    wmr_sqldb_create( &wmr->db, 2, wmr->syslogEn, wmr->debugEn);
-	    wmr->sqlt[2].tables = 1;
-	    wmr->sqlt[2].sensor[0] = 1;
-	}
+#ifdef HAVE_LIBSQLITE3
+    if(wmr->sqlEn == 1) {
+		if (( wmr->sqlt[2].tables == 0 ) && ( wmr->sqlt[2].sensor[0] == 0 )) {
+			wmr_sqldb_create( &wmr->db, 2, wmr->syslogEn, wmr->debugEn);
+			wmr->sqlt[2].tables = 1;
+			wmr->sqlt[2].sensor[0] = 1;
+		}
 
-    sprintf ( msg, WMR_TMPL_SQL[2], battery, power, wind_dir, wind_speed, avg_speed, low_speed, high_speed, wind_chill);
-    wmr_sqldb_log( &wmr->db, wmr->curtime, msg, 2, wmr->syslogEn, wmr->debugEn );
+		sprintf ( msg, WMR_TMPL_SQL[2], battery, power, wind_dir, wind_speed, avg_speed, low_speed, high_speed, wind_chill);
+		wmr_sqldb_log( &wmr->db, wmr->curtime, msg, 2, wmr->syslogEn, wmr->debugEn );
     }
+#endif
 
     if(wmr->rrdEn == 1)
     {
@@ -428,18 +428,18 @@ void wmr_handle_rain(WMR *wmr, WEATHER *weather, unsigned char *data, int len)
     wmr_file_data( &wmr->data_fh, msg, wmr->curtime, wmr->syslogEn, wmr->debugEn);
     }
 
-    if(wmr->sqlEn == 1)
-    {
-	if (( wmr->sqlt[3].tables == 0 ) && ( wmr->sqlt[3].sensor[sensor] == 0 ))
-	{
-	    wmr_sqldb_create( &wmr->db, 3, wmr->syslogEn, wmr->debugEn);
-	    wmr->sqlt[3].tables = 1;
-	    wmr->sqlt[3].sensor[sensor] = 1;
-	}
+#ifdef HAVE_LIBSQLITE3
+    if(wmr->sqlEn == 1) {
+		if (( wmr->sqlt[3].tables == 0 ) && ( wmr->sqlt[3].sensor[sensor] == 0 )) {
+			wmr_sqldb_create( &wmr->db, 3, wmr->syslogEn, wmr->debugEn);
+			wmr->sqlt[3].tables = 1;
+			wmr->sqlt[3].sensor[sensor] = 1;
+		}
 
-    sprintf ( msg, WMR_TMPL_SQL[3], battery, sensor, power, rate, hour, day, total, syr, smo, sda, sho, smi);
-    wmr_sqldb_log( &wmr->db, wmr->curtime, msg, 3, wmr->syslogEn, wmr->debugEn );
+		sprintf ( msg, WMR_TMPL_SQL[3], battery, sensor, power, rate, hour, day, total, syr, smo, sda, sho, smi);
+		wmr_sqldb_log( &wmr->db, wmr->curtime, msg, 3, wmr->syslogEn, wmr->debugEn );
     }
+#endif
 
     if(wmr->rrdEn == 1)
     {
@@ -513,18 +513,18 @@ void wmr_handle_water(WMR *wmr, WEATHER *weather, unsigned char *data, int len)
     wmr_file_data( &wmr->data_fh, msg, wmr->curtime, wmr->syslogEn, wmr->debugEn);
     }
 
-    if(wmr->sqlEn == 1)
-    {
-	if (( wmr->sqlt[4].tables == 0 ) && ( wmr->sqlt[4].sensor[sensor] == 0 ))
-	{
-	    wmr_sqldb_create( &wmr->db, 4, wmr->syslogEn, wmr->debugEn);
-	    wmr->sqlt[4].tables = 1;
-	    wmr->sqlt[4].sensor[sensor] = 1;
-	}
+#ifdef HAVE_LIBSQLITE3
+    if(wmr->sqlEn == 1) {
+		if (( wmr->sqlt[4].tables == 0 ) && ( wmr->sqlt[4].sensor[sensor] == 0 )) {
+			wmr_sqldb_create( &wmr->db, 4, wmr->syslogEn, wmr->debugEn);
+			wmr->sqlt[4].tables = 1;
+			wmr->sqlt[4].sensor[sensor] = 1;
+		}
 
-    sprintf ( msg, WMR_TMPL_SQL[4], battery, sensor, temp);
-    wmr_sqldb_log( &wmr->db, wmr->curtime, msg, 4, wmr->syslogEn, wmr->debugEn );
+		sprintf ( msg, WMR_TMPL_SQL[4], battery, sensor, temp);
+		wmr_sqldb_log( &wmr->db, wmr->curtime, msg, 4, wmr->syslogEn, wmr->debugEn );
     }
+#endif
 
     if(wmr->rrdEn == 1)
     {
@@ -579,18 +579,18 @@ void wmr_handle_uv(WMR *wmr, WEATHER *weather, unsigned char *data, int len)
     wmr_file_data( &wmr->data_fh, msg, wmr->curtime, wmr->syslogEn, wmr->debugEn);
     }
 
-    if(wmr->sqlEn == 1)
-    {
-	if (( wmr->sqlt[5].tables == 0 ) && ( wmr->sqlt[5].sensor[0] == 0 ))
-	{
-	    wmr_sqldb_create( &wmr->db, 5, wmr->syslogEn, wmr->debugEn);
-	    wmr->sqlt[5].tables = 1;
-	    wmr->sqlt[5].sensor[0] = 1;
-	}
+#ifdef HAVE_LIBSQLITE3
+    if(wmr->sqlEn == 1) {
+		if (( wmr->sqlt[5].tables == 0 ) && ( wmr->sqlt[5].sensor[0] == 0 )) {
+			wmr_sqldb_create( &wmr->db, 5, wmr->syslogEn, wmr->debugEn);
+			wmr->sqlt[5].tables = 1;
+			wmr->sqlt[5].sensor[0] = 1;
+		}
 
-    sprintf ( msg, WMR_TMPL_SQL[5], battery, uvindex);
-    wmr_sqldb_log( &wmr->db, wmr->curtime, msg, 5, wmr->syslogEn, wmr->debugEn );
+		sprintf ( msg, WMR_TMPL_SQL[5], battery, uvindex);
+		wmr_sqldb_log( &wmr->db, wmr->curtime, msg, 5, wmr->syslogEn, wmr->debugEn );
     }
+#endif
 
     if(wmr->rrdEn == 1)
     {
@@ -649,18 +649,18 @@ void wmr_handle_mainu(WMR *wmr, WEATHER *weather, unsigned char *data, int len)
     wmr_file_data( &wmr->data_fh, msg, wmr->curtime, wmr->syslogEn, wmr->debugEn);
     }
 
-    if( wmr->sqlEn == 1)
-    {
-	if (( wmr->sqlt[6].tables == 0 ) && ( wmr->sqlt[6].sensor[0] == 0 ))
-	{
-	    wmr_sqldb_create( &wmr->db, 6, wmr->syslogEn, wmr->debugEn);
-	    wmr->sqlt[6].tables = 1;
-	    wmr->sqlt[6].sensor[0] = 1;
-	}
+#ifdef HAVE_LIBSQLITE3
+    if( wmr->sqlEn == 1) {
+		if (( wmr->sqlt[6].tables == 0 ) && ( wmr->sqlt[6].sensor[0] == 0 )) {
+			wmr_sqldb_create( &wmr->db, 6, wmr->syslogEn, wmr->debugEn);
+			wmr->sqlt[6].tables = 1;
+			wmr->sqlt[6].sensor[0] = 1;
+		}
 
-    sprintf ( msg, WMR_TMPL_SQL[6], battery, powered, yr, mo, dy, hr, mi, rf, level);
-    wmr_sqldb_log( &wmr->db, wmr->curtime, msg, 6, wmr->syslogEn, wmr->debugEn );
+		sprintf ( msg, WMR_TMPL_SQL[6], battery, powered, yr, mo, dy, hr, mi, rf, level);
+		wmr_sqldb_log( &wmr->db, wmr->curtime, msg, 6, wmr->syslogEn, wmr->debugEn );
     }
+#endif
 
     if( wmr->rrdEn == 1)
     {

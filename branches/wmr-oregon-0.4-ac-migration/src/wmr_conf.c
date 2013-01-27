@@ -18,14 +18,22 @@
 
 void view_cnfile(WMR *wmr)
 {
+#ifdef HAVE_LIBSQLITE3
+	int sqlEn = wmr->sqlEn;
+	char *db_name = wmr->db_name;
+#else
+	int sqlEn = 0;
+	char *db_name = "";
+#endif 
 
-	printf ( WMR_CONF_C_TXT_1, \
+	printf ( 
+		WMR_CONF_C_TXT_1, \
 		wmr->conf_path, \
 		wmr->daemonEn, \
 		wmr->syslogEn, \
 		wmr->lock_file, \
-		wmr->sqlEn, \
-		wmr->db_name, \
+		sqlEn, \
+		db_name, \
 		wmr->fileEn, \
 		wmr->data_filename, \
 		wmr->rrdEn, \
@@ -167,7 +175,9 @@ int read_cnfile(WMR *wmr, WEATHER *weather)
     wmr->alarmEn	= 0;
     wmr->debugEn	= 1;
 
+#ifdef HAVE_LIBSQLITE3
     strcpy(wmr->db_name, "./weather.db" );
+#endif
     strcpy(wmr->data_filename, "./weather.log" );
     strcpy(wmr->rrdtool_exec_path, "/usr/bin/rrdtool" );
     strcpy(wmr->rrdtool_save_path, "./" );
@@ -190,11 +200,15 @@ int read_cnfile(WMR *wmr, WEATHER *weather)
       ptr = strtok( NULL, " \t\n" );
       wmr->sqlEn = atoi(ptr);
       continue;
-    } else if( strncasecmp( "SQLBASEPATH", ptr, 11 ) == 0 ) {
-      ptr = strtok( NULL, " \t\n");
-      strncpy(wmr->db_name, ptr, strlen(ptr));
-      continue;
-    } else if( strncasecmp( "FILENABLE", ptr, 9 ) == 0 ) {
+    } 
+#ifdef HAVE_LIBSQLITE3
+    else if( strncasecmp( "SQLBASEPATH", ptr, 11 ) == 0 ) {
+		ptr = strtok( NULL, " \t\n");
+		strncpy(wmr->db_name, ptr, strlen(ptr));
+		continue;
+    } 
+#endif
+    else if( strncasecmp( "FILENABLE", ptr, 9 ) == 0 ) {
       ptr = strtok( NULL, " \t\n");
       wmr->fileEn = atoi(ptr);
       continue;

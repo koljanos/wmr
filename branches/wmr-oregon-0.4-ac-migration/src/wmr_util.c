@@ -1,4 +1,4 @@
-/**
+ /**
  * Oregon Scientific WMR100/200/WMRS200/I300/I600/RMS600 protocol. Tested on wmrs200.
  *
  * Copyright:
@@ -34,81 +34,67 @@ WEATHER *weather_new( int seln, key_t shm_key, char * fname, int debugEn )
 
     pthread_mutex_lock(&job_mutex);
 
-    switch(seln)
-    {
+    switch(seln) {
         case 0:
-		// if ( (int) ( shmKey = ftok("./", 1) )  < 0 )
-		if ( (int) ( shmKey = ftok( fname, 1) )  < 0 )
-		{
-    		    printf (WMR_UTIL_C_TXT_1 );
-		    perror("- ftok ");
-		    exit(WMR_EXIT_FAILURE);
-		}
-                if ( (shmID = shmget( shmKey, sizeof(WEATHER), 0666 | IPC_CREAT )) < 0 )
-                // if ( (shmID = shmget( shmKey, sizeof(WEATHER), 0666 | IPC_CREAT | IPC_EXCL )) < 0 )
-                {
-                    printf (WMR_UTIL_C_TXT_2, seln, shmKey, shmID );
-		    perror("- shmget ");
+				// if ( (int) ( shmKey = ftok("./", 1) )  < 0 )
+				if ( (int) ( shmKey = ftok( fname, 1) )  < 0 ) {
+					printf (WMR_UTIL_C_TXT_1 );
+					perror("- ftok ");
+					exit(WMR_EXIT_FAILURE);
+				}
+		        if ( (shmID = shmget( shmKey, sizeof(WEATHER), 0666 | IPC_CREAT )) < 0 ) {
+		        // if ( (shmID = shmget( shmKey, sizeof(WEATHER), 0666 | IPC_CREAT | IPC_EXCL )) < 0 ) {
+					printf (WMR_UTIL_C_TXT_2, seln, shmKey, shmID );
+					perror("- shmget ");
 
-		    if ( shmID == -1 )
-		    {
-			printf (WMR_UTIL_C_TXT_3, shmID);
-			shmctl( shmget(shmKey, 0, 0666), IPC_RMID, NULL);
-		    }
+					if ( shmID == -1 ) {
+						printf (WMR_UTIL_C_TXT_3, shmID);
+						shmctl( shmget(shmKey, 0, 0666), IPC_RMID, NULL);
+					}
 
-                    exit(WMR_EXIT_FAILURE);
-                }
+		         	exit(WMR_EXIT_FAILURE);
+				}
 
-// warning: cast from pointer to integer of different size
-//
-                if ( (int) ( weather = shmat(shmID, NULL, 0) ) == -1 )
-                {
-                    printf (WMR_UTIL_C_TXT_4, shm_key );
-		    perror("- shmat ");
-                    exit(WMR_EXIT_FAILURE);
-                }
-                memset(weather, 0, sizeof(WEATHER));
-                weather->run.shmid = shmKey;
-		weather->run.shmhn[seln] = shmID;
-                break;
+	// warning: cast from pointer to integer of different size
+	//
+		        if ( ( weather = shmat(shmID, NULL, 0) ) == (void *) -1 ) {
+		            printf (WMR_UTIL_C_TXT_4, shm_key );
+					perror("- shmat ");
+		            exit(WMR_EXIT_FAILURE);
+		        }
+		        memset(weather, 0, sizeof(WEATHER));
+		        weather->run.shmid = shmKey;
+				weather->run.shmhn[seln] = shmID;
+				break;
         case 1:
-                if ( shm_key <= 0 )
-                {
-                    printf (WMR_UTIL_C_TXT_5);
-                    exit(WMR_EXIT_FAILURE);
+                if ( shm_key <= 0 ) {
+					printf (WMR_UTIL_C_TXT_5);
+					exit(WMR_EXIT_FAILURE);
                 }
-                if ( (shmID = shmget( shm_key, sizeof(WEATHER), 0666 )) < 0 )
-                //if ( (shmID = shmget( shm_key, 0, 0666 )) < 0 )
-                {
-                    printf (WMR_UTIL_C_TXT_6, seln, shm_key, shmID);
-		    perror("- shmget ");
+                if ( (shmID = shmget( shm_key, sizeof(WEATHER), 0666 )) < 0 ) {
+                //if ( (shmID = shmget( shm_key, 0, 0666 )) < 0 ) {
+					printf (WMR_UTIL_C_TXT_6, seln, shm_key, shmID);
+		    		perror("- shmget ");
                     exit(WMR_EXIT_FAILURE);
                 }
 
 // warning: cast from pointer to integer of different size
 //
-                if ( (int) ( weather = shmat(shmID, NULL, 0) ) == -1 )
-                {
+                if ( ( weather = shmat(shmID, NULL, 0) ) == (void *)-1 ) {
                     printf (WMR_UTIL_C_TXT_7, shm_key );
-		    perror("- shmat ");
+		    		perror("- shmat ");
                     exit(WMR_EXIT_FAILURE);
                 }
 
-		weather->run.shmhn[seln] = shmID;
+				weather->run.shmhn[seln] = shmID;
                 break;
     }
 
 
-    if ( debugEn > 3 )
-    {
-	shmctl(shmID, IPC_STAT, &shmstat);
-	printf( WMR_UTIL_C_TXT_8, \
-    		seln, \
-		shmID, \
-    		(int) shmstat.shm_nattch, \
-    		shmstat.shm_cpid, \
-    		shmstat.shm_lpid \
-    		);
+    if ( debugEn > 3 ) {
+		shmctl(shmID, IPC_STAT, &shmstat);
+		printf( WMR_UTIL_C_TXT_8, \
+				seln, shmID, (int) shmstat.shm_nattch, shmstat.shm_cpid, shmstat.shm_lpid );
     }
 
 pthread_mutex_unlock(&job_mutex);
@@ -209,7 +195,9 @@ WMR *wmr_new( void )
 
     wmr->data_fh                = NULL;
     wmr->data_filename          = malloc(CNF_PATH_SIZE);
+#ifdef HAVE_LIBSQLITE3
     wmr->db_name                = malloc(CNF_PATH_SIZE);
+#endif
     wmr->conf_path              = malloc(CNF_PATH_SIZE);
     wmr->rrdtool_exec_path      = malloc(CNF_PATH_SIZE);
     wmr->rrdtool_save_path      = malloc(CNF_PATH_SIZE);
@@ -274,29 +262,38 @@ void get_curtime( char ** curtime )
 
 }
 
-// void wmr_print_state( unsigned int usb_hid, int syslogEn )
-void wmr_print_state( HIDInterface *usb_hid, int syslogEn )
+void wmr_print_state( unsigned int usb_hid, int syslogEn )
+//void wmr_print_state( HIDInterface *usb_hid, int syslogEn )
 {
   sprintf (err_string, "- WMR->HID: %08x\n", usb_hid);
   syslog_msg (syslogEn, err_string);
 }
 
+#ifdef HAVE_LIBSQLITE3
 int logrotate ( sqlite3 ** db, FILE ** data_fh, char *logrotate_path, int fileEn,  char *data_filename, int sqlEn, char * db_name, int rrdEn, char * rrdtool_save_path, int syslogEn, int debugEn )
+#else
+int logrotate ( FILE ** data_fh, char *logrotate_path, int fileEn,  char *data_filename, int rrdEn, char * rrdtool_save_path, int syslogEn, int debugEn )
+#endif
 {
     char msg[1024];
 
 
-    if ((sqlEn == 1 ) && ( *db )) 
-    {
-	wmr_sqldb_close(*&db);
+#ifdef HAVE_LIBSQLITE3
+    if ((sqlEn == 1 ) && ( *db )) {
+		wmr_sqldb_close(*&db);
     }
+#endif
 
     if ((fileEn == 1 ) && ( *data_fh ))
     { 
 	wmr_file_close( *&data_fh);
     }
 
+#ifdef HAVE_LIBSQLITE3
     sprintf ( msg, WMR_TMPL_LOGROTATE,  logrotate_path, fileEn,  data_filename,  sqlEn,  db_name, rrdEn,  rrdtool_save_path ); 
+#else
+    sprintf ( msg, WMR_TMPL_LOGROTATE,  logrotate_path, fileEn, data_filename, rrdEn, rrdtool_save_path ); 
+#endif
 
     if(system (msg) != 0)
     {
@@ -465,29 +462,26 @@ int kill_prog( char * lock_file, int syslogEn, int debugEn )
     char lock_pid[16];
     int	 daemon_pid;
 
-    if (!(fdl = fopen (lock_file, "r"))) 
-    {
-	if( debugEn > 0 )         
-    	{
-	    sprintf ( err_string, WMR_UTIL_C_TXT_28, lock_file);
-	    syslog_msg (syslogEn, err_string);
-	}
-	return (WMR_EXIT_NORMAL);			
+    if (!(fdl = fopen (lock_file, "r")))  {
+		if( debugEn > 0 ) {
+			sprintf ( err_string, WMR_UTIL_C_TXT_28, lock_file);
+			syslog_msg (syslogEn, err_string);
+		}
+		return (WMR_EXIT_NORMAL);			
     }
 	
-    fgets(lock_pid, 15, fdl);
+    if ( fgets(lock_pid, 15, fdl) ) { ; }
     daemon_pid = atoi(lock_pid);
     fclose (fdl);
 
-    if (killpg(daemon_pid, SIGTERM) == -1)
-    {
-	if( debugEn > 0 )         
-    	{
-	    sprintf (err_string, WMR_UTIL_C_TXT_29, daemon_pid );
-	    syslog_msg (syslogEn, err_string );
-	}
-	return (WMR_EXIT_NORMAL);			
+    if (killpg(daemon_pid, SIGTERM) == -1) {
+		if( debugEn > 0 ) {
+			sprintf (err_string, WMR_UTIL_C_TXT_29, daemon_pid );
+			syslog_msg (syslogEn, err_string );
+		}
+		return (WMR_EXIT_NORMAL);			
     }
 	    
-return (WMR_EXIT_SUCCESS);
+	return (WMR_EXIT_SUCCESS);
 }
+

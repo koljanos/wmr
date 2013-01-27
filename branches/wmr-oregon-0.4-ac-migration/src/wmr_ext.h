@@ -60,8 +60,10 @@ unsigned char const INIT_PACKET2[] = { 0x01, 0xd0, 0x08, 0x01, 0x00, 0x00, 0x00,
     extern void view_cnfsnmp( WEATHER * );
     // FILE LOG
     extern int  wmr_file_open (FILE **, char *  );
+#ifdef HAVE_LIBSQLITE3
     // SQL LOG
     extern int  wmr_sqldb_init(sqlite3 **, char *, int, int );
+#endif
     // UPDATE EXEC
     extern int upd_exec_handle ( key_t, char *, char *, int, int );
     extern void upd_scan_dir   ( WEATHER *, char *, int, int );
@@ -71,7 +73,11 @@ unsigned char const INIT_PACKET2[] = { 0x01, 0xd0, 0x08, 0x01, 0x00, 0x00, 0x00,
 //    extern void wmr_print_state( unsigned int, int );
     extern void wmr_print_state( HIDInterface *, int );
     extern void get_curtime( char ** );
+#ifdef HAVE_LIBSQLITE3
     extern int logrotate ( sqlite3 **, FILE **, char *, int, char *, int, char *, int, char *, int, int );
+#else    
+    extern int logrotate ( FILE **, char *, int, char *, int, char *, int, int );
+#endif
     extern int kill_prog(char *, int, int );
     // SENSOR
     extern void wmr_handle_temp		(WMR *, WEATHER *, unsigned char *, int);
@@ -115,9 +121,11 @@ unsigned char const INIT_PACKET2[] = { 0x01, 0xd0, 0x08, 0x01, 0x00, 0x00, 0x00,
     static char *const TABLES[] 	= { "TEMP", "PRESSURE", "WIND", "RAIN", "WATER", "UV", "MAIN", "HUMIDITY" };
 #endif
 
-#if defined(GENERAL_SQL)
-    #include <sqlite3.h>
-    #define WMR_TMPL_SQL_INSERT     "INSERT INTO %s VALUES( \'%s\',%s )"
+#ifdef HAVE_LIBSQLITE3
+
+	#ifdef GENERAL_SQL // to be removed - ?
+// done in wmr.h	#include <sqlite3.h>
+		#define WMR_TMPL_SQL_INSERT     "INSERT INTO %s VALUES( \'%s\',%s )"
 
 static char *const WMR_SQL_CREATE[] = { \
 "CREATE TABLE IF NOT EXISTS TEMP ( tdate datetime PRIMARY KEY UNIQUE, battery int(2), sensor int, smile int, trend char(2), temp float(5), humidity int(3), dewpoint float(5) )", \
@@ -129,6 +137,7 @@ static char *const WMR_SQL_CREATE[] = { \
 "CREATE TABLE IF NOT EXISTS MAIN ( tdate datetime PRIMARY KEY UNIQUE, battery int(2), powered int(2), ddate datetime, rf int(2), level int(2) )" \
 };
 
+	#endif
 #endif
 
 #if defined(GENERAL_SENSOR)
@@ -137,13 +146,16 @@ static char *const WMR_SQL_CREATE[] = { \
     extern int alarm_sig(char *, int, int, int, int, int, int, int, int, int);
     // FILE LOG
     extern void wmr_file_data (FILE **, char *, char *, int, int);
+	#ifdef HAVE_LIBSQLITE3
     // SQL LOG
     extern void wmr_sqldb_log(sqlite3 **, char *, char *, int, int, int);
     extern void wmr_sqldb_create(sqlite3 **, int, int, int);
+	#endif
     // RRD LOG
     extern void rrdtool_exec   ( char *, char *, int, int, char *, int *, int, int );
     extern void rrd_update_int ( char *, char *, int, int, double *, int, int *, int, int );
 
+	#ifdef HAVE_LIBSQLITE3
 static char *const WMR_TMPL_SQL[] = { \
 "\'%d\',\'%d\',\'%d\',\'%s\',\'%.1f\',\'%d\',\'%.1f\'", \
 "\'%d\',\'%d\',\'%d\',\'%d\'", \
@@ -151,6 +163,7 @@ static char *const WMR_TMPL_SQL[] = { \
 "\'%d\',\'%d\',\'%d\',\'%d\',\'%.2f\',\'%.2f\',\'%.2f\',\'%04d%02d%02d%02d%02d\'", \
 "\'%d\',\'%d\',\'%.1f\'","\'%d\',\'%d\'","\'%d\',\'%d\',\'%04d%02d%02d%02d%02d\',\'%d\',\'%d\'" \
 };
+	#endif
 
 static char *const WMR_TMPL_TXT[] = { \
 "type=TEMP,battery=%d,sensor=%d,smile=%d,trend=%s,temp=%.1f,humidity=%d,dewpoint=%.1f", \
@@ -181,8 +194,12 @@ static char *const TRENDS[] 	= { "-", "U", "D" };
 #endif
 
 #if defined(GENERAL_UTIL)
-    #include <sqlite3.h>
-    #define WMR_TMPL_LOGROTATE      "%s %d %s %d %s %d %s"
+//    #include <sqlite3.h>
+	#ifdef HAVE_LIBSQLITE3
+		#define WMR_TMPL_LOGROTATE      "%s %d %s %d %s %d %s"
+	#else
+		#define WMR_TMPL_LOGROTATE      "%s %d %s %d %s"
+	#endif
     #define WMR_CONFG_FILE "/etc/wmr/wmr.conf"
 #endif
 
@@ -242,8 +259,10 @@ static char *const WMR_RRD_GRAPH_PAR[] = { \
 #if defined(GENERAL_MAIN) || defined(GENERAL_UTIL)
     #define CNF_PATH_SIZE 255
     #define BUF_SIZE 255
-    // SQL LOG
-    extern void wmr_sqldb_close(sqlite3 **);
+	#ifdef HAVE_LIBSQLITE3
+		// SQL LOG
+		extern void wmr_sqldb_close(sqlite3 **);
+	#endif
     // FILE LOG
     extern void wmr_file_close(FILE ** );
 #endif

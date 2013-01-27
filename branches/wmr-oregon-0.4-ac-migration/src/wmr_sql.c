@@ -12,15 +12,19 @@
  *
  */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <sys/stat.h>
-#include <sys/types.h>
-#include <string.h>
-#include <unistd.h>
+//#include <stdio.h>
+//#include <stdlib.h>
+//#include <sys/stat.h>
+//#include <sys/types.h>
+//#include <string.h>
+//#include <unistd.h>
 #define GENERAL_TABLES 1
 #define GENERAL_SQL 1
-#include "wmr_ext.h"
+#include "wmr.h"
+
+//
+
+#ifdef HAVE_LIBSQLITE3
 
 void wmr_sqldb_create(sqlite3 **db, int tbln, int syslogEn, int debugEn)
 {
@@ -83,3 +87,4 @@ void wmr_sqldb_close(sqlite3 **db)
 	sqlite3_close(*db);
 }
 
+#endif
