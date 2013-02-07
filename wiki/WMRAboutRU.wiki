@@ -38,6 +38,8 @@ http://www.nkl.ru/support/wmr/wmr-oregon-latest.tar.gz
 
 На сайте есть готовая сборка под OpenWRT для RouteBoard 2xx (i386)
 http://www.nkl.ru/support/wmr/wmr-oregon-OpenWrt_i386_bin.tar.gz
+и сборка под SH4 платформу (OpenBox,SkayWay,Octagon etc)
+http://www.nkl.ru/support/wmr/wmr-0.4.sh4.tar.gz
 
 = Поддерживает железо =
 
