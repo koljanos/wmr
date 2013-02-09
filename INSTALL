@@ -48,6 +48,21 @@ or run to compile singele file wmrd:
     make single
     make install-single
 
+or run to compile multi platform binary:
+    ./configure
+    make COMPILE=i686|i386|sh4
+    make install
+
+or run to compile manualy select language:
+    ./configure
+    make LANG=EN (default)|1251|866|KOI8|UTF8
+    make install
+
+sample:
+    ./configure
+    make single COMPILE=i686 LANG=UTF8
+    make install-single
+
 
 Run:
 _________________________________________
