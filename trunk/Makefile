@@ -7,16 +7,41 @@ VERSION = 0.4
 MAKEFLAGS	= --no-print-directory
 ## MAKEFLAGS	+= --version --print-data-base
 
+ifeq ($(COMPILE),sh4)
+##
+## for sh4 (octagon,Openbox,SkyWay, e.t.c.) toolchain
+##
+DDD = compile for sh4 toolchain
+PLATFORM = ST
+TOOLCHAINPATH = /var/INSTALL/toolchain/sh4
+TOOLCHAINSYS = ${COMPILE}
+BINNAME = sh4-linux-
+CROSS_COMPILE = ${TOOLCHAINPATH}/bin/${BINNAME}
+LIBPATHL = -Wl,-rpath,/var/lib/wmr -L.
+#
+CC	= ${TOOLCHAINPATH}/bin/${BINNAME}gcc
+CPP	= ${TOOLCHAINPATH}/bin/${BINNAME}cpp
+ARCH	= ${TOOLCHAINPATH}/bin/${BINNAME}ar
+LD	= ${TOOLCHAINPATH}/bin/${BINNAME}ld
+CFLAGS	= -I/usr/local/lib/${TOOLCHAINSYS}/_include_ -I${TOOLCHAINPATH}/include -I${TOOLCHAINPATH}/target/usr/include
+CFLAGS	+= -std=gnu99 -Wall -O2 -D_GNU_SOURCE -DLANG_ENG -DGENTOO_HACK
+LIBS	= -L/usr/local/lib/${TOOLCHAINSYS} -L${TOOLCHAINPATH}/lib -L${TOOLCHAINPATH}/target/usr/lib
+LDFLAGS	= -lusb -lhid -lsqlite3 -lpthread -lm
+CPPFLAGS = -I/usr/local/lib/${TOOLCHAINSYS}/_include_ -I${TOOLCHAINPATH}/include -I${TOOLCHAINPATH}/target/usr/include
+endif
+
 ifeq ($(COMPILE),i386)
 ##
 ## for i386 OpenWRT toolchain
 ##
 DDD = compile for i386 OpenWRT toolchain
 TOOLCHAINPATH=/var/INSTALL/toolchain/openwrt/staging_dir/toolchain-i386_gcc4.1.2
-TOOLCHAINSYS=i386
+TOOLCHAINSYS=${COMPILE}
+LIBPATHL = -Wl,-rpath,/usr/lib/wmr -L.
+#
 CC      = ${TOOLCHAINPATH}/bin/gcc
-CFLAGS  = -I${TOOLCHAINPATH}/include -I/usr/loca/lib/_include_
-CFLAGS += -std=gnu99  -Wall -D_GNU_SOURCE
+CFLAGS  = -I/usr/local/lib/${TOOLCHAINSYS}/_include_ -I${TOOLCHAINPATH}/include 
+CFLAGS += -std=gnu99 -O2 -Wall -D_GNU_SOURCE -DLANG_ENG -DGENTOO_HACK
 LIBS    = -L/usr/local/lib/${TOOLCHAINSYS} -L/usr/lib/wmr -L${TOOLCHAINPATH}/lib
 LDFLAGS = -lusb -lhid -lsqlite3 -lpthread -lm
 endif
@@ -29,9 +54,10 @@ DDD = compile for Win32 mingw
 TOOLCHAINPATH=/var/INSTALL/toolchain/mingw
 TOOLCHAINSYS=win32
 PLATFORM=i386-mingw32-
+LIBPATHL = -Wl,-rpath,/usr/lib/wmr -L.
 CC	= ${TOOLCHAINPATH}/bin/gcc
-CFLAGS  = -I${TOOLCHAINPATH}/include -I/usr/loca/lib/${TOOLCHAINSYS}/include
-CFLAGS += -std=gnu99  -Wall -D_GNU_SOURCE
+CFLAGS  = -I${TOOLCHAINPATH}/include -I/usr/local/lib/${TOOLCHAINSYS}/include
+CFLAGS += -std=gnu99 -Wall -D_GNU_SOURCE -DLANG_ENG -DGENTOO_HACK
 LIBS    = -L/usr/local/lib/${TOOLCHAINSYS} -L/usr/lib/wmr -L${TOOLCHAINPATH}/lib
 LDFLAGS = -lusb -lhid -lsqlite3
 endif
@@ -42,14 +68,20 @@ ifeq ($(COMPILE),i686)
 ##
 DDD = compile for i686 Linux
 TOOLCHAINPATH=/usr
+TOOLCHAINSYS=i686
+LIBPATHL = -Wl,-rpath,/usr/lib/wmr -L.
 CC      = gcc
-LIBS	= -L/usr/local/lib -L-L/usr/lib
-CFLAGS  = -I/usr/local/include -I/usr/include
+LIBS	= -L/usr/local/lib/${TOOLCHAINSYS} -L-L/usr/lib
+CFLAGS  = -I/usr/local/lib/${TOOLCHAINSYS}/_include_ -I/usr/include
 LDFLAGS = -lusb -lhid -lsqlite3 -lpthread
-endif
-
 
 include Makefile.inc
+
+endif
+
+PATH	:= ${TOOLCHAINPATH}/bin:/usr/local/lib/${TOOLCHAINSYS}/_bin_:$(PATH)
+
+
 
 OBJS		=	src/wmr.o src/wmr_conf.o src/wmr_syslog.o src/wmr_util.o src/wmr_sensor.o
 OBJSLIBRRD	=	src/wmr_rrdtool.o src/rrdupdate/rrd_update.o src/rrdupdate/rrd_misc.o src/rrdupdate/rrd_generic.o
@@ -117,14 +149,14 @@ libupd:		$(OBJSLIBUPD)
 
 prog:		$(OBJS)
 		@echo '#define DATA_VERSION "'Den68 ASCII/SQL/RRD/SNMP - building: `date` '"' >src/wmr_build.h
-		$(CC) $(OBJS) -o wmrd $(LIBS) ${LDFLAGS} -Wl,-rpath,/usr/lib/wmr -L. -lwmr-alarm -lwmr-rrd -lwmr-sql -lwmr-file -lwmr-upd
+		$(CC) $(OBJS) -o wmrd $(LIBS) ${LDFLAGS} ${LIBPATHL} -lwmr-alarm -lwmr-rrd -lwmr-sql -lwmr-file -lwmr-upd
 		@rm -f $(OBJS)
 		@${TOOLCHAINPATH}/bin/strip wmrd
 		@./goftp.sh
 
 single:         $(OBJS) $(OBJSLIBUPD) $(OBJSLIBSNMP) $(OBJSLIBFILE) $(OBJSLIBSQL) $(OBJSLIBRRD) $(OBJSLIBALARM)
 		@echo '#define DATA_VERSION "'Den68 ASCII/SQL/RRD/SNMP - building: `date` '"' >src/wmr_build.h
-		$(CC) $(OBJS) $(OBJSLIBUPD) $(OBJSLIBSNMP) $(OBJSLIBFILE) $(OBJSLIBSQL) $(OBJSLIBRRD) $(OBJSLIBALARM) -o wmrd $(LIBS) ${LDFLAGS}
+		$(CC) $(OBJS) $(OBJSLIBUPD) $(OBJSLIBSNMP) $(OBJSLIBFILE) $(OBJSLIBSQL) $(OBJSLIBRRD) $(OBJSLIBALARM) -o wmrd $(LIBS) ${LDFLAGS} ${LIBPATHL}
 		@rm -f $(OBJS) $(OBJSLIBUPD) $(OBJSLIBSNMP) $(OBJSLIBFILE) $(OBJSLIBSQL) $(OBJSLIBRRD) $(OBJSLIBALARM)
 		@${TOOLCHAINPATH}/bin/strip wmrd
 		@./goftp.sh

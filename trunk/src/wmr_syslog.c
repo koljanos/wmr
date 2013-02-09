@@ -39,5 +39,3 @@ void syslog_msg ( int syslogEn, char *msg_string)
 // 25:4: warning: format not a string literal and no format arguments
 // 29:4: warning: format not a string literal and no format arguments
 // 33:4: warning: format not a string literal and no format arguments
-
- 
