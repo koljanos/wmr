@@ -15,6 +15,7 @@ DDD = compile for sh4 toolchain
 PLATFORM = ST
 TOOLCHAINPATH = /var/INSTALL/toolchain/sh4
 TOOLCHAINSYS = ${COMPILE}
+PLATFORM = sh4-octagon-
 BINNAME = sh4-linux-
 CROSS_COMPILE = ${TOOLCHAINPATH}/bin/${BINNAME}
 LIBPATHL = -Wl,-rpath,/var/lib/wmr -L.
@@ -24,7 +25,7 @@ CPP	= ${TOOLCHAINPATH}/bin/${BINNAME}cpp
 ARCH	= ${TOOLCHAINPATH}/bin/${BINNAME}ar
 LD	= ${TOOLCHAINPATH}/bin/${BINNAME}ld
 CFLAGS	= -I/usr/local/lib/${TOOLCHAINSYS}/_include_ -I${TOOLCHAINPATH}/include -I${TOOLCHAINPATH}/target/usr/include
-CFLAGS	+= -std=gnu99 -Wall -O2 -D_GNU_SOURCE -DLANG_ENG -DGENTOO_HACK
+CFLAGS	+= -std=gnu99 -Wall -O2 -D_GNU_SOURCE
 LIBS	= -L/usr/local/lib/${TOOLCHAINSYS} -L${TOOLCHAINPATH}/lib -L${TOOLCHAINPATH}/target/usr/lib
 LDFLAGS	= -lusb -lhid -lsqlite3 -lpthread -lm
 CPPFLAGS = -I/usr/local/lib/${TOOLCHAINSYS}/_include_ -I${TOOLCHAINPATH}/include -I${TOOLCHAINPATH}/target/usr/include
@@ -37,11 +38,17 @@ ifeq ($(COMPILE),i386)
 DDD = compile for i386 OpenWRT toolchain
 TOOLCHAINPATH=/var/INSTALL/toolchain/openwrt/staging_dir/toolchain-i386_gcc4.1.2
 TOOLCHAINSYS=${COMPILE}
+PLATFORM = i386-openwrt-
+BINNAME = i386-linux-uclibc-
+CROSS_COMPILE = ${TOOLCHAINPATH}/bin/${BINNAME}
 LIBPATHL = -Wl,-rpath,/usr/lib/wmr -L.
 #
 CC      = ${TOOLCHAINPATH}/bin/gcc
+CPP	= ${TOOLCHAINPATH}/bin/${BINNAME}cpp
+ARCH	= ${TOOLCHAINPATH}/bin/${BINNAME}ar
+LD	= ${TOOLCHAINPATH}/bin/${BINNAME}ld
 CFLAGS  = -I/usr/local/lib/${TOOLCHAINSYS}/_include_ -I${TOOLCHAINPATH}/include 
-CFLAGS += -std=gnu99 -O2 -Wall -D_GNU_SOURCE -DLANG_ENG -DGENTOO_HACK
+CFLAGS += -std=gnu99 -O2 -Wall -D_GNU_SOURCE
 LIBS    = -L/usr/local/lib/${TOOLCHAINSYS} -L/usr/lib/wmr -L${TOOLCHAINPATH}/lib
 LDFLAGS = -lusb -lhid -lsqlite3 -lpthread -lm
 endif
@@ -53,11 +60,11 @@ ifeq ($(COMPILE),win32)
 DDD = compile for Win32 mingw
 TOOLCHAINPATH=/var/INSTALL/toolchain/mingw
 TOOLCHAINSYS=win32
-PLATFORM=i386-mingw32-
+PLATFORM = i386-mingw32-
 LIBPATHL = -Wl,-rpath,/usr/lib/wmr -L.
 CC	= ${TOOLCHAINPATH}/bin/gcc
 CFLAGS  = -I${TOOLCHAINPATH}/include -I/usr/local/lib/${TOOLCHAINSYS}/include
-CFLAGS += -std=gnu99 -Wall -D_GNU_SOURCE -DLANG_ENG -DGENTOO_HACK
+CFLAGS += -std=gnu99 -Wall -D_GNU_SOURCE
 LIBS    = -L/usr/local/lib/${TOOLCHAINSYS} -L/usr/lib/wmr -L${TOOLCHAINPATH}/lib
 LDFLAGS = -lusb -lhid -lsqlite3
 endif
@@ -69,19 +76,39 @@ ifeq ($(COMPILE),i686)
 DDD = compile for i686 Linux
 TOOLCHAINPATH=/usr
 TOOLCHAINSYS=i686
+PLATFORM = i686-linux-
 LIBPATHL = -Wl,-rpath,/usr/lib/wmr -L.
 CC      = gcc
 LIBS	= -L/usr/local/lib/${TOOLCHAINSYS} -L-L/usr/lib
 CFLAGS  = -I/usr/local/lib/${TOOLCHAINSYS}/_include_ -I/usr/include
+CFLAGS	+= -std=gnu99 -Wall -O2 -D_GNU_SOURCE
 LDFLAGS = -lusb -lhid -lsqlite3 -lpthread
 
 include Makefile.inc
 
 endif
 
+ifeq ($(LANG),EN)
+CFLAGS  += -DLANG_ENG
+endif
+
+ifeq ($(LANG),1251)
+CFLAGS  += -DLANG_1251
+endif
+
+ifeq ($(LANG),866)
+CFLAGS  += -DLANG_866
+endif
+
+ifeq ($(LANG),KOI8)
+CFLAGS  += -DLANG_KOI8
+endif
+
+ifeq ($(LANG),UTF8)
+CFLAGS  += -DLANG_UTF8
+endif
+
 PATH	:= ${TOOLCHAINPATH}/bin:/usr/local/lib/${TOOLCHAINSYS}/_bin_:$(PATH)
-
-
 
 OBJS		=	src/wmr.o src/wmr_conf.o src/wmr_syslog.o src/wmr_util.o src/wmr_sensor.o
 OBJSLIBRRD	=	src/wmr_rrdtool.o src/rrdupdate/rrd_update.o src/rrdupdate/rrd_misc.o src/rrdupdate/rrd_generic.o
@@ -91,6 +118,7 @@ OBJSLIBALARM	=	src/wmr_alarm.o
 OBJSLIBSNMP	=	src/snmp/oiddb.o src/snmp/snmp.o src/snmp/debug.o
 OBJSLIBUPD	=	src/wmr_updexec.o
 OBJSSHM		=	src/debug/shm.o
+
 
 # -----------------------------------------------------------------------
 # Sort out what operating system is being run and modify CFLAGS and LIBS
@@ -155,8 +183,8 @@ prog:		$(OBJS)
 		@./goftp.sh
 
 single:         $(OBJS) $(OBJSLIBUPD) $(OBJSLIBSNMP) $(OBJSLIBFILE) $(OBJSLIBSQL) $(OBJSLIBRRD) $(OBJSLIBALARM)
-		@echo '#define DATA_VERSION "'Den68 ASCII/SQL/RRD/SNMP - building: `date` '"' >src/wmr_build.h
-		$(CC) $(OBJS) $(OBJSLIBUPD) $(OBJSLIBSNMP) $(OBJSLIBFILE) $(OBJSLIBSQL) $(OBJSLIBRRD) $(OBJSLIBALARM) -o wmrd $(LIBS) ${LDFLAGS} ${LIBPATHL}
+		@echo '#define DATA_VERSION "'Den68 ASCII/SQL/RRD/SNMP - building: ${PLATFORM}`date` '"' >src/wmr_build.h
+		$(CC) -MMD $(OBJS) $(OBJSLIBUPD) $(OBJSLIBSNMP) $(OBJSLIBFILE) $(OBJSLIBSQL) $(OBJSLIBRRD) $(OBJSLIBALARM) -o wmrd $(LIBS) ${LDFLAGS} ${LIBPATHL}
 		@rm -f $(OBJS) $(OBJSLIBUPD) $(OBJSLIBSNMP) $(OBJSLIBFILE) $(OBJSLIBSQL) $(OBJSLIBRRD) $(OBJSLIBALARM)
 		@${TOOLCHAINPATH}/bin/strip wmrd
 		@./goftp.sh
