@@ -91,6 +91,11 @@ typedef struct _WMR {
 #ifdef HAVE_LIBSQLITE3
     sqlite3 *db;;
     char * db_name;
+    struct
+    {
+	int tables;
+	int sensor[10];
+    } sqlt[7];
 #endif
     char * rrdtool_exec_path;
     char * rrdtool_save_path;
@@ -101,13 +106,6 @@ typedef struct _WMR {
     char * curtime;
     long long exectime;
 
-#ifdef HAVE_LIBSQLITE3
-    struct
-    {
-	int tables;
-	int sensor[10];
-    } sqlt[7];
-#endif
 
     struct
     {
